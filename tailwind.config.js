@@ -7,8 +7,42 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: "480px",
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+        "2xl": "1536px",
+      },
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: "1rem",
+          xs: "1rem",
+          md: "1rem",
+          lg: "2rem",
+          xl: "3rem",
+          "2xl": "3rem",
+        },
+      },
       colors: {
-        baseBg: "#111",
+        background: "#111",
+        primaryBg: "var(--primary-bg)",
+        secondaryBg: "var(--secondary-bg)",
+        tertiaryBg: "var(--tertiary-bg)",
+        primaryText: "var(--primary-text)",
+        secondaryText: "var(--secondary-text)",
+        gradientLeft: "var(--gradient-left)",
+        gradientRight: "var(--gradient-right)",
+        secondaryButton: "var(--secondary-button-bg)",
+      },
+      fontSize: {
+        small: "16px",
+        paragraph: "20px",
+        h1: "35px",
+        h2: "25px",
+        h3: "20px",
       },
     },
   },
