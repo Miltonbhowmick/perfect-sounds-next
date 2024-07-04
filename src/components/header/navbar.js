@@ -5,7 +5,7 @@ export default function Navbar() {
     <nav className="relative bg-secondaryBg">
       <div className="container">
         <div className="lg:h-[100px] flex justify-between items-center">
-          <div className="basis-[20%] shrink-1 grow-0 flex gap-2 items-center">
+          <div className="basis-[30%] shrink grow-0 flex gap-2 items-center">
             <svg
               className="w-[20px]"
               xmlns="http://www.w3.org/2000/svg"
@@ -17,28 +17,28 @@ export default function Navbar() {
               <path
                 d="M21.875 21.875L27.5 27.5"
                 stroke="#828282"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M25 13.75C25 7.5368 19.9633 2.5 13.75 2.5C7.5368 2.5 2.5 7.5368 2.5 13.75C2.5 19.9633 7.5368 25 13.75 25C19.9633 25 25 19.9633 25 13.75Z"
                 stroke="#828282"
-                stroke-width="1.5"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinejoin="round"
               />
             </svg>
             <span className="text-secondaryText text-[20px]">
               Search for Sound effect
             </span>
           </div>
-          <div className="basis-[auto] shrink-1 grow-1">
+          <div className="basis-[auto] shrink grow flex justify-center">
             <img
               className="w-[120px]"
               src="/images/company-logo/perfectsounds-logo-white.png"
             />
           </div>
-          <ul className="basis-[20%] shrink-1 grow-0 flex gap-7 justify-end items-center">
+          <ul className="basis-[30%] shrink grow-0 flex gap-7 justify-end items-center">
             <li>
               <a className="text-primaryText text-h3 font-medium">Plan</a>
             </li>
