@@ -20,6 +20,7 @@ module.exports = {
         padding: {
           DEFAULT: "1rem",
           xs: "1rem",
+          sm: "1rem",
           md: "1rem",
           lg: "2rem",
           xl: "3rem",
@@ -40,9 +41,12 @@ module.exports = {
       fontSize: {
         small: "16px",
         paragraph: "20px",
-        h1: "35px",
-        h2: "25px",
-        h3: "20px",
+        h1: "70px",
+        h2: "35px",
+        h3: "25px",
+        h4: "20px",
+        h5: "16px",
+        h6: "14px",
       },
     },
   },
