@@ -53,14 +53,14 @@ export default function Home() {
           uppercase
           headline="Explore Our Featured Categories"
         ></HeadlineSection>
-        <div className="mt-[40px] flex gap-4">
+        <div className="mt-[40px] flex gap-4 flex-wrap">
           {categoryList.map((obj, i) => {
             return (
               <Chip
                 prependIcon={obj?.icon}
                 variant="outlined"
                 color="bg-secondaryBg"
-                className="px-[16px] md:px-[18px] lg:px-[20px] h-[30px] xl:h-[60px] text-primaryText"
+                className="px-[16px] md:px-[18px] lg:px-[20px] h-[40px] xl:h-[60px] text-primaryText"
                 key={"cat_chip_" + i}
               >
                 <h6>{obj?.name}</h6>

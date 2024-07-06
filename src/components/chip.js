@@ -21,7 +21,7 @@ const Chip = ({
 
   return (
     <div
-      className={`${styles} inline-flex items-center rounded-full text-sm font-semibold h-[50px]`}
+      className={`${styles} inline-flex items-center rounded-full text-sm font-semibold min-h-[30px]`}
     >
       {prependIcon && (
         <span className="material-icons text-inherit mr-2">{prependIcon}</span>
