@@ -10,7 +10,9 @@ const ImageContent = ({
   className,
   ...props
 }) => {
-  const customStyles = classNames("flex flex-row gap-20 py-16");
+  const customStyles = classNames(
+    "flex flex-row gap-6 md:gap-12 lg:gap-20 py-16"
+  );
 
   return (
     <div className={customStyles}>
@@ -22,14 +24,14 @@ const ImageContent = ({
         {description && <p className="text-primaryText">{description}</p>}
         {buttonVariant === "gradient" && (
           <ButtonGradiend
-            className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 px-5 h-[55px] w-max rounded-full"
+            className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 px-5 h-[35px] md:h-[45px] lg:h-[55px] w-max rounded-full"
             gradient
           >
             <h6 className="text-primaryText font-bold">{buttonText}</h6>
           </ButtonGradiend>
         )}
         {buttonVariant === "grad-outlined" && (
-          <ButtonGradiendOutlined className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 h-[55px] rounded-full">
+          <ButtonGradiendOutlined className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 h-[35px] md:h-[45px] lg:h-[55px] rounded-full">
             <h6 className="bg-gradient-to-r from-gradientLeft to-gradientRight bg-clip-text text-transparent font-bold">
               {buttonText}
             </h6>

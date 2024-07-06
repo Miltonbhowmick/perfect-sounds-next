@@ -17,7 +17,7 @@ const ButtonGradiendOutlined = ({
     return (
       <Link
         href={href}
-        className={`${bgStyle} ${className} mx-auto p-[2px] h-[80px]`}
+        className={`${bgStyle} ${className} mx-auto p-[2px] min-h-[30px]`}
         {...props}
       >
         <div className="bg-primaryBg  px-3 rounded-[inherit] flex h-full w-full items-center justify-center">
@@ -28,7 +28,7 @@ const ButtonGradiendOutlined = ({
   }
   return (
     <button
-      className={`${bgStyle} ${className} mx-auto p-[2px] h-[80px]`}
+      className={`${bgStyle} ${className} mx-auto p-[2px] min-h-[30px]`}
       onClick={onClick}
       {...props}
     >

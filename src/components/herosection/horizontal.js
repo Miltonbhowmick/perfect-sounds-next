@@ -23,14 +23,14 @@ const HeroBannerHorizontal = ({
           <p className="text-primaryText text-center">{description}</p>
           {buttonVariant === "gradient" && (
             <ButtonGradiend
-              className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 px-5 py-1 md:py-2 lg:py-3 rounded-full"
+              className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 h-[40px] lg:h-[55px] rounded-full"
               gradient
             >
               <h6 className="text-primaryText font-bold">{buttonText}</h6>
             </ButtonGradiend>
           )}
           {buttonVariant === "grad-outlined" && (
-            <ButtonGradiendOutlined className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 h-[45px] rounded-full">
+            <ButtonGradiendOutlined className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 h-[40px] lg:h-[55px] rounded-full">
               <h6 className="bg-gradient-to-r from-gradientLeft to-gradientRight bg-clip-text text-transparent font-bold">
                 {buttonText}
               </h6>
