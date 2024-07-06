@@ -15,13 +15,21 @@ const ButtonGradiend = ({
 
   if (href) {
     return (
-      <Link href={href} className={`${bgStyle} ${className}`} {...props}>
+      <Link
+        href={href}
+        className={`${bgStyle} ${className} flex justify-center items-center p-[2px] h-[60px]`}
+        {...props}
+      >
         {children}
       </Link>
     );
   }
   return (
-    <button className={`${bgStyle} ${className}`} onClick={onClick} {...props}>
+    <button
+      className={`${bgStyle} ${className} flex justify-center items-center p-[2px] h-[60px]`}
+      onClick={onClick}
+      {...props}
+    >
       {children}
     </button>
   );
