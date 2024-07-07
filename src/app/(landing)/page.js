@@ -4,6 +4,9 @@ import BadgeCross from "@/components/badges/cross";
 import HeadlineSection from "@/components/headline/section";
 import Chip from "@/components/chip";
 import LeftImageRightContent from "@/components/leftImageRightContent";
+import BottomFooter from "@/components/footer/bottom";
+import CopyWrite from "@/components/footer/copywrite";
+import Check from "@/components/music/check";
 
 import LoginIcon from "@mui/icons-material/Login";
 import SpaIcon from "@mui/icons-material/Spa";
@@ -94,9 +97,12 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="relative">
+      <div className="container py-5">
+        <Check></Check>
+      </div>
+      <div className="relative overflow-hidden">
         <div className="bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gradientRight to-gradientLeft blur-[45px] md:blur-[90px] rounded-full w-[130px] h-[120px] md:w-[336px] md:h-[200px] lg:w-[436px] lg:h-[405px] absolute top-[5%] -left-[15%] lg:-left-[25%]"></div>
-        <div className="bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gradientRight to-gradientLeft blur-[45px] md:blur-[90px] rounded-full w-[111px] h-[111px] md:w-[236px] md:h-[170px] lg:w-[336px] lg:h-[305px] absolute -bottom-[15%]  -right-[8%] lg:-right-[20%]"></div>
+        <div className="bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gradientRight to-gradientLeft blur-[45px] md:blur-[90px] rounded-full w-[111px] h-[111px] md:w-[236px] md:h-[170px] lg:w-[336px] lg:h-[305px] absolute -bottom-[15%]  -right-[8%] lg:-right-[15%]"></div>
         <div className="container">
           <HeroBannerHorizontal
             className="h-[245px] sm:h-[345px] md:h-[500px] lg:h-[550px]"
@@ -244,6 +250,10 @@ export default function Home() {
             </defs>
           </svg>
         </div>
+      </div>
+      <div className="border-t border-tertiaryBg mt-[93px]">
+        <BottomFooter></BottomFooter>
+        <CopyWrite></CopyWrite>
       </div>
     </main>
   );
