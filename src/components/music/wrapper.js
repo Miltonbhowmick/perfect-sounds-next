@@ -59,20 +59,25 @@ const MusicWrapper = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex gap-16 justify-between items-center">
-        <div className="w-full flex gap-2 justify-between items-center">
+      <div className="flex gap-4 md:gap-8 lg:gap-16 justify-between items-center">
+        <div className="w-full flex gap-2 justify-start md:justify-between items-center">
           <ButtonMediaPlay
-            className="w-[80px] h-[80px] rounded-full cursor-pointer"
+            className="w-[40px] h-[40px] md:w-[80px] md:h-[80px] rounded-full cursor-pointer"
             playing={playing}
             gradient
             onClick={() => {
               handlePlayPause(), setAudioUrl("/musics/1.mp3");
             }}
           ></ButtonMediaPlay>
-          <div className="basis-[60%]">
+          <div className="w-full">
             <div ref={waveformRef}></div>
+            <p className="block md:hidden text-primaryText">
+              Motocross motorcycle engine
+            </p>
           </div>
-          <p className="text-primaryText">Motocross motorcycle engine</p>
+          <p className="hidden md:block text-primaryText">
+            Motocross motorcycle engine
+          </p>
         </div>
         <div className="flex gap-6 justify-between items-center">
           <div className="text-primaryText flex gap-2 items-center">
