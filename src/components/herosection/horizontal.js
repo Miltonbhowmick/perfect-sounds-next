@@ -16,7 +16,7 @@ const HeroBannerHorizontal = ({
     <div className={classNames("relative", "overflow-hidden", className)}>
       <div className="absolute inset-0 -z-10">{image}</div>
       <div className="z-10 h-full flex justify-center">
-        <div className="w-100 lg:w-8/12 xl:w-10/12 flex flex-col gap-[.5px] xs:gap-1 md:gap-2 xl:gap-3 justify-center items-center">
+        <div className="w-[80%] md:w-[60%] flex flex-col gap-[.5px] xs:gap-1 md:gap-2 xl:gap-3 justify-center items-center">
           <h1 className="text-primaryText font-bold text-center lg:leading-[4.5rem] xl:leading-[5.5rem]">
             {headline}
           </h1>
