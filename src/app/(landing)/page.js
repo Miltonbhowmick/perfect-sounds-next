@@ -93,15 +93,21 @@ export default function Home() {
             ></HeadlineSection>
           </div>
         </div>
-        <HeroBannerHorizontal
-          className="h-[245px] sm:h-[345px] md:h-[500px] lg:h-[550px]"
-          headline="Explore Our Extensive Sound Effects Collection"
-          description={
-            "Check out All Sounds Now and Take Your Audio Design to the Next Level!"
-          }
-          buttonText={"Explore sounds"}
-          buttonVariant="grad-outlined"
-        ></HeroBannerHorizontal>
+      </div>
+      <div className="relative">
+        <div className="bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gradientRight to-gradientLeft blur-[45px] md:blur-[90px] rounded-full w-[130px] h-[120px] md:w-[336px] md:h-[200px] lg:w-[436px] lg:h-[405px] absolute top-[5%] -left-[15%] lg:-left-[25%]"></div>
+        <div className="bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gradientRight to-gradientLeft blur-[45px] md:blur-[90px] rounded-full w-[111px] h-[111px] md:w-[236px] md:h-[170px] lg:w-[336px] lg:h-[305px] absolute -bottom-[15%]  -right-[8%] lg:-right-[20%]"></div>
+        <div className="container">
+          <HeroBannerHorizontal
+            className="h-[245px] sm:h-[345px] md:h-[500px] lg:h-[550px]"
+            headline="Explore Our Extensive Sound Effects Collection"
+            description={
+              "Check out All Sounds Now and Take Your Audio Design to the Next Level!"
+            }
+            buttonText={"Explore sounds"}
+            buttonVariant="grad-outlined"
+          ></HeroBannerHorizontal>
+        </div>
       </div>
       <div className="bg-secondaryBg relative">
         <div className="container relative z-[99]">
@@ -151,8 +157,8 @@ export default function Home() {
                 y2="104.5"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stop-color="#DC1B73" />
-                <stop offset="1" stop-color="#F47B23" />
+                <stop stopColor="#DC1B73" />
+                <stop offset="1" stopColor="#F47B23" />
               </linearGradient>
               <linearGradient
                 id="paint1_linear_156_1538"
@@ -162,8 +168,8 @@ export default function Home() {
                 y2="104.5"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stop-color="#DC1B73" />
-                <stop offset="1" stop-color="#F47B23" />
+                <stop stopColor="#DC1B73" />
+                <stop offset="1" stopColor="#F47B23" />
               </linearGradient>
               <linearGradient
                 id="paint2_linear_156_1538"
@@ -173,8 +179,8 @@ export default function Home() {
                 y2="104.5"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stop-color="#DC1B73" />
-                <stop offset="1" stop-color="#F47B23" />
+                <stop stopColor="#DC1B73" />
+                <stop offset="1" stopColor="#F47B23" />
               </linearGradient>
             </defs>
           </svg>
@@ -210,8 +216,8 @@ export default function Home() {
                 y2="104.5"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stop-color="#DC1B73" />
-                <stop offset="1" stop-color="#F47B23" />
+                <stop stopColor="#DC1B73" />
+                <stop offset="1" stopColor="#F47B23" />
               </linearGradient>
               <linearGradient
                 id="paint1_linear_156_1538"
@@ -221,8 +227,8 @@ export default function Home() {
                 y2="104.5"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stop-color="#DC1B73" />
-                <stop offset="1" stop-color="#F47B23" />
+                <stop stopColor="#DC1B73" />
+                <stop offset="1" stopColor="#F47B23" />
               </linearGradient>
               <linearGradient
                 id="paint2_linear_156_1538"
@@ -232,8 +238,8 @@ export default function Home() {
                 y2="104.5"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stop-color="#DC1B73" />
-                <stop offset="1" stop-color="#F47B23" />
+                <stop stopColor="#DC1B73" />
+                <stop offset="1" stopColor="#F47B23" />
               </linearGradient>
             </defs>
           </svg>
