@@ -2,6 +2,8 @@ import Navbar from "@/components/header/navbar";
 import { Inter, Flow_Circular } from "next/font/google";
 import "../globals.css";
 
+import { Providers } from "@/store/Provider";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -11,11 +13,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={(inter.className, "bg-primaryBg")}>
-        <Navbar />
-        {children}
-      </body>
-    </html>
+    <Providers>
+      <html lang="en">
+        <body className={(inter.className, "bg-primaryBg")}>
+          <Navbar />
+          {children}
+        </body>
+      </html>
+    </Providers>
   );
 }
