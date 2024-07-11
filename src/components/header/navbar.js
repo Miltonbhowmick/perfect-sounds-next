@@ -1,4 +1,5 @@
 import ButtonGradiend from "../button/gradient";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
@@ -43,7 +44,12 @@ export default function Navbar() {
               <a className="text-primaryText text-h3 font-medium">Plan</a>
             </li>
             <li>
-              <a className="text-primaryText text-h3 font-medium">Sign up</a>
+              <Link
+                href="/account/signup"
+                className="text-primaryText text-h3 font-medium"
+              >
+                Sign up
+              </Link>
             </li>
             <li>
               {/* <a className="px-2 bg-gradient-primaryButton text-primaryText text-h3 font-medium">
