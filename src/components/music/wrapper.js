@@ -1,12 +1,17 @@
 "use Client";
 
+import { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentMusic, setPlaying } from "@/utils/modules/PlayerSlice";
+
+import WaveSurfer from "wavesurfer.js";
+import BottomPlayer from "./bottom-player";
+
 import ButtonMediaPlay from "@/components/button/mediaPlay";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import { useState, useRef, useEffect } from "react";
-import WaveSurfer from "wavesurfer.js";
-
+import store from "@/store/store";
 const MusicWrapper = () => {
   const musicList = [
     {
@@ -17,17 +22,24 @@ const MusicWrapper = () => {
     {
       id: 2,
       name: "ami kar",
-      url: "/musics/1.mp3",
+      url: "/musics/2.mp3",
     },
     {
       id: 3,
       name: "se amar",
-      url: "/musics/1.mp3",
+      url: "/musics/3.mp3",
     },
   ];
 
-  const [playing, setPlaying] = useState(null);
-  const [currentAudioUrl, setCurrentAudioUrl] = useState(null);
+  const dispatch = useDispatch();
+  var currentMusic = useSelector((state) => {
+    return state.player.currentMusic;
+  });
+  const [mediaElement, setMediaElement] = useState(null);
+  var playing = useSelector((state) => {
+    return state.player.playing;
+  });
+  const [durations, setDurations] = useState({});
   const waveformRefs = useRef([]);
   const wavesurferInstances = useRef([]);
 
@@ -44,20 +56,31 @@ const MusicWrapper = () => {
           responsive: true,
           height: 50,
           width: "100%",
-          normalize: true,
+          normalize: false,
           partialRender: true,
         });
 
         ws.load(music.url);
+
+        ws.on("ready", () => {
+          const duration = ws.getDuration();
+          setDurations((prevDurations) => ({
+            ...prevDurations,
+            [music.id]: duration,
+          }));
+        });
+
         ws.on("play", () => {
-          setCurrentAudioUrl(music.id);
-          setPlaying(true);
+          setMediaElement(ws.getMediaElement());
+          dis;
+          dispatch(setCurrentMusic(music));
+          dispatch(setPlaying(true));
         });
         ws.on("pause", () => {
-          setPlaying(false);
+          dispatch(setPlaying(false));
         });
         ws.on("finish", () => {
-          setPlaying(false);
+          dispatch(setPlaying(false));
         });
 
         return ws;
@@ -67,25 +90,34 @@ const MusicWrapper = () => {
     return () => {
       wavesurferInstances.current.forEach((ws) => {
         if (ws) {
-          console.log(".asdasd");
           ws.destroy();
         }
       });
     };
-  }, [musicList.length]);
+  }, [dispatch]);
 
   const handlePlayPause = (clickIndex) => {
+    let wsClick = null;
     wavesurferInstances.current.forEach((ws, wsIndex) => {
-      if (wsIndex === clickIndex) {
-        if (!ws.isPlaying()) {
-          ws.play();
-        } else {
-          ws.pause();
-        }
+      if (musicList[wsIndex].id === clickIndex) {
+        wsClick = ws;
       } else {
         ws.stop();
       }
     });
+    if (wsClick) {
+      if (!wsClick.isPlaying()) {
+        wsClick.play();
+      } else {
+        wsClick.pause();
+      }
+    }
+  };
+
+  const formatDuration = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
   };
 
   return (
@@ -93,15 +125,15 @@ const MusicWrapper = () => {
       {musicList.map((music, index) => (
         <div
           className="flex gap-4 md:gap-8 lg:gap-16 justify-between items-center"
-          key={music.id}
+          key={"music_row" + music.id}
         >
           <div className="w-full flex gap-2 md:gap-8 justify-start md:justify-between items-center">
             <div className="basis-[10%] shrink grow">
               <ButtonMediaPlay
                 className="w-[40px] h-[40px] md:w-[80px] md:h-[80px] rounded-full cursor-pointer"
-                playing={currentAudioUrl === music.id && playing}
+                playing={currentMusic?.id === music?.id && playing === true}
                 gradient
-                onClick={() => handlePlayPause(index)}
+                onClick={() => handlePlayPause(music.id)}
               />
             </div>
             <div className="basis-[70%] shrink grow">
@@ -119,7 +151,11 @@ const MusicWrapper = () => {
           <div className="flex gap-6 justify-between items-center">
             <div className="text-primaryText flex gap-2 items-center">
               <QueryBuilderIcon fontSize="small" />
-              <p>00:19</p>
+              <p>
+                {durations[music.id]
+                  ? formatDuration(durations[music.id])
+                  : "00:00"}
+              </p>
             </div>
             <div className="px-4 py-2 rounded text-primaryText border border-primaryText cursor-pointer">
               <FavoriteBorderOutlinedIcon />
@@ -134,6 +170,8 @@ const MusicWrapper = () => {
           </div>
         </div>
       ))}
+
+      <BottomPlayer mediaElement={mediaElement}></BottomPlayer>
     </div>
   );
 };
