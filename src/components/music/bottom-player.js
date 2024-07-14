@@ -1,12 +1,12 @@
 "use client";
-
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPlaying } from "@/utils/modules/PlayerSlice";
 import ButtonMediaPlay from "@/components/button/mediaPlay";
 import WaveSurfer from "wavesurfer.js";
+import { useMediaElement } from "@/contexts/MediaElementContext";
 
-const BottomPlayer = ({ mediaElement }) => {
+const BottomPlayer = () => {
   const dispatch = useDispatch();
   const currentMusic = useSelector((state) => {
     return state.player.currentMusic;
@@ -14,12 +14,13 @@ const BottomPlayer = ({ mediaElement }) => {
   const playing = useSelector((state) => {
     return state.player.playing;
   });
+  const { mediaElement, mediaElementRef } = useMediaElement();
   const bottomWaveformRef = useRef(null);
   const wavesurferInstance = useRef(null);
   const [duration, setDuration] = useState(0);
 
   useEffect(() => {
-    if (bottomWaveformRef.current && currentMusic && mediaElement) {
+    if (bottomWaveformRef.current && currentMusic && mediaElementRef) {
       wavesurferInstance.current = WaveSurfer.create({
         container: bottomWaveformRef.current,
         waveColor: "#828282",
@@ -31,8 +32,7 @@ const BottomPlayer = ({ mediaElement }) => {
         height: 50,
         width: "100%",
         normalize: true,
-        partialRender: true,
-        media: mediaElement,
+        media: mediaElementRef.current,
       });
 
       // wavesurferInstance.current.load(currentMusic?.url);
@@ -55,7 +55,7 @@ const BottomPlayer = ({ mediaElement }) => {
         }
       };
     }
-  }, [currentMusic, dispatch, mediaElement]);
+  }, [currentMusic, dispatch, mediaElementRef]);
 
   const handlePlayPause = () => {
     if (wavesurferInstance.current) {
@@ -85,6 +85,9 @@ const BottomPlayer = ({ mediaElement }) => {
 
   return (
     <div className="fixed z-[99] bottom-0 left-0 right-0 bg-gray-800 p-4">
+      {/* <audio controls autoPlay>
+        <source src={currentMusic?.url}></source>
+      </audio> */}
       {currentMusic && (
         <div className="flex justify-between items-center">
           <ButtonMediaPlay
@@ -96,7 +99,7 @@ const BottomPlayer = ({ mediaElement }) => {
           <div className="w-full">
             <div ref={bottomWaveformRef}></div>
           </div>
-          <p className="text-primaryText">{currentMusic.name}</p>
+          <p className="text-primaryText">{currentMusic?.name}</p>
           <p className="text-primaryText">{formatDuration(duration)}</p>
         </div>
       )}
