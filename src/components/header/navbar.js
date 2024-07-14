@@ -63,10 +63,11 @@ export default function Navbar() {
                 Log in
               </a> */}
               <ButtonGradiend
-                gradient
+                href={"/account/signin"}
                 className="text-primaryText text-h3 px-[16px] py-[10px] rounded-full"
+                gradient
               >
-                <span className="leading-none">Log in</span>
+                <span className="leading-none">Sign in</span>
               </ButtonGradiend>
             </li>
           </ul>

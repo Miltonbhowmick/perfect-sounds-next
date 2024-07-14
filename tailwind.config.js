@@ -41,8 +41,8 @@ module.exports = {
       fontSize: {
         small: "16px",
         paragraph: "12px",
-        "paragraph-lg": "20px",
         "paragraph-md": "14px",
+        "paragraph-lg": "20px",
 
         h1: "25px",
         h2: "20px",
