@@ -3,6 +3,8 @@ import { Inter, Flow_Circular } from "next/font/google";
 import "../globals.css";
 
 import { Providers } from "@/store/Provider";
+import ClientBottomPlayer from "@/components/music/client-bottom-player";
+import { ClientMediaElementProviders } from "@/contexts/ClientMediaElementContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,12 +16,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <Providers>
-      <html lang="en">
-        <body className={(inter.className, "bg-primaryBg")}>
-          <Navbar />
-          {children}
-        </body>
-      </html>
+      <ClientMediaElementProviders>
+        <html lang="en">
+          <body className={(inter.className, "bg-primaryBg")}>
+            <Navbar />
+            {children}
+            <ClientBottomPlayer></ClientBottomPlayer>
+          </body>
+        </html>
+      </ClientMediaElementProviders>
     </Providers>
   );
 }

@@ -5,7 +5,6 @@ const playerSlice = createSlice({
   initialState: {
     currentMusic: null,
     playing: false,
-    mediaElement: null,
   },
   reducers: {
     setCurrentMusic(state, action) {
@@ -13,9 +12,6 @@ const playerSlice = createSlice({
     },
     setPlaying(state, action) {
       state.playing = action.payload;
-    },
-    setMediaElement(state, action) {
-      state.mediaElement = action.payload;
     },
   },
 });

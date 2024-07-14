@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentMusic, setPlaying } from "@/utils/modules/PlayerSlice";
+import { useMediaElement } from "@/contexts/MediaElementContext";
 
 import WaveSurfer from "wavesurfer.js";
 import BottomPlayer from "./bottom-player";
@@ -11,7 +12,7 @@ import ButtonMediaPlay from "@/components/button/mediaPlay";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import store from "@/store/store";
+
 const MusicWrapper = () => {
   const musicList = [
     {
@@ -35,10 +36,12 @@ const MusicWrapper = () => {
   var currentMusic = useSelector((state) => {
     return state.player.currentMusic;
   });
-  const [mediaElement, setMediaElement] = useState(null);
   var playing = useSelector((state) => {
     return state.player.playing;
   });
+  const { mediaElement, setMediaElement, setMediaElementRef } =
+    useMediaElement();
+
   const [durations, setDurations] = useState({});
   const waveformRefs = useRef([]);
   const wavesurferInstances = useRef([]);
@@ -71,8 +74,8 @@ const MusicWrapper = () => {
         });
 
         ws.on("play", () => {
-          setMediaElement(ws.getMediaElement());
-          dis;
+          setMediaElementRef(ws.getMediaElement());
+
           dispatch(setCurrentMusic(music));
           dispatch(setPlaying(true));
         });
@@ -171,7 +174,7 @@ const MusicWrapper = () => {
         </div>
       ))}
 
-      <BottomPlayer mediaElement={mediaElement}></BottomPlayer>
+      {/* <BottomPlayer mediaElement={mediaElement}></BottomPlayer> */}
     </div>
   );
 };
