@@ -34,14 +34,21 @@ export default function Navbar() {
             </span>
           </div>
           <div className="basis-[auto] shrink grow flex justify-center">
-            <img
-              className="w-[120px]"
-              src="/images/company-logo/perfectsounds-logo-white.png"
-            />
+            <Link href="/">
+              <img
+                className="w-[120px]"
+                src="/images/company-logo/perfectsounds-logo-white.png"
+              />
+            </Link>
           </div>
           <ul className="basis-[30%] shrink grow-0 flex gap-7 justify-end items-center">
             <li>
-              <a className="text-primaryText text-h3 font-medium">Plan</a>
+              <Link
+                href="/wishlist"
+                className="text-primaryText text-h3 font-medium"
+              >
+                Plan
+              </Link>
             </li>
             <li>
               <Link
