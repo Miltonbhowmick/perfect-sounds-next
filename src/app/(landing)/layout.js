@@ -5,6 +5,8 @@ import "../globals.css";
 import { Providers } from "@/store/Provider";
 import ClientBottomPlayer from "@/components/music/client-bottom-player";
 import { ClientMediaElementProviders } from "@/contexts/ClientMediaElementContext";
+import BottomFooter from "@/components/footer/bottom";
+import CopyWrite from "@/components/footer/copywrite";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +24,10 @@ export default function RootLayout({ children }) {
             <Navbar />
             {children}
             <ClientBottomPlayer></ClientBottomPlayer>
+            <div className="border-t border-tertiaryBg mt-[93px]">
+              <BottomFooter></BottomFooter>
+              <CopyWrite></CopyWrite>
+            </div>
           </body>
         </html>
       </ClientMediaElementProviders>

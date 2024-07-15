@@ -52,7 +52,7 @@ export default function Navbar() {
             </li>
             <li>
               <Link
-                href="/account/signup"
+                href="/signup"
                 className="text-primaryText text-h3 font-medium"
               >
                 Sign up
@@ -63,7 +63,7 @@ export default function Navbar() {
                 Log in
               </a> */}
               <ButtonGradiend
-                href={"/account/signin"}
+                href={"/signin"}
                 className="text-primaryText text-h3 px-[16px] py-[10px] rounded-full"
                 gradient
               >

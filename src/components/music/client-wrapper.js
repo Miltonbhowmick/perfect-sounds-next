@@ -2,6 +2,6 @@
 
 import MusicWrapper from "@/components/music/wrapper";
 
-export default function ClientComponent() {
+export default function ClientWrapper() {
   return <MusicWrapper></MusicWrapper>;
 }

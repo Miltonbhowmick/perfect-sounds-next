@@ -14,7 +14,7 @@ const HeroBannerAuth = ({
   ...props
 }) => {
   return (
-    <div className="md:none lg:flex lg:basis-[50%] h-inherit relative">
+    <div className="hidden lg:flex lg:basis-[50%] h-inherit relative">
       {image}
       <div className="z-10 h-full flex justify-center">
         <div className="lg:w-[90%] xl:w-[80%] flex flex-col gap-[.5px] xs:gap-1 md:gap-2 xl:gap-3 justify-center items-center">

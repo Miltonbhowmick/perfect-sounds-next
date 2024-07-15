@@ -6,8 +6,6 @@ import Link from "next/link";
 import classNames from "classnames";
 
 const SigninForm = ({ className }) => {
-  // Pass the useFormik() hook initial form values and a submit function that will
-  // be called when the form is submitted
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -16,6 +14,7 @@ const SigninForm = ({ className }) => {
       alert(JSON.stringify(values, null, 2));
     },
   });
+
   return (
     <form
       onSubmit={formik.handleSubmit}
@@ -57,16 +56,16 @@ const SigninForm = ({ className }) => {
       </div>
       <Link
         href={"/"}
-        className="text-gradientRight font-medium	 text-paragraph md:text-paragraph-md lg:text-paragraph-lg"
+        className="text-gradientRight font-medium	 text-paragraph md:text-paragraph-md lg:text-paragraph-lg text-center lg:text-start"
       >
         Forgot Password
       </Link>
-      <button className="px-[20px] py-[15px] bg-gradient-to-r from-gradientLeft to-gradientRight rounded-xl">
-        <h6 className="text-primaryText">Signin</h6>
+      <button className="px-[20px] py-[15px] bg-gradient-to-r from-gradientLeft to-gradientRight rounded-lg">
+        <h6 className="text-primaryText font-bold">Signin</h6>
       </button>
-      <p className="text-primaryText font-bold flex gap-2">
+      <p className="text-primaryText font-bold flex gap-2 justify-center lg:justify-start">
         Don't have an account?
-        <Link href="/account/signup" className="text-secondaryButton">
+        <Link href="/signup" className="text-secondaryButton">
           Sign up now
         </Link>
       </p>
