@@ -64,7 +64,7 @@ const SigninForm = ({ className }) => {
         <h6 className="text-primaryText font-bold">Signin</h6>
       </button>
       <p className="text-primaryText font-bold flex gap-2 justify-center lg:justify-start">
-        <span>Don't have an account?</span>
+        {"Don't have an account?"}
         <Link href="/signup" className="text-secondaryButton">
           Sign up now
         </Link>
