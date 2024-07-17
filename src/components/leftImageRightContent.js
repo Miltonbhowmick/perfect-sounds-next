@@ -1,4 +1,5 @@
 import ButtonGradiend from "./button/gradient";
+import ButtonGradiendOutlined from "./button/gradientOutlined";
 import classNames from "classnames";
 
 const ImageContent = ({
