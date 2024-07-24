@@ -34,6 +34,7 @@ module.exports = {
         tertiaryBg: "var(--tertiary-bg)",
         primaryText: "var(--primary-text)",
         secondaryText: "var(--secondary-text)",
+        tertiaryText: "var(--tertiary-text)",
         gradientLeft: "var(--gradient-left)",
         gradientRight: "var(--gradient-right)",
         secondaryButton: "var(--secondary-button-bg)",
