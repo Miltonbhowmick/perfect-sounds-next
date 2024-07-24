@@ -44,7 +44,7 @@ export default function Navbar() {
           <ul className="basis-[30%] shrink grow-0 flex gap-7 justify-end items-center">
             <li>
               <Link
-                href="/wishlist"
+                href="/price"
                 className="text-primaryText text-h3 font-medium"
               >
                 Plan

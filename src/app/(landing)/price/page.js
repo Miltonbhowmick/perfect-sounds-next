@@ -146,7 +146,7 @@ export default function PricePage() {
           {pricingList.map((element, index) => {
             return (
               <div
-                className="basis-[48%] lg:basis-[23%] shrink bg-secondaryBg rounded-xl p-5"
+                className="basis-[100%] sm:basis-[48%] lg:basis-[23%] shrink bg-secondaryBg rounded-xl p-5"
                 key={"price_plan_" + index}
               >
                 <div className="flex flex-col gap-5 h-[35rem]">
