@@ -5,7 +5,7 @@ const CheckoutPage = () => {
   return (
     <div className="mt-10 container flex flex-col gap-5">
       <div className="header p-10 relative bg-secondaryBg rounded-xl flex flex-col justify-center items-center">
-        <div className="w-[90%] lg:w-[60%] flex flex-col justify-center items-center">
+        <div className="w-[90%] md:w-[60%] flex flex-col justify-center items-center">
           <h4 className="text-primaryText font-bold">Order Summary</h4>
           <table className="table-auto w-full">
             <tbody>
@@ -16,7 +16,7 @@ const CheckoutPage = () => {
                 <td className="pb-1 md:pb-5">
                   <p className="text-primaryText font-bold flex flex-row gap-3">
                     {"Premium"}
-                    <Link href="/price" className="text-gradientLeft">
+                    <Link href="/price" className="text-gradientLeft underline">
                       Change Plan
                     </Link>
                   </p>
