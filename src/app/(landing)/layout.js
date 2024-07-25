@@ -7,6 +7,7 @@ import ClientBottomPlayer from "@/components/music/client-bottom-player";
 import { ClientMediaElementProviders } from "@/contexts/ClientMediaElementContext";
 import BottomFooter from "@/components/footer/bottom";
 import CopyWrite from "@/components/footer/copywrite";
+import MobileNavbar from "@/components/header/mobile-navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,8 @@ export default function RootLayout({ children }) {
       <ClientMediaElementProviders>
         <html lang="en">
           <body className={(inter.className, "bg-primaryBg")}>
-            <Navbar />
+            <Navbar className="hidden md:block" />
+            <MobileNavbar className="block md:hidden" />
             {children}
             <ClientBottomPlayer></ClientBottomPlayer>
             <div className="border-t border-tertiaryBg mt-[93px]">

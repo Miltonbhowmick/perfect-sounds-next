@@ -1,11 +1,11 @@
 import ButtonGradiend from "../button/gradient";
 import Link from "next/link";
 
-export default function Navbar() {
+export default function Navbar({ className }) {
   return (
-    <nav className="relative bg-secondaryBg">
+    <nav className={`${className} relative bg-secondaryBg`}>
       <div className="container">
-        <div className="lg:h-[100px] flex justify-between items-center">
+        <div className="py-2 lg:h-[100px] flex justify-between items-center">
           <div className="basis-[30%] shrink grow-0 flex gap-2 items-center">
             <svg
               className="w-[20px]"
@@ -29,25 +29,23 @@ export default function Navbar() {
                 strokeLinejoin="round"
               />
             </svg>
-            <span className="text-secondaryText text-[20px]">
-              Search for Sound effect
-            </span>
+            <p className="text-secondaryText">Search for Sound effect</p>
           </div>
-          <div className="basis-[auto] shrink grow flex justify-center">
+          <div className="basis-[40%] shrink grow flex justify-center">
             <Link href="/">
               <img
-                className="w-[120px]"
+                className="md:w-[80px] lg:w-[120px]"
                 src="/images/company-logo/perfectsounds-logo-white.png"
               />
             </Link>
           </div>
-          <ul className="basis-[30%] shrink grow-0 flex gap-7 justify-end items-center">
+          <ul className="basis-[30%] shrink flex gap-4 lg:gap-7 justify-end items-center">
             <li>
               <Link
                 href="/price"
                 className="text-primaryText text-h3 font-medium"
               >
-                Plan
+                <h6>Plan</h6>
               </Link>
             </li>
             <li>
