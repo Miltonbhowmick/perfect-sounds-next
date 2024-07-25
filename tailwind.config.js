@@ -40,6 +40,7 @@ module.exports = {
         secondaryButton: "var(--secondary-button-bg)",
       },
       fontSize: {
+        "small-xs": "8px",
         small: "16px",
         paragraph: "12px",
         "paragraph-md": "14px",
