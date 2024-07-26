@@ -84,7 +84,7 @@ const BottomPlayer = () => {
   };
 
   return (
-    <div className="fixed z-[99] bottom-0 left-0 right-0 bg-gray-800 p-4">
+    <div className="fixed z-[10] bottom-0 left-0 right-0 bg-gray-800 p-4">
       {/* <audio controls autoPlay>
         <source src={currentMusic?.url}></source>
       </audio> */}

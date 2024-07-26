@@ -85,6 +85,10 @@ module.exports = {
         "h5-xl": "25px",
         "h6-xl": "20px",
       },
+      dropShadow: {
+        primary: "0 0px 20px rgba(17, 17, 17, .35)",
+        "gradient-left": "0 0px 20px rgba(220, 27, 115, .35)",
+      },
     },
   },
   plugins: [],

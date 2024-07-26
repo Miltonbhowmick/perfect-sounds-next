@@ -1,4 +1,5 @@
 import CheckoutForm from "@/components/forms/checkout";
+import SuccessfullModal from "@/components/modal/successfull";
 import Link from "next/link";
 
 const CheckoutPage = () => {
@@ -192,7 +193,9 @@ const CheckoutPage = () => {
         <section className="w-[100%] lg:w-[60%]">
           <CheckoutForm></CheckoutForm>
         </section>
+        <button></button>
       </div>
+      <SuccessfullModal></SuccessfullModal>
     </div>
   );
 };
