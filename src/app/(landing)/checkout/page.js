@@ -195,7 +195,6 @@ const CheckoutPage = () => {
         </section>
         <button></button>
       </div>
-      <SuccessfullModal></SuccessfullModal>
     </div>
   );
 };
