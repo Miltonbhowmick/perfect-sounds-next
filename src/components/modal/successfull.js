@@ -95,7 +95,7 @@ const SuccessfullModal = ({
                 </svg>
               </div>
               <div className="flex flex-col items-center">
-                <h4 className="text-primaryText font-bold text-center">
+                <h4 className="text-primaryText font-bold text-center uppercase">
                   Payment Successful!
                 </h4>
                 <p className="text-primaryText text-center w-3/4">
