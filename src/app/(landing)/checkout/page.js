@@ -1,5 +1,4 @@
 import CheckoutForm from "@/components/forms/checkout";
-import SuccessfullModal from "@/components/modal/successfull";
 import Link from "next/link";
 
 const CheckoutPage = () => {

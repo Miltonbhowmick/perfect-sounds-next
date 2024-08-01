@@ -213,9 +213,9 @@ export default function PricePage() {
                             <path
                               d="M5 14.5L8.5 18L19 7"
                               stroke="white"
-                              stroke-width="1.5"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
                             />
                           </svg>
                           <span className="text-primaryText font-medium text-paragraph md:text-small">
