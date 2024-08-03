@@ -44,8 +44,6 @@ const MusicWrapper = () => {
     setMediaElement,
     setMediaElementRef,
     setMediaElementCanvaRef,
-    intactMediaElementRef,
-    setIntactMediaElementRef,
   } = useMediaElement();
 
   const [durations, setDurations] = useState({});
@@ -85,8 +83,6 @@ const MusicWrapper = () => {
           setMediaElement(ws.getMediaElement());
           setMediaElementRef(ws);
           setMediaElementCanvaRef(audioRef);
-
-          setIntactMediaElementRef(music.url);
 
           dispatch(setCurrentMusic(music));
           dispatch(setPlaying(true));

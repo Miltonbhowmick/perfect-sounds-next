@@ -6,8 +6,6 @@ import { createContext, useContext, useState, useRef, useEffect } from "react";
 const MediaElementContext = createContext(null);
 
 export const MediaElementProvider = ({ children }) => {
-  const intactMediaElementRef = useRef(new Audio());
-
   const [mediaElement, setMediaElement] = useState(null);
   const mediaElementRef = useRef();
   const mediaElementCanvaRef = useRef();
@@ -26,11 +24,6 @@ export const MediaElementProvider = ({ children }) => {
   const setMediaElementCanvaRef = (element) => {
     mediaElementCanvaRef.current = element;
   };
-  const setIntactMediaElementRef = (element) => {
-    // intactMediaElementRef.current.src = element;
-    // console.log("asce?????");
-    // intactMediaElementRef.current.play();
-  };
 
   return (
     <MediaElementContext.Provider
@@ -41,8 +34,6 @@ export const MediaElementProvider = ({ children }) => {
         setMediaElementRef,
         mediaElementCanvaRef,
         setMediaElementCanvaRef,
-        intactMediaElementRef,
-        setIntactMediaElementRef,
       }}
     >
       {children}
