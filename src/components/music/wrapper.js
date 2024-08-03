@@ -39,12 +39,19 @@ const MusicWrapper = () => {
   var playing = useSelector((state) => {
     return state.player.playing;
   });
-  const { mediaElement, setMediaElement, setMediaElementRef } =
-    useMediaElement();
+  const {
+    mediaElement,
+    setMediaElement,
+    setMediaElementRef,
+    setMediaElementCanvaRef,
+    intactMediaElementRef,
+    setIntactMediaElementRef,
+  } = useMediaElement();
 
   const [durations, setDurations] = useState({});
   const waveformRefs = useRef([]);
   const wavesurferInstances = useRef([]);
+  const audioRef = useRef();
 
   useEffect(() => {
     if (waveformRefs.current.length === musicList.length) {
@@ -61,6 +68,7 @@ const MusicWrapper = () => {
           width: "100%",
           normalize: false,
           partialRender: true,
+          media: new Audio(),
         });
 
         ws.load(music.url);
@@ -74,7 +82,11 @@ const MusicWrapper = () => {
         });
 
         ws.on("play", () => {
-          setMediaElementRef(ws.getMediaElement());
+          setMediaElement(ws.getMediaElement());
+          setMediaElementRef(ws);
+          setMediaElementCanvaRef(audioRef);
+
+          setIntactMediaElementRef(music.url);
 
           dispatch(setCurrentMusic(music));
           dispatch(setPlaying(true));
@@ -83,7 +95,7 @@ const MusicWrapper = () => {
           dispatch(setPlaying(false));
         });
         ws.on("finish", () => {
-          dispatch(setPlaying(false));
+          // dispatch(setPlaying(false));
         });
 
         return ws;
@@ -93,7 +105,7 @@ const MusicWrapper = () => {
     return () => {
       wavesurferInstances.current.forEach((ws) => {
         if (ws) {
-          ws.destroy();
+          // ws.destroy();
         }
       });
     };
@@ -125,6 +137,9 @@ const MusicWrapper = () => {
 
   return (
     <div className="flex flex-col gap-4">
+      <audio ref={audioRef}>
+        <source src="/musics/1.mp3"></source>
+      </audio>
       {musicList.map((music, index) => (
         <div
           className="flex gap-4 md:gap-8 lg:gap-16 justify-between items-center"

@@ -5,8 +5,10 @@ import { setPlaying } from "@/utils/modules/PlayerSlice";
 import ButtonMediaPlay from "@/components/button/mediaPlay";
 import WaveSurfer from "wavesurfer.js";
 import { useMediaElement } from "@/contexts/MediaElementContext";
+import { usePathname } from "next/navigation";
 
 const BottomPlayer = () => {
+  const path = usePathname();
   const dispatch = useDispatch();
   const currentMusic = useSelector((state) => {
     return state.player.currentMusic;
@@ -14,13 +16,23 @@ const BottomPlayer = () => {
   const playing = useSelector((state) => {
     return state.player.playing;
   });
-  const { mediaElement, mediaElementRef } = useMediaElement();
+  const { mediaElement, mediaElementRef, mediaElementCanvaRef } =
+    useMediaElement();
   const bottomWaveformRef = useRef(null);
   const wavesurferInstance = useRef(null);
   const [duration, setDuration] = useState(0);
 
+  // useEffect(() => {
+  //   console.log(
+  //     mediaElement,
+  //     mediaElementRef.current,
+  //     mediaElementCanvaRef.current
+  //   );
+  // }, [path]);
+
   useEffect(() => {
-    if (bottomWaveformRef.current && currentMusic && mediaElementRef) {
+    console.log("main eff", mediaElementCanvaRef.current);
+    if (bottomWaveformRef.current && currentMusic) {
       wavesurferInstance.current = WaveSurfer.create({
         container: bottomWaveformRef.current,
         waveColor: "#828282",
@@ -32,10 +44,8 @@ const BottomPlayer = () => {
         height: 50,
         width: "100%",
         normalize: true,
-        media: mediaElementRef.current,
+        media: mediaElement,
       });
-
-      // wavesurferInstance.current.load(currentMusic?.url);
 
       wavesurferInstance.current.on("ready", () => {
         setDuration(wavesurferInstance.current.getDuration());
@@ -55,27 +65,28 @@ const BottomPlayer = () => {
         }
       };
     }
-  }, [currentMusic, dispatch, mediaElementRef]);
+  }, [currentMusic, dispatch]);
 
   const handlePlayPause = () => {
-    if (wavesurferInstance.current) {
-      if (!wavesurferInstance.current.isPlaying()) {
-        wavesurferInstance.current.play();
+    console.log(">>>>");
+    if (mediaElementRef.current) {
+      if (!mediaElementRef.current.isPlaying()) {
+        mediaElementRef.current.play();
       } else {
-        wavesurferInstance.current.pause();
+        mediaElementRef.current.pause();
       }
     }
   };
 
-  useEffect(() => {
-    if (wavesurferInstance.current) {
-      if (playing) {
-        wavesurferInstance.current.play();
-      } else {
-        wavesurferInstance.current.pause();
-      }
-    }
-  }, [playing]);
+  // useEffect(() => {
+  //   if (wavesurferInstance.current) {
+  //     if (playing) {
+  //       wavesurferInstance.current.play();
+  //     } else {
+  //       wavesurferInstance.current.pause();
+  //     }
+  //   }
+  // }, [playing]);
 
   const formatDuration = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -85,9 +96,6 @@ const BottomPlayer = () => {
 
   return (
     <div className="fixed z-[10] bottom-0 left-0 right-0 bg-gray-800 p-4">
-      {/* <audio controls autoPlay>
-        <source src={currentMusic?.url}></source>
-      </audio> */}
       {currentMusic && (
         <div className="flex justify-between items-center">
           <ButtonMediaPlay
