@@ -40,7 +40,9 @@ const Discover = () => {
             <select className="appearance-none w-full px-4 py-3 rounded-full text-paragraph md:text-paragraph-md text-primaryText border border-primaryText bg-transparent outline-transparent">
               {categoryList.map((element, index) => {
                 return (
-                  <option className="text-primaryBg">{element.name}</option>
+                  <option className="text-primaryBg" key={"cat_" + index}>
+                    {element.name}
+                  </option>
                 );
               })}
             </select>
@@ -52,7 +54,9 @@ const Discover = () => {
             <select className="appearance-none w-full px-4 py-3 rounded-full text-paragraph md:text-paragraph-md text-primaryText border border-primaryText bg-transparent outline-transparent">
               {subCategoryList.map((element, index) => {
                 return (
-                  <option className="text-primaryBg">{element.name}</option>
+                  <option className="text-primaryBg" key={"subcat_" + index}>
+                    {element.name}
+                  </option>
                 );
               })}
             </select>
