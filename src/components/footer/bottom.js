@@ -8,7 +8,7 @@ const FooterBottom = () => {
   return (
     <div className="container">
       <div className="w-100 flex justify-center py-[14px] md:py-[50px]">
-        <div className="w-[90%] md:w-[50%] flex flex-col gap-4 justify-center items-center">
+        <div className="w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%] flex flex-col gap-4 justify-center items-center">
           <div className="relative w-[58px] h-[30px] md:w-[195px] md:h-[102px]">
             <Image
               src="/images/company-logo/perfectsounds-logo-white.png"
@@ -16,50 +16,65 @@ const FooterBottom = () => {
               fill
             />
           </div>
-          <p className="text-center text-secondaryText">
+          <p className="w-full md:w-[80%] text-center text-secondaryText">
             PerfectSounds is owned and operated by Reserved Training Limited
             Company number 13663798 22 3a Carlton Road Bournemouth Dorset Bh1
             3TG
           </p>
-          <div className="w-full flex flex-col lg:flex-row gap-5">
+          <div className="mt-[37px] lg:mt-[60px] w-full flex flex-col-reverse lg:flex-row gap-5 lg:gap-5">
             <div className="w-full flex gap-0 justify-between">
-              <div className="basis-1/3 shrink grow flex flex-col gap-6">
+              <div className="basis-1/3 shrink grow flex flex-col gap-2 md:gap-6">
                 <h5 className="text-primaryText leading-[25px]">Product</h5>
-                <ul className="flex flex-col gap-2">
+                <ul className="flex flex-col gap-1 md:gap-2">
                   <li>
-                    <Link href="/discover" className="text-secondaryText">
+                    <Link
+                      href="/discover"
+                      className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
+                    >
                       Browse Sounds
                     </Link>
                   </li>
                   <li>
-                    <Link href="/price" className="text-secondaryText">
+                    <Link
+                      href="/price"
+                      className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
+                    >
                       Plan
                     </Link>
                   </li>
                   <li>
-                    <Link href="/checkout" className="text-secondaryText">
+                    <Link
+                      href="/checkout"
+                      className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
+                    >
                       Checkout
                     </Link>
                   </li>
                   <li>
-                    <Link href="/wishlist" className="text-secondaryText">
+                    <Link
+                      href="/wishlist"
+                      className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
+                    >
                       Wishlist
                     </Link>
                   </li>
                 </ul>
               </div>
-              <div className="basis-1/3 shrink grow flex flex-col gap-6">
+              <div className="basis-1/3 shrink grow flex flex-col gap-2 md:gap-6">
                 <h5 className="text-primaryText leading-[25px]">Company</h5>
-                <ul className="flex flex-col gap-2">
+                <ul className="flex flex-col gap-1 md:gap-2">
                   <li>
-                    <Link href="/contract" className="text-secondaryText">
-                      Contract
+                    <Link
+                      href="/contact"
+                      className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
+                    >
+                      Contact
                     </Link>
                   </li>
                   <li>
                     <Link
                       href="/account/favourites"
-                      className="text-secondaryText"
+                      className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
                     >
                       Facourites
                     </Link>
@@ -67,7 +82,7 @@ const FooterBottom = () => {
                   <li>
                     <Link
                       href="/account/downloads"
-                      className="text-secondaryText"
+                      className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
                     >
                       Downloads
                     </Link>
@@ -75,26 +90,33 @@ const FooterBottom = () => {
                   <li>
                     <Link
                       href="/account/billing-and-invoice"
-                      className="text-secondaryText"
+                      className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
                     >
                       Billing & Invoice
                     </Link>
                   </li>
                 </ul>
               </div>
-              <div className="basis-1/3 shrink grow flex flex-col gap-6">
+              <div className="basis-1/3 shrink grow flex flex-col gap-2 md:gap-6">
                 <h5 className="text-primaryText leading-[25px]">Legal</h5>
-                <ul className="flex flex-col gap-2">
+                <ul className="flex flex-col gap-1 md:gap-2">
                   <li>
-                    <Link href="/license" className="text-secondaryText">
+                    <Link
+                      href="/license"
+                      className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
+                    >
                       License
                     </Link>
                   </li>
                   <li>
-                    <a className="text-secondaryText">Terms of Use</a>
+                    <a className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText">
+                      Terms of Use
+                    </a>
                   </li>
                   <li>
-                    <a className="text-secondaryText">Privacy Policy</a>
+                    <a className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText">
+                      Privacy Policy
+                    </a>
                   </li>
                 </ul>
               </div>
