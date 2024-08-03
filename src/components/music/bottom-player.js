@@ -17,9 +17,11 @@ const BottomPlayer = () => {
     return state.player.playing;
   });
   const { mediaElement } = useMediaElement();
+
   const bottomWaveformRef = useRef(null);
   const wavesurferInstance = useRef(null);
   const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(() => {
     if (bottomWaveformRef.current && currentMusic) {
@@ -39,6 +41,11 @@ const BottomPlayer = () => {
 
       wavesurferInstance.current.on("ready", () => {
         setDuration(wavesurferInstance.current.getDuration());
+      });
+
+      wavesurferInstance.current.on("audioprocess", () => {
+        const currentTime = wavesurferInstance.current.getCurrentTime();
+        setCurrentTime(currentTime);
       });
 
       wavesurferInstance.current.on("play", () => dispatch(setPlaying(true)));
@@ -87,7 +94,9 @@ const BottomPlayer = () => {
             <div ref={bottomWaveformRef}></div>
           </div>
           <p className="text-primaryText">{currentMusic?.name}</p>
-          <p className="text-primaryText">{formatDuration(duration)}</p>
+          <p className="text-primaryText">
+            {duration ? formatDuration(duration - (currentTime || 0)) : "00:00"}
+          </p>
         </div>
       )}
     </div>
