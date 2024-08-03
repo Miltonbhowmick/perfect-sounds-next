@@ -55,7 +55,7 @@ const Discover = () => {
           </h5>
           <p className="text-primaryText">Showing results - 1827</p>
         </div>
-        <div className="mt-10 flex flex-row gap-3">
+        <div className="mt-10 flex md:flex-col lg:flex-row gap-3">
           <div className="bg-secondaryBg p-5 rounded-xl basis-[300px] shrink-0">
             <ul className="flex flex-col gap-4">
               <li className="px-[30px] py-[20px] text-primaryText font-bold rounded-xl bg-tertiaryBg">
