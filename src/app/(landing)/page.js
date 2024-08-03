@@ -114,7 +114,7 @@ export default function Home() {
         </div>
       </div>
       <div className="bg-secondaryBg relative">
-        <div className="container relative z-[99]">
+        <div className="container relative z-[10]">
           <LeftImageRightContent
             image={
               <Image

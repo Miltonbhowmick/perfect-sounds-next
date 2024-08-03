@@ -74,9 +74,9 @@ const BottomPlayer = () => {
   };
 
   return (
-    <div className="fixed z-[10] bottom-0 left-0 right-0 bg-gray-800 p-4">
+    <div className="fixed z-[45] bottom-0 left-0 right-0 bg-gray-800">
       {currentMusic && (
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center p-4">
           <ButtonMediaPlay
             className="w-[40px] h-[40px] md:w-[80px] md:h-[80px] rounded-full cursor-pointer"
             playing={playing}
