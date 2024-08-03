@@ -39,12 +39,7 @@ const MusicWrapper = () => {
   var playing = useSelector((state) => {
     return state.player.playing;
   });
-  const {
-    mediaElement,
-    setMediaElement,
-    setMediaElementRef,
-    setMediaElementCanvaRef,
-  } = useMediaElement();
+  const { setMediaElement } = useMediaElement();
 
   const [durations, setDurations] = useState({});
   const waveformRefs = useRef([]);
@@ -81,8 +76,6 @@ const MusicWrapper = () => {
 
         ws.on("play", () => {
           setMediaElement(ws.getMediaElement());
-          setMediaElementRef(ws);
-          setMediaElementCanvaRef(audioRef);
 
           dispatch(setCurrentMusic(music));
           dispatch(setPlaying(true));

@@ -16,22 +16,12 @@ const BottomPlayer = () => {
   const playing = useSelector((state) => {
     return state.player.playing;
   });
-  const { mediaElement, mediaElementRef, mediaElementCanvaRef } =
-    useMediaElement();
+  const { mediaElement } = useMediaElement();
   const bottomWaveformRef = useRef(null);
   const wavesurferInstance = useRef(null);
   const [duration, setDuration] = useState(0);
 
-  // useEffect(() => {
-  //   console.log(
-  //     mediaElement,
-  //     mediaElementRef.current,
-  //     mediaElementCanvaRef.current
-  //   );
-  // }, [path]);
-
   useEffect(() => {
-    console.log("main eff", mediaElementCanvaRef.current);
     if (bottomWaveformRef.current && currentMusic) {
       wavesurferInstance.current = WaveSurfer.create({
         container: bottomWaveformRef.current,
@@ -68,25 +58,14 @@ const BottomPlayer = () => {
   }, [currentMusic, dispatch]);
 
   const handlePlayPause = () => {
-    console.log(">>>>");
-    if (mediaElementRef.current) {
-      if (!mediaElementRef.current.isPlaying()) {
-        mediaElementRef.current.play();
+    if (wavesurferInstance.current) {
+      if (!wavesurferInstance.current.isPlaying()) {
+        wavesurferInstance.current.play();
       } else {
-        mediaElementRef.current.pause();
+        wavesurferInstance.current.pause();
       }
     }
   };
-
-  // useEffect(() => {
-  //   if (wavesurferInstance.current) {
-  //     if (playing) {
-  //       wavesurferInstance.current.play();
-  //     } else {
-  //       wavesurferInstance.current.pause();
-  //     }
-  //   }
-  // }, [playing]);
 
   const formatDuration = (seconds) => {
     const minutes = Math.floor(seconds / 60);
