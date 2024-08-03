@@ -2,6 +2,7 @@ import Image from "next/image";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import XIcon from "@mui/icons-material/X";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import Link from "next/link";
 
 const FooterBottom = () => {
   return (
@@ -26,10 +27,24 @@ const FooterBottom = () => {
                 <h5 className="text-primaryText leading-[25px]">Product</h5>
                 <ul className="flex flex-col gap-2">
                   <li>
-                    <a className="text-secondaryText">Browse Sounds</a>
+                    <Link href="/discover" className="text-secondaryText">
+                      Browse Sounds
+                    </Link>
                   </li>
                   <li>
-                    <a className="text-secondaryText">Plan</a>
+                    <Link href="/price" className="text-secondaryText">
+                      Plan
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/checkout" className="text-secondaryText">
+                      Checkout
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/wishlist" className="text-secondaryText">
+                      Wishlist
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -37,7 +52,33 @@ const FooterBottom = () => {
                 <h5 className="text-primaryText leading-[25px]">Company</h5>
                 <ul className="flex flex-col gap-2">
                   <li>
-                    <a className="text-secondaryText">Contract</a>
+                    <Link href="/contract" className="text-secondaryText">
+                      Contract
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/account/favourites"
+                      className="text-secondaryText"
+                    >
+                      Facourites
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/account/downloads"
+                      className="text-secondaryText"
+                    >
+                      Downloads
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/account/billing-and-invoice"
+                      className="text-secondaryText"
+                    >
+                      Billing & Invoice
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -45,7 +86,9 @@ const FooterBottom = () => {
                 <h5 className="text-primaryText leading-[25px]">Legal</h5>
                 <ul className="flex flex-col gap-2">
                   <li>
-                    <a className="text-secondaryText">License</a>
+                    <Link href="/license" className="text-secondaryText">
+                      License
+                    </Link>
                   </li>
                   <li>
                     <a className="text-secondaryText">Terms of Use</a>
