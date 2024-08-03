@@ -32,7 +32,33 @@ const Discover = () => {
   return (
     <main>
       <div className="container py-10">
-        <div className="flex flex-col gap-3">
+        <div className="flex gap-5 justify-between lg:hidden">
+          <div className="w-1/2">
+            <h5 className="text-primaryText uppercase font-medium">
+              categories
+            </h5>
+            <select className="appearance-none w-full px-4 py-3 rounded-full text-paragraph md:text-paragraph-md text-primaryText border border-primaryText bg-transparent outline-transparent">
+              {categoryList.map((element, index) => {
+                return (
+                  <option className="text-primaryBg">{element.name}</option>
+                );
+              })}
+            </select>
+          </div>
+          <div className="w-1/2">
+            <h5 className="text-primaryText uppercase font-medium">
+              sub categories
+            </h5>
+            <select className="appearance-none w-full px-4 py-3 rounded-full text-paragraph md:text-paragraph-md text-primaryText border border-primaryText bg-transparent outline-transparent">
+              {subCategoryList.map((element, index) => {
+                return (
+                  <option className="text-primaryBg">{element.name}</option>
+                );
+              })}
+            </select>
+          </div>
+        </div>
+        <div className="hidden lg:flex flex-col gap-3">
           <h5 className="text-primaryText uppercase font-medium">
             sub categories
           </h5>
@@ -55,8 +81,8 @@ const Discover = () => {
           </h5>
           <p className="text-primaryText">Showing results - 1827</p>
         </div>
-        <div className="mt-10 flex md:flex-col lg:flex-row gap-3">
-          <div className="bg-secondaryBg p-5 rounded-xl basis-[300px] shrink-0">
+        <div className="mt-10 flex flex-col lg:flex-row gap-3">
+          <div className="hidden lg:block bg-secondaryBg p-5 rounded-xl basis-[300px] shrink-0">
             <ul className="flex flex-col gap-4">
               <li className="px-[30px] py-[20px] text-primaryText font-bold rounded-xl bg-tertiaryBg">
                 <h6>Categories</h6>
