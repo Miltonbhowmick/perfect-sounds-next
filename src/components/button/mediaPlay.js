@@ -5,6 +5,7 @@ const ButtonMediaPlay = ({
   onClick = defaultProps.onClick,
   playing = defaultProps.playing,
   gradient = defaultProps.gradient,
+  iconColor = defaultProps.iconColor,
   className = defaultProps.className,
   ...props
 }) => {
@@ -20,9 +21,15 @@ const ButtonMediaPlay = ({
       {...props}
     >
       {playing === true ? (
-        <PauseIcon fontSize="large" />
+        <PauseIcon
+          fontSize="large"
+          className={iconColor ? `text-${iconColor}` : "text-primaryBg"}
+        />
       ) : (
-        <PlayArrowIcon fontSize="large" />
+        <PlayArrowIcon
+          fontSize="large"
+          className={iconColor ? `text-${iconColor}` : "text-primaryBg"}
+        />
       )}
     </button>
   );
@@ -32,6 +39,7 @@ const defaultProps = {
   onClick: null,
   playing: false,
   gradient: false,
+  iconColor: null,
   className: "",
 };
 
