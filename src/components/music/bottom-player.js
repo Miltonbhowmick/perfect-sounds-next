@@ -1,7 +1,11 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentVolume, setPlaying } from "@/utils/modules/PlayerSlice";
+import {
+  setCurrentVolume,
+  setIsMuted,
+  setPlaying,
+} from "@/utils/modules/PlayerSlice";
 import ButtonMediaPlay from "@/components/button/mediaPlay";
 import WaveSurfer from "wavesurfer.js";
 import { useMediaElement } from "@/contexts/MediaElementContext";
@@ -22,6 +26,9 @@ const BottomPlayer = () => {
   });
   const currentVolume = useSelector((state) => {
     return state.player.currentVolume;
+  });
+  const isMuted = useSelector((state) => {
+    return state.player.isMuted;
   });
 
   const { mediaElement } = useMediaElement();
@@ -89,6 +96,15 @@ const BottomPlayer = () => {
     dispatch(setCurrentVolume(volumeValue));
   };
 
+  const toggleMute = () => {
+    if (!isMuted) {
+      wavesurferInstance.current.setVolume(0);
+    } else {
+      wavesurferInstance.current.setVolume(currentVolume);
+    }
+    dispatch(setIsMuted(!isMuted));
+  };
+
   const handleCurrentPlayingTime = (e) => {
     wavesurferInstance.current.seekTo(e.target.value / duration);
   };
@@ -148,12 +164,13 @@ const BottomPlayer = () => {
               </button>
               <div className="flex gap-2">
                 <div>
-                  {currentVolume === 0 ? (
+                  {isMuted ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 28 24"
                       fill="none"
                       className="w-[24px] h-[24px] md:w-[30px] md:h-[30px]"
+                      onClick={toggleMute}
                     >
                       <path
                         d="M14.4102 0.890625C14.2812 0.960938 12.5586 2.22656 10.5898 3.69141L7.00391 6.375H4.96484C2.67969 6.375 2.31641 6.46875 1.61328 7.20703C0.898438 7.96875 0.875 8.10938 0.875 12.0234C0.875 15.9844 0.898438 16.125 1.70703 16.8867C2.41016 17.543 2.75 17.625 4.98828 17.625H7.00391L10.5898 20.3086C12.5586 21.7852 14.293 23.0508 14.4336 23.1211C14.5742 23.1914 15.0195 23.25 15.418 23.25C16.3438 23.25 17.0234 22.8867 17.457 22.1484L17.75 21.6445V12V2.35547L17.457 1.85156C17.0234 1.11328 16.3438 0.75 15.3945 0.75C14.9844 0.75 14.5391 0.820312 14.4102 0.890625Z"
@@ -166,10 +183,12 @@ const BottomPlayer = () => {
                     </svg>
                   ) : (
                     <svg
+                      onClick={() => {}}
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 22 24"
                       fill="none"
                       className="w-[24px] h-[24px] md:w-[30px] md:h-[30px]"
+                      onClick={toggleMute}
                     >
                       <path
                         d="M11.7032 0.937378C11.4688 1.04285 10.2383 2.15613 8.77349 3.62097C5.87895 6.50378 5.60942 6.67957 3.87505 6.84363C2.36333 6.98425 1.70708 7.33582 1.19145 8.2616C1.00395 8.61316 0.980517 9.0116 0.94536 11.7303C0.921923 13.7343 0.957079 14.9647 1.03911 15.2811C1.20317 15.8788 1.97661 16.746 2.48052 16.91C2.69145 16.9686 3.28911 17.0741 3.82817 17.1444C5.53911 17.3671 5.71489 17.4843 8.5977 20.3319C10.0157 21.7264 11.3399 22.9569 11.5508 23.0624C12.0665 23.3202 13.0157 23.2968 13.5547 23.0272C14.4571 22.5702 14.6797 22.0897 14.9727 19.9569C15.7813 14.1796 15.8633 9.78504 15.2657 4.91003C14.9141 2.06238 14.6094 1.27722 13.7422 0.91394C13.2383 0.703003 12.2188 0.714722 11.7032 0.937378Z"
