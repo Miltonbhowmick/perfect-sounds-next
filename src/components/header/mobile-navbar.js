@@ -1,11 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const MobileNavbar = ({ className }) => {
   const [showMenuList, setShowMenuList] = useState(false);
   const [showSearchBox, setShowSearchBox] = useState(false);
+
+  const pathName = usePathname();
+
+  useEffect(() => {
+    setShowMenuList(false);
+    setShowSearchBox(false);
+  }, [pathName]);
 
   return (
     <nav className={`${className} relative z-[10] bg-secondaryBg`}>
