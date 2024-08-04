@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentVolume, setPlaying } from "@/utils/modules/PlayerSlice";
 import ButtonMediaPlay from "@/components/button/mediaPlay";
@@ -45,6 +45,7 @@ const BottomPlayer = () => {
         width: "100%",
         normalize: true,
         media: mediaElement,
+        dragToSeek: true,
       });
 
       wavesurferInstance.current.on("ready", () => {
@@ -88,6 +89,10 @@ const BottomPlayer = () => {
     dispatch(setCurrentVolume(volumeValue));
   };
 
+  const handleCurrentPlayingTime = (e) => {
+    wavesurferInstance.current.seekTo(e.target.value / duration);
+  };
+
   const formatDuration = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
@@ -105,6 +110,24 @@ const BottomPlayer = () => {
     >
       {currentMusic && (
         <div className="flex flex-col lg:flex-row gap-3 justify-between items-center py-2 lg:py-4 px-6">
+          <div className="flex lg:hidden w-full gap-5">
+            <input
+              type="range"
+              min="0"
+              max={duration}
+              step="1"
+              onChange={(e) => {
+                handleCurrentPlayingTime(e);
+              }}
+              className="accent-gradientRight w-full bg-[#F47B23]"
+            />
+            <p className="text-primaryText">
+              {duration
+                ? formatDuration(duration - (currentTime || 0))
+                : "00:00"}
+            </p>
+          </div>
+
           {/* <div className="block lg:hidden w-full">
             <div ref={bottomWaveformRef}></div>
           </div> */}
@@ -182,7 +205,7 @@ const BottomPlayer = () => {
               <p className="text-primaryText">{currentMusic?.name}</p>
             </div>
             <div className="flex gap-3 justify-between items-center">
-              <div className="text-primaryText flex gap-2 items-center">
+              <div className="hidden lg:block text-primaryText flex gap-2 items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 19 18"

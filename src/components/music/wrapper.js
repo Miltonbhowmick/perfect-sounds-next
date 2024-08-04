@@ -63,6 +63,7 @@ const MusicWrapper = () => {
           normalize: false,
           partialRender: true,
           media: new Audio(),
+          dragToSeek: true,
         });
 
         ws.load(music.url);
