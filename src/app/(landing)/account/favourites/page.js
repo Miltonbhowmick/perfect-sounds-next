@@ -11,7 +11,7 @@ import AccountMobileSidebar from "@/components/sidebar/mobile-account";
 export default function AccountFavourites() {
   return (
     <div>
-      <div className="relative">
+      <div className="relative overflow-hidden">
         <HeroBannerHorizontal
           className="h-[245px] sm:h-[345px] md:h-[360px] lg:h-[400px]"
           image={
@@ -22,7 +22,10 @@ export default function AccountFavourites() {
               fill
             />
           }
-          headline={"My Account"}
+          headline={"My Favourite"}
+          description={
+            "Want to get in touch? We’d love to hear from you. Here’s how you can reach us:"
+          }
         ></HeroBannerHorizontal>
         <div className="bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gradientRight to-gradientLeft blur-[45px] md:blur-[90px] rounded-full w-[130px] h-[120px] md:w-[336px] md:h-[200px] lg:w-[436px] lg:h-[405px] absolute top-[5%] -left-[15%] lg:-left-[25%]"></div>
         <div className="bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gradientRight to-gradientLeft blur-[45px] md:blur-[90px] rounded-full w-[111px] h-[111px] md:w-[236px] md:h-[170px] lg:w-[336px] lg:h-[305px] absolute -bottom-[15%]  -right-[8%] lg:-right-[15%]"></div>
