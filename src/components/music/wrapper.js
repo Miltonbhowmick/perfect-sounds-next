@@ -55,20 +55,24 @@ const MusicWrapper = () => {
           waveColor: "#828282",
           progressColor: "#FFFFFF",
           cursorColor: "#dc1b73",
+          barHeight: 100,
           barWidth: 3,
           barRadius: 1,
           responsive: true,
           height: 50,
           width: "100%",
-          normalize: false,
-          partialRender: true,
+          // normalize: false,
+          // partialRender: true,
+          url: music.url,
           media: new Audio(),
-          dragToSeek: true,
+          peaks: [],
+          // dragToSeek: true,
         });
 
-        ws.load(music.url);
+        // ws.load(music.url);
 
         ws.on("ready", () => {
+          // Here actual duration is pre-calculated when page first time rendered
           const duration = ws.getDuration();
           setDurations((prevDurations) => ({
             ...prevDurations,
@@ -77,6 +81,8 @@ const MusicWrapper = () => {
         });
 
         ws.on("audioprocess", () => {
+          // Here duration is re-calculating because audio is playing.
+          // So, on playing audio duration reducing calculating
           const duration = ws.getCurrentTime();
           setCurrentTimes((prevDurations) => ({
             ...prevDurations,
