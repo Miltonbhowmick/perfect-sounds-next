@@ -4,3 +4,5 @@ export const PUBLIC_ACCOUNT = PUBLIC_API_ROOT + "/api/v1/account/public";
 export const USERS = PUBLIC_ACCOUNT + "/users";
 
 export const PUBLIC_COMMON = PUBLIC_API_ROOT + "/api/v1/common/public";
+
+export const PUBLIC_MUSIC = PUBLIC_API_ROOT + "/api/v1/music/public";

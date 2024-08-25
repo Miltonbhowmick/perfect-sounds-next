@@ -1,53 +1,37 @@
 import ClientWrapper from "@/components/music/client-wrapper";
 
 import { fetchCategories, fetchSubCategories } from "@/services/common.service";
+import { fetchTracks } from "@/services/music.service";
 import { Suspense } from "react";
 import Link from "next/link";
 
 const Discover = async (searchParams) => {
-  // const subCategoryList = [
-  //   {
-  //     name: "Blow",
-  //   },
-  //   {
-  //     name: "Gitch",
-  //   },
-  // ];
-
-  // const categoryList = [
-  //   {
-  //     name: "Transition",
-  //     active: false,
-  //   },
-  //   {
-  //     name: "Nature",
-  //     active: true,
-  //   },
-  //   {
-  //     name: "Technology",
-  //     active: false,
-  //   },
-  //   {
-  //     name: "Funny",
-  //     active: false,
-  //   },
-  // ];
-
-  // const queryParams = useSearchParams();
-  // const category = queryParams.get("category");
-  // const subcategory = queryParams.get("subcategory");
-
   const queryParams = searchParams.searchParams;
-  var categoryQuery = queryParams.category;
-  var subCategoryQuery = queryParams.subcategory;
-
+  var categoryQuery = queryParams.category || null;
+  var subCategoryQuery = queryParams.subcategory || null;
   var categories = null;
   var subCategories = null;
+  var musicTrackList = null;
+
   await fetchCategories().then((data) => {
     categories = data.results;
   });
   await fetchSubCategories().then((data) => {
     subCategories = data.results;
+  });
+
+  var params = {
+    limit: 10,
+    offset: 0,
+  };
+  if (categoryQuery) {
+    params["category__slug"] = categoryQuery;
+  }
+  if (subCategoryQuery) {
+    params["subcategory__slug"] = subCategoryQuery;
+  }
+  await fetchTracks(params).then((data) => {
+    musicTrackList = data.results;
   });
 
   return (
@@ -151,7 +135,7 @@ const Discover = async (searchParams) => {
             </ul>
           </div>
           <div className="bg-secondaryBg p-5 rounded-xl basis-auto grow shrink">
-            <ClientWrapper></ClientWrapper>
+            <ClientWrapper musicTrackList={musicTrackList}></ClientWrapper>
           </div>
         </div>
       </div>

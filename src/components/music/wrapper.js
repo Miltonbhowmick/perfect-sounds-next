@@ -1,6 +1,6 @@
 "use Client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentMusic, setPlaying } from "@/store/modules/music";
 import { useMediaElement } from "@/contexts/MediaElementContext";
@@ -12,24 +12,24 @@ import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 
-const MusicWrapper = () => {
-  const musicList = [
-    {
-      id: 1,
-      name: "amr ami",
-      url: "/musics/1.mp3",
-    },
-    {
-      id: 2,
-      name: "ami kar",
-      url: "/musics/2.mp3",
-    },
-    {
-      id: 3,
-      name: "se amar",
-      url: "/musics/3.mp3",
-    },
-  ];
+const MusicWrapper = ({ musicTrackList }) => {
+  // const musicList = [
+  //   {
+  //     id: 1,
+  //     name: "amr ami",
+  //     url: "/musics/1.mp3",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "ami kar",
+  //     url: "/musics/2.mp3",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "se amar",
+  //     url: "/musics/3.mp3",
+  //   },
+  // ];
 
   const dispatch = useDispatch();
   var currentMusic = useSelector((state) => {
@@ -47,28 +47,34 @@ const MusicWrapper = () => {
   const audioRef = useRef();
 
   useEffect(() => {
-    if (waveformRefs.current.length === musicList.length) {
-      wavesurferInstances.current = musicList.map((music, index) => {
+    if (waveformRefs.current.length === musicTrackList.length) {
+      console.log("musicTrackList.length", musicTrackList.length);
+      wavesurferInstances.current = musicTrackList.map((music, index) => {
         const ws = WaveSurfer.create({
           container: waveformRefs.current[index],
           waveColor: "#828282",
           progressColor: "#FFFFFF",
           cursorColor: "#dc1b73",
-          // barHeight: 100,
+          barHeight: 100,
           barWidth: 3,
           barRadius: 1,
           responsive: true,
           height: 50,
           width: "100%",
-          normalize: false,
-          partialRender: true,
-          url: music.url,
+          // normalize: false,
+          // partialRender: true,
+          url: music.audio_file,
           media: new Audio(),
-          // peaks: [],
+          peaks: music.beats,
           dragToSeek: true,
+          interact: true,
+          duration: music.duration_seconds,
         });
 
         // ws.load(music.url);
+        ws.on("seeking", (currentTime) => {
+          console.log("======seeker", currentTime);
+        });
 
         ws.on("ready", () => {
           // Here actual duration is pre-calculated when page first time rendered
@@ -113,12 +119,12 @@ const MusicWrapper = () => {
         }
       });
     };
-  }, [dispatch]);
+  }, [musicTrackList]);
 
   const handlePlayPause = (clickIndex) => {
     let wsClick = null;
     wavesurferInstances.current.forEach((ws, wsIndex) => {
-      if (musicList[wsIndex].id === clickIndex) {
+      if (musicTrackList[wsIndex].id === clickIndex) {
         wsClick = ws;
       } else {
         ws.stop();
@@ -144,7 +150,7 @@ const MusicWrapper = () => {
       <audio ref={audioRef}>
         <source src="/musics/1.mp3"></source>
       </audio>
-      {musicList.map((music, index) => (
+      {musicTrackList.map((music, index) => (
         <div
           className="flex gap-4 md:gap-8 lg:gap-16 justify-between items-center"
           key={"music_row" + music.id}
@@ -251,7 +257,7 @@ const MusicWrapper = () => {
               </svg>
             </a>
             <a
-              href={music.url}
+              href={music.audio_file}
               className="px-2 py-2 rounded text-primaryText border border-primaryText cursor-pointer"
               download
             >

@@ -2,11 +2,10 @@ import Image from "next/image";
 import HeroBannerHorizontal from "@/components/herosection/horizontal";
 import BadgeCross from "@/components/badges/cross";
 import HeadlineSection from "@/components/headline/section";
-import Chip from "@/components/chip";
 import LeftImageRightContent from "@/components/leftImageRightContent";
 import ClientWrapper from "@/components/music/client-wrapper";
 import { fetchCategories } from "@/services/common.service";
-import Link from "next/link";
+import { fetchTracks } from "@/services/music.service";
 import CategoryChipList from "@/components/category/chipList";
 import { Suspense } from "react";
 
@@ -15,6 +14,15 @@ export default async function Home() {
 
   await fetchCategories().then((data) => {
     categories = data.results;
+  });
+
+  var musicTrackList = null;
+  var params = {
+    limit: 6,
+    offset: 0,
+  };
+  await fetchTracks(params).then((data) => {
+    musicTrackList = data.results;
   });
 
   return (
@@ -77,7 +85,7 @@ export default async function Home() {
         </div>
       </div>
       <div className="container py-5">
-        <ClientWrapper></ClientWrapper>
+        <ClientWrapper musicTrackList={musicTrackList}></ClientWrapper>
       </div>
       <div className="relative overflow-hidden">
         <div className="bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gradientRight to-gradientLeft blur-[45px] md:blur-[90px] rounded-full w-[130px] h-[120px] md:w-[336px] md:h-[200px] lg:w-[436px] lg:h-[405px] absolute top-[5%] -left-[15%] lg:-left-[25%]"></div>
