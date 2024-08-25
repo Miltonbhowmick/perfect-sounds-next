@@ -1,33 +1,54 @@
 import ClientWrapper from "@/components/music/client-wrapper";
 
-const Discover = () => {
-  const subCategoryList = [
-    {
-      name: "Blow",
-    },
-    {
-      name: "Gitch",
-    },
-  ];
+import { fetchCategories, fetchSubCategories } from "@/services/common.service";
+import { Suspense } from "react";
+import Link from "next/link";
 
-  const categoryList = [
-    {
-      name: "Transition",
-      active: false,
-    },
-    {
-      name: "Nature",
-      active: true,
-    },
-    {
-      name: "Technology",
-      active: false,
-    },
-    {
-      name: "Funny",
-      active: false,
-    },
-  ];
+const Discover = async (searchParams) => {
+  // const subCategoryList = [
+  //   {
+  //     name: "Blow",
+  //   },
+  //   {
+  //     name: "Gitch",
+  //   },
+  // ];
+
+  // const categoryList = [
+  //   {
+  //     name: "Transition",
+  //     active: false,
+  //   },
+  //   {
+  //     name: "Nature",
+  //     active: true,
+  //   },
+  //   {
+  //     name: "Technology",
+  //     active: false,
+  //   },
+  //   {
+  //     name: "Funny",
+  //     active: false,
+  //   },
+  // ];
+
+  // const queryParams = useSearchParams();
+  // const category = queryParams.get("category");
+  // const subcategory = queryParams.get("subcategory");
+
+  const queryParams = searchParams.searchParams;
+  var categoryQuery = queryParams.category;
+  var subCategoryQuery = queryParams.subcategory;
+
+  var categories = null;
+  var subCategories = null;
+  await fetchCategories().then((data) => {
+    categories = data.results;
+  });
+  await fetchSubCategories().then((data) => {
+    subCategories = data.results;
+  });
 
   return (
     <main>
@@ -38,13 +59,15 @@ const Discover = () => {
               categories
             </h5>
             <select className="appearance-none w-full px-4 py-3 rounded-full text-paragraph md:text-paragraph-md text-primaryText border border-primaryText bg-transparent outline-transparent">
-              {categoryList.map((element, index) => {
-                return (
-                  <option className="text-primaryBg" key={"cat_" + index}>
-                    {element.name}
-                  </option>
-                );
-              })}
+              <Suspense>
+                {categories?.map((element, index) => {
+                  return (
+                    <option className="text-primaryBg" key={"cat_" + index}>
+                      {element?.name}
+                    </option>
+                  );
+                })}
+              </Suspense>
             </select>
           </div>
           <div className="w-1/2">
@@ -52,7 +75,7 @@ const Discover = () => {
               sub categories
             </h5>
             <select className="appearance-none w-full px-4 py-3 rounded-full text-paragraph md:text-paragraph-md text-primaryText border border-primaryText bg-transparent outline-transparent">
-              {subCategoryList.map((element, index) => {
+              {subCategories.map((element, index) => {
                 return (
                   <option className="text-primaryBg" key={"subcat_" + index}>
                     {element.name}
@@ -67,13 +90,23 @@ const Discover = () => {
             sub categories
           </h5>
           <ul className="flex gap-4">
-            {subCategoryList.map((element, index) => {
+            {subCategories.map((element, index) => {
               return (
                 <li
                   className="text-primaryText font-medium px-5 py-2 border border-tertiaryBg w-max rounded-lg"
                   key={"sub_cat" + index}
                 >
-                  {element.name}
+                  <Link
+                    href={{
+                      pathname: "/discover",
+                      query: {
+                        ...queryParams,
+                        subcategory: element?.slug,
+                      },
+                    }}
+                  >
+                    {element.name}
+                  </Link>
                 </li>
               );
             })}
@@ -91,18 +124,30 @@ const Discover = () => {
               <li className="px-[30px] py-[20px] text-primaryText font-bold rounded-xl bg-tertiaryBg">
                 <h6>Categories</h6>
               </li>
-              {categoryList.map((element, index) => {
-                return (
-                  <li
-                    className={`${
-                      element.active ? "bg-gradientLeft" : "border-tertiaryBg"
-                    } px-[30px] py-[20px] text-primaryText font-medium rounded-xl `}
-                    key={"cat" + index}
-                  >
-                    <h6>{element.name}</h6>
-                  </li>
-                );
-              })}
+              <Suspense>
+                {categories.map((element, index) => {
+                  return (
+                    <li
+                      className={`${
+                        element.active ? "bg-gradientLeft" : "border-tertiaryBg"
+                      } px-[30px] py-[20px] text-primaryText font-medium rounded-xl `}
+                      key={"cat" + index}
+                    >
+                      <Link
+                        href={{
+                          pathname: "/discover",
+                          query: {
+                            ...queryParams,
+                            category: element?.slug,
+                          },
+                        }}
+                      >
+                        <h6>{element.name}</h6>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </Suspense>
             </ul>
           </div>
           <div className="bg-secondaryBg p-5 rounded-xl basis-auto grow shrink">
