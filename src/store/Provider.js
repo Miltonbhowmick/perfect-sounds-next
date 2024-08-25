@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import store from "./store";
 import { Provider } from "react-redux";
 
-export function Providers({ children }) {
+export function Providers({ preData, children }) {
   useEffect(() => {
     console.log("Redux load?");
   });
