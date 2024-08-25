@@ -5,26 +5,17 @@ import HeadlineSection from "@/components/headline/section";
 import Chip from "@/components/chip";
 import LeftImageRightContent from "@/components/leftImageRightContent";
 import ClientWrapper from "@/components/music/client-wrapper";
+import { fetchCategories } from "@/services/common.service";
+import Link from "next/link";
+import CategoryChipList from "@/components/category/chipList";
+import { Suspense } from "react";
 
-import LoginIcon from "@mui/icons-material/Login";
-import SpaIcon from "@mui/icons-material/Spa";
-import TimelineIcon from "@mui/icons-material/Timeline";
+export default async function Home() {
+  var categories = null;
 
-export default function Home() {
-  const categoryList = [
-    {
-      name: "Transistion",
-      icon: <LoginIcon />,
-    },
-    {
-      name: "Nature",
-      icon: <SpaIcon />,
-    },
-    {
-      name: "Technology",
-      icon: <TimelineIcon />,
-    },
-  ];
+  await fetchCategories().then((data) => {
+    categories = data.results;
+  });
 
   return (
     <main className="relative">
@@ -55,19 +46,9 @@ export default function Home() {
           headline="Explore Our Featured Categories"
         ></HeadlineSection>
         <div className="mt-[40px] flex gap-4 flex-wrap">
-          {categoryList.map((obj, i) => {
-            return (
-              <Chip
-                prependIcon={obj?.icon}
-                variant="outlined"
-                color="bg-secondaryBg"
-                className="px-[16px] md:px-[18px] lg:px-[20px] h-[40px] xl:h-[60px] text-primaryText"
-                key={"cat_chip_" + i}
-              >
-                <h6>{obj?.name}</h6>
-              </Chip>
-            );
-          })}
+          <Suspense>
+            <CategoryChipList itemList={categories} />
+          </Suspense>
         </div>
         <div className="mt-[74px] flex flex-row flex-wrap lg:flex-nowrap gap-5 justify-between">
           <div className="basis-full lg:basis-[33.33%] shrink grow">

@@ -5,7 +5,7 @@ import {
   setCurrentVolume,
   setIsMuted,
   setPlaying,
-} from "@/utils/modules/PlayerSlice";
+} from "@/store/modules/PlayerSlice";
 import ButtonMediaPlay from "@/components/button/mediaPlay";
 import WaveSurfer from "wavesurfer.js";
 import { useMediaElement } from "@/contexts/MediaElementContext";

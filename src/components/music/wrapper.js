@@ -2,9 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentMusic, setPlaying } from "@/utils/modules/PlayerSlice";
+import { setCurrentMusic, setPlaying } from "@/store/modules/PlayerSlice";
 import { useMediaElement } from "@/contexts/MediaElementContext";
-
 import WaveSurfer from "wavesurfer.js";
 import BottomPlayer from "./bottom-player";
 
@@ -55,18 +54,18 @@ const MusicWrapper = () => {
           waveColor: "#828282",
           progressColor: "#FFFFFF",
           cursorColor: "#dc1b73",
-          barHeight: 100,
+          // barHeight: 100,
           barWidth: 3,
           barRadius: 1,
           responsive: true,
           height: 50,
           width: "100%",
-          // normalize: false,
-          // partialRender: true,
+          normalize: false,
+          partialRender: true,
           url: music.url,
           media: new Audio(),
-          peaks: [],
-          // dragToSeek: true,
+          // peaks: [],
+          dragToSeek: true,
         });
 
         // ws.load(music.url);
