@@ -1,12 +1,12 @@
 "use client";
 
 import { configureStore } from "@reduxjs/toolkit";
-import PlayerSlice from "@/store/modules/PlayerSlice";
+import musicSlice from "@/store/modules/music";
 import commonSlice from "@/store/modules/common";
 
 const store = configureStore({
   reducer: {
-    player: PlayerSlice,
+    music: musicSlice,
     common: commonSlice,
   },
 });

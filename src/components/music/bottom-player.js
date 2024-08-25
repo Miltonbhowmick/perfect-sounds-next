@@ -5,7 +5,7 @@ import {
   setCurrentVolume,
   setIsMuted,
   setPlaying,
-} from "@/store/modules/PlayerSlice";
+} from "@/store/modules/music";
 import ButtonMediaPlay from "@/components/button/mediaPlay";
 import WaveSurfer from "wavesurfer.js";
 import { useMediaElement } from "@/contexts/MediaElementContext";
@@ -19,16 +19,16 @@ const BottomPlayer = () => {
   const path = usePathname();
   const dispatch = useDispatch();
   const currentMusic = useSelector((state) => {
-    return state.player.currentMusic;
+    return state.music.currentMusic;
   });
   const playing = useSelector((state) => {
-    return state.player.playing;
+    return state.music.playing;
   });
   const currentVolume = useSelector((state) => {
-    return state.player.currentVolume;
+    return state.music.currentVolume;
   });
   const isMuted = useSelector((state) => {
-    return state.player.isMuted;
+    return state.music.isMuted;
   });
 
   const { mediaElement } = useMediaElement();

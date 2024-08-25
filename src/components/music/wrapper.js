@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentMusic, setPlaying } from "@/store/modules/PlayerSlice";
+import { setCurrentMusic, setPlaying } from "@/store/modules/music";
 import { useMediaElement } from "@/contexts/MediaElementContext";
 import WaveSurfer from "wavesurfer.js";
 import BottomPlayer from "./bottom-player";
@@ -33,10 +33,10 @@ const MusicWrapper = () => {
 
   const dispatch = useDispatch();
   var currentMusic = useSelector((state) => {
-    return state.player.currentMusic;
+    return state.music.currentMusic;
   });
   var playing = useSelector((state) => {
-    return state.player.playing;
+    return state.music.playing;
   });
   const { setMediaElement } = useMediaElement();
 

@@ -1,7 +1,7 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 
-const playerSlice = createSlice({
-  name: "player",
+const musicSlice = createSlice({
+  name: "music",
   initialState: {
     currentMusic: null,
     playing: false,
@@ -28,5 +28,5 @@ const playerSlice = createSlice({
 });
 
 export const { setCurrentMusic, setPlaying, setCurrentVolume, setIsMuted } =
-  playerSlice.actions;
-export default playerSlice.reducer;
+  musicSlice.actions;
+export default musicSlice.reducer;
