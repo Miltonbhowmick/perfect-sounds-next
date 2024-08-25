@@ -1,21 +1,43 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
+import * as yup from "yup";
 import Link from "next/link";
 import classNames from "classnames";
 
 const SignupForm = ({ className }) => {
+  const SignupSchema = yup.object().shape({
+    email: yup.string().email("Invalid email").required("Email is required!"),
+    password: yup
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .matches(/\d/, "Password must contain at least one digit")
+      .matches(
+        /[~!@#$%^&*]/,
+        "Password must contain at least one special character (~,!,@,#,$,%,^,&,*)"
+      )
+      .required("Password is required"),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "Passwords must match")
+      .required("Confirm password is required"),
+  });
+
   const formik = useFormik({
+    validationSchema: SignupSchema,
     initialValues: {
       email: "",
       password: "",
       confirmPassword: "",
     },
+
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      console.log(JSON.stringify(values, null, 2));
     },
   });
+
   return (
     <form
       onSubmit={formik.handleSubmit}
@@ -34,9 +56,13 @@ const SignupForm = ({ className }) => {
           type="email"
           placeholder="example@gmail.com"
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           value={formik.values.email}
           className="px-[20px] py-[15px] bg-transparent focus:outline-none border-tertiaryBg rounded-xl border text-[16px] text-primaryText placeholder-slate-400"
         />
+        {formik.touched.email && formik.errors.email ? (
+          <p className="text-gradientRight text-small">{formik.errors.email}</p>
+        ) : null}
       </div>
       <div className="flex flex-col gap-2">
         <label
@@ -51,9 +77,15 @@ const SignupForm = ({ className }) => {
           type="password"
           placeholder="Enter your password"
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           value={formik.values.password}
           className="px-[20px] py-[15px] bg-transparent focus:outline-none border-tertiaryBg rounded-xl border text-[16px] text-primaryText placeholder-slate-400"
         />
+        {formik.touched.password && formik.errors.password ? (
+          <p className="text-gradientRight text-small">
+            {formik.errors.password}
+          </p>
+        ) : null}
       </div>
       <div className="flex flex-col gap-2">
         <label
@@ -68,9 +100,15 @@ const SignupForm = ({ className }) => {
           type="confirmPassword"
           placeholder="Enter your password"
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           value={formik.values.confirmPassword}
           className="px-[20px] py-[15px] bg-transparent focus:outline-none border-tertiaryBg rounded-xl border text-[16px] text-primaryText placeholder-slate-400"
         />
+        {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
+          <p className="text-gradientRight text-small">
+            {formik.errors.confirmPassword}
+          </p>
+        ) : null}
       </div>
       <div className="flex gap-2 items-center text-paragraph md:text-paragraph-md lg:text-paragraph-lg">
         <input type="checkbox" className="accept-gradientRight"></input>

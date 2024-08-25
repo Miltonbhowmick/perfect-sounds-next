@@ -19,11 +19,11 @@ export default function SignUp() {
         buttonText={"Buy Sound Effects"}
         href="/"
       />
-      <div className="lg:basis-[50%] h-screen bg-secondaryBg flex justify-center items-center">
+      <div className="lg:basis-[50%] py-2 bg-secondaryBg flex justify-center items-center">
         <div className="container h-full flex justify-center items-center">
           <div className="relative w-full lg:w-[70%] flex flex-col gap-4">
             <div className="flex justify-center lg:justify-start">
-              <div className="relative w-[90px] h-[50px] md:w-[120px] md:h-[60px]">
+              <div className="relative w-[90px] h-[50px] md:w-[100px] md:h-[60px]">
                 <Image
                   src="/images/company-logo/perfectsounds-logo-white.png"
                   alt="perfectsounds-logo-white"
