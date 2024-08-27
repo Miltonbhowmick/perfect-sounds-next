@@ -4,13 +4,17 @@ import HeroBannerAuth from "@/components/herosection/auth";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import OTPInput from "react-otp-input";
+import { sendVerificationCode, verifyCode } from "@/services/user.service";
+import { useRouter } from "next/navigation";
 
-export default function Verification({ searchParams }) {
+export default function Verification(searchParams) {
+  const router = useRouter();
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(10);
 
-  const email = searchParams?.searchParams?.email || null;
-  const reson = searchParams?.searchParams?.reason || null;
+  const queryParams = searchParams.searchParams;
+  const email = queryParams?.email || null;
+  const reason = queryParams?.reason || null;
 
   const resetTimer = () => {
     setTimer(10);
@@ -27,7 +31,36 @@ export default function Verification({ searchParams }) {
     }
   }, [timer]);
 
-  const resendVerificationCode = () => {};
+  const handleResendVerificationCodeApi = () => {
+    let payload = {
+      email: email,
+      reason: reason,
+      code: otp,
+    };
+    sendVerificationCode(payload)
+      .then((data) => {
+        alert("otp success send");
+        resetTimer();
+      })
+      .catch((e) => {
+        alert("unsuccess");
+      });
+  };
+
+  const handleVerifyCodeApi = () => {
+    let payload = {
+      email: email,
+      code: otp,
+    };
+    verifyCode(payload)
+      .then((data) => {
+        alert("Verfied!");
+        router.push("/signin");
+      })
+      .catch((e) => {
+        alert("unsuccess");
+      });
+  };
 
   return (
     <main className="min-h-screen flex flex-col lg:flex-row">
@@ -89,7 +122,7 @@ export default function Verification({ searchParams }) {
             <p className="text-center text-primaryText font-bold">
               Want verification code again?
               <a
-                onClick={resendVerificationCode}
+                onClick={handleResendVerificationCodeApi}
                 className={
                   (timer > 0
                     ? "pointer-events-none line-through"
@@ -101,6 +134,15 @@ export default function Verification({ searchParams }) {
                 Resend Code
               </a>
             </p>
+            <button
+              onClick={handleVerifyCodeApi}
+              disabled={timer === 0}
+              className={`px-[20px] py-[15px] bg-gradient-to-r from-gradientLeft to-gradientRight rounded-lg ${
+                timer === 0 ? "opacity-25" : ""
+              }`}
+            >
+              <h6 className="text-primaryText font-bold">Submit</h6>
+            </button>
           </div>
         </div>
       </div>

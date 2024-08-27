@@ -20,7 +20,7 @@ const SignupForm = ({ className }) => {
       .matches(/\d/, "Password must contain at least one digit")
       .matches(
         /[~!@#$%^&*]/,
-        "Password must contain at least one special character (~,!,@,#,$,%,^,&,*)"
+        "Password must contain at least one special character"
       )
       .required("Password is required"),
     confirmPassword: yup
@@ -45,15 +45,32 @@ const SignupForm = ({ className }) => {
       };
       signup(payload)
         .then((data) => {
-          router.push(
-            `/verification?email=${payload.email}&reason=user_creation`
-          );
+          handleResendVerificationCodeApi(payload);
         })
         .catch((e) => {
-          alert("unsuccess");
+          alert("unsuccess signup");
         });
     },
   });
+
+  const handleResendVerificationCodeApi = ({ email }) => {
+    let payload = {
+      email: email,
+      reason: "user_creation",
+    };
+    console.log("call it???", payload);
+    sendVerificationCode(payload)
+      .then((data) => {
+        alert("OTP success send");
+        router.push(
+          `/verification?email=${payload.email}&reason=user_creation`
+        );
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("unsuccess");
+      });
+  };
 
   return (
     <form

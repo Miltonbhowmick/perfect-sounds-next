@@ -4,25 +4,47 @@ import React from "react";
 import { useFormik } from "formik";
 import Link from "next/link";
 import classNames from "classnames";
-import { signin } from "@/services/user.service";
+import * as yup from "yup";
+import { sendVerificationCode } from "@/services/user.service";
+import { useRouter } from "next/navigation";
 
-const SigninForm = ({ className }) => {
+const ForgetPasswordForm = ({ className }) => {
+  const router = useRouter();
+  const ForgetPasswordSchema = yup.object().shape({
+    email: yup.string().email("Invalid email").required("Email is required!"),
+  });
+
   const formik = useFormik({
     initialValues: {
       email: "",
     },
+    validationSchema: ForgetPasswordSchema,
     onSubmit: (values) => {
       let payload = {
         email: values.email,
-        password: values.password,
       };
-      signin(payload)
-        .then((data) => alert("succes"))
-        .catch((e) => {
-          alert("unsuccess");
-        });
+      handleResendVerificationCodeApi(payload);
     },
   });
+
+  const handleResendVerificationCodeApi = ({ email }) => {
+    let payload = {
+      email: email,
+      reason: "forget_password",
+    };
+    console.log("call it???", payload);
+    sendVerificationCode(payload)
+      .then((data) => {
+        alert("OTP success send");
+        router.push(
+          `/verification?email=${payload.email}&reason=user_creation`
+        );
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("unsuccess");
+      });
+  };
 
   return (
     <form
@@ -46,31 +68,8 @@ const SigninForm = ({ className }) => {
           className="px-[20px] py-[15px] bg-transparent focus:outline-none border-tertiaryBg rounded-xl border text-[16px] text-primaryText placeholder-slate-400"
         />
       </div>
-      <div className="flex flex-col gap-2">
-        <label
-          htmlFor="password"
-          className="text-primaryText font-medium	text-paragraph md:text-paragraph-md lg:text-paragraph-lg"
-        >
-          Password
-        </label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          placeholder="Enter your password"
-          onChange={formik.handleChange}
-          value={formik.values.password}
-          className="px-[20px] py-[15px] bg-transparent focus:outline-none border-tertiaryBg rounded-xl border text-[16px] text-primaryText placeholder-slate-400"
-        />
-      </div>
-      <Link
-        href={"/forget-password"}
-        className="text-gradientRight font-medium	 text-paragraph md:text-paragraph-md lg:text-paragraph-lg text-center lg:text-start"
-      >
-        Forgot Password
-      </Link>
       <button className="px-[20px] py-[15px] bg-gradient-to-r from-gradientLeft to-gradientRight rounded-lg">
-        <h6 className="text-primaryText font-bold">Signin</h6>
+        <h6 className="text-primaryText font-bold">Submit</h6>
       </button>
       <p className="text-primaryText font-bold flex gap-2 justify-center lg:justify-start">
         {"Don't have an account?"}
@@ -82,4 +81,4 @@ const SigninForm = ({ className }) => {
   );
 };
 
-export default SigninForm;
+export default ForgetPasswordForm;
