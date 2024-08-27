@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: false,
   publicRuntimeConfig: {
-    baseUrl: process.env.API_ROOT || "http://localhost:8000",
+    baseUrl: process.env.NEXT_PUBLIC_API_ROOT || "http://localhost:8000",
   },
 };
 

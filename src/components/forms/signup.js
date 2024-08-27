@@ -5,8 +5,12 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Link from "next/link";
 import classNames from "classnames";
+import { signup, sendVerificationCode } from "@/services/user.service";
+import { useRouter } from "next/navigation";
 
 const SignupForm = ({ className }) => {
+  const router = useRouter();
+
   const SignupSchema = yup.object().shape({
     email: yup.string().email("Invalid email").required("Email is required!"),
     password: yup
@@ -34,7 +38,20 @@ const SignupForm = ({ className }) => {
     },
 
     onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
+      let payload = {
+        email: values.email,
+        password: values.password,
+        confirmPassword: values.confirmPassword,
+      };
+      signup(payload)
+        .then((data) => {
+          router.push(
+            `/verification?email=${payload.email}&reason=user_creation`
+          );
+        })
+        .catch((e) => {
+          alert("unsuccess");
+        });
     },
   });
 
@@ -97,7 +114,7 @@ const SignupForm = ({ className }) => {
         <input
           id="confirmPassword"
           name="confirmPassword"
-          type="confirmPassword"
+          type="password"
           placeholder="Enter your password"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -111,8 +128,12 @@ const SignupForm = ({ className }) => {
         ) : null}
       </div>
       <div className="flex gap-2 items-center text-paragraph md:text-paragraph-md lg:text-paragraph-lg">
-        <input type="checkbox" className="accept-gradientRight"></input>
-        <label className="text-primaryText font-medium">
+        <input
+          id="agree"
+          type="checkbox"
+          className="accept-gradientRight"
+        ></input>
+        <label htmlFor="agree" className="text-primaryText font-medium">
           I agree to the Terms of Service and Privacy Policy
         </label>
       </div>

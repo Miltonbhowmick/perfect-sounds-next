@@ -4,6 +4,7 @@ import React from "react";
 import { useFormik } from "formik";
 import Link from "next/link";
 import classNames from "classnames";
+import { signin } from "@/services/user.service";
 
 const SigninForm = ({ className }) => {
   const formik = useFormik({
@@ -11,7 +12,15 @@ const SigninForm = ({ className }) => {
       email: "",
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      let payload = {
+        email: values.email,
+        password: values.password,
+      };
+      signin(payload)
+        .then((data) => alert("succes"))
+        .catch((e) => {
+          alert("unsuccess");
+        });
     },
   });
 

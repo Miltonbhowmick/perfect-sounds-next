@@ -1,4 +1,4 @@
-export const PUBLIC_API_ROOT = process.env.API_ROOT;
+export const PUBLIC_API_ROOT = process.env.NEXT_PUBLIC_API_ROOT;
 
 export const PUBLIC_ACCOUNT = PUBLIC_API_ROOT + "/api/v1/account/public";
 export const USERS = PUBLIC_ACCOUNT + "/users";

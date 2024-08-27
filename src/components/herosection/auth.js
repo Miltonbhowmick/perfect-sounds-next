@@ -3,14 +3,14 @@ import ButtonGradiend from "@/components/button/gradient";
 import ButtonGradiendOutlined from "@/components/button/gradientOutlined";
 
 const HeroBannerAuth = ({
+  image = defaultProps.image,
+  headline = defaultProps.headline,
+  description = defaultProps.description,
+  buttonText = defaultProps.buttonText,
+  buttonVariant = defaultProps.buttonVariant,
+  className = defaultProps.className,
+  href = defaultProps.href,
   children,
-  className,
-  image,
-  headline,
-  description,
-  buttonText,
-  buttonVariant,
-  href,
   ...props
 }) => {
   return (
@@ -47,7 +47,7 @@ const HeroBannerAuth = ({
   );
 };
 
-HeroBannerAuth.defaultProps = {
+const defaultProps = {
   image: null,
   headline: null,
   description: null,
