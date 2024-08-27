@@ -2,6 +2,8 @@ import axios from "axios";
 import { PUBLIC_ACCOUNT } from "@/utils/store/endpoints";
 import { buildParams } from "@/utils/utils";
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { setProfile } from "@/store/modules/user";
 
 export const signup = async (payload = {}) => {
   return new Promise((resolve, reject) => {
@@ -63,6 +65,26 @@ export const verifyCode = async (payload = {}) => {
       data: payload,
     })
       .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+};
+
+export const profile = async (payload = {}) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "get",
+      url: `${PUBLIC_ACCOUNT}/users/profile`,
+      headers: {
+        Authorization: "Token 382110337f6a36d38fa22685fd34794e4515ac14",
+      },
+    })
+      .then((response) => {
+        // const dispatch = useDispatch();
+        // dispatch(setProfile(response.data));
         resolve(response.data);
       })
       .catch((e) => {
