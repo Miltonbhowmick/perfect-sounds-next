@@ -1,6 +1,7 @@
 import axios from "axios";
 import { PUBLIC_ACCOUNT } from "@/utils/store/endpoints";
 import { buildParams } from "@/utils/utils";
+import Cookies from "js-cookie";
 
 export const signup = async (payload = {}) => {
   return new Promise((resolve, reject) => {
@@ -26,6 +27,10 @@ export const signin = async (payload = {}) => {
       data: payload,
     })
       .then((response) => {
+        const day7 = 24 * 60 * 60 * 7;
+        Cookies.set("PERFECTSOUND", response.data.token, {
+          expires: day7,
+        });
         resolve(response.data);
       })
       .catch((e) => {

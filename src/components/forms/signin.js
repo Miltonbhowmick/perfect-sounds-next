@@ -5,11 +5,15 @@ import { useFormik } from "formik";
 import Link from "next/link";
 import classNames from "classnames";
 import { signin } from "@/services/user.service";
+import { useRouter } from "next/navigation";
 
 const SigninForm = ({ className }) => {
+  const router = useRouter();
+
   const formik = useFormik({
     initialValues: {
       email: "",
+      password: "",
     },
     onSubmit: (values) => {
       let payload = {
@@ -17,7 +21,10 @@ const SigninForm = ({ className }) => {
         password: values.password,
       };
       signin(payload)
-        .then((data) => alert("succes"))
+        .then((data) => {
+          alert("signin succes");
+          router.push("/");
+        })
         .catch((e) => {
           alert("unsuccess");
         });
