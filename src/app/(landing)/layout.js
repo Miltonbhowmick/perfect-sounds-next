@@ -10,6 +10,8 @@ import BottomFooter from "@/components/footer/bottom";
 import CopyWrite from "@/components/footer/copywrite";
 import MobileNavbar from "@/components/header/mobile-navbar";
 import store from "@/store/store";
+import { profile } from "@/services/user.service";
+import { getTokenSSR, deleteCookie } from "../actions/auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,12 +21,20 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
+  var userProfile = null;
+  const authToken = getTokenSSR();
+  if (authToken) {
+    await profile({}, authToken).then((data) => {
+      userProfile = data;
+    });
+  }
+
   return (
-    <Providers store={store}>
-      <PopulateStore>
-        <ClientMediaElementProviders>
-          <html lang="en">
-            <body className={(inter.className, "bg-primaryBg")}>
+    <html lang="en">
+      <body className={(inter.className, "bg-primaryBg")}>
+        <Providers store={store}>
+          <PopulateStore userProfile={userProfile}>
+            <ClientMediaElementProviders>
               <Navbar className="hidden md:block" />
               <MobileNavbar className="block md:hidden" />
               {children}
@@ -33,10 +43,10 @@ export default async function RootLayout({ children }) {
                 <BottomFooter></BottomFooter>
                 <CopyWrite></CopyWrite>
               </div>
-            </body>
-          </html>
-        </ClientMediaElementProviders>
-      </PopulateStore>
-    </Providers>
+            </ClientMediaElementProviders>
+          </PopulateStore>
+        </Providers>
+      </body>
+    </html>
   );
 }

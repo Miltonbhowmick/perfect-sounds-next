@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 export const buildParams = (params) => {
   const keys = Object.keys(params);
   if (keys.length == 0) return "";

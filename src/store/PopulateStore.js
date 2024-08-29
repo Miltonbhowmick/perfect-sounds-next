@@ -1,12 +1,11 @@
 "use client";
 
-import { setCategories } from "@/store/modules/common";
+import { setProfile } from "./modules/user";
 import store from "../store/store";
+import { useDispatch } from "react-redux";
 
-export const PopulateStore = ({ populatedData, children }) => {
-  // store.dispatch(setCategories(populatedData.results));
-
-  // console.log(store.getState());
-
+export const PopulateStore = ({ userProfile, children }) => {
+  const dispatch = useDispatch();
+  dispatch(setProfile(userProfile));
   return <>{children}</>;
 };
