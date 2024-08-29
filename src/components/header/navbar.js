@@ -43,7 +43,10 @@ export default function Navbar({ className }) {
                 strokeLinejoin="round"
               />
             </svg>
-            <p className="text-secondaryText">Search for Sound effect</p>
+            <input
+              className="text-secondaryText bg-transparent outline-0"
+              placeholder="Search for Sound effect"
+            />
           </div>
           <div className="basis-[40%] shrink grow flex justify-center">
             <Link href="/">
