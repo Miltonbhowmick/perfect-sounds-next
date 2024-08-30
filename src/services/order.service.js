@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PUBLIC_COMMON } from "@/utils/store/endpoints";
+import { PUBLIC_ORDER } from "@/utils/store/endpoints";
 import { buildParams } from "@/utils/utils";
 
 export const fetchOrders = async (params = {}, token) => {
@@ -14,8 +14,8 @@ export const fetchOrders = async (params = {}, token) => {
       .then((response) => {
         resolve(response.data);
       })
-      .catch((error) => {
-        reject(error.response?.data);
+      .catch((e) => {
+        reject(e);
       });
   });
 };
@@ -33,8 +33,8 @@ export const createOrder = async (payload = {}, token) => {
       .then((response) => {
         resolve(response.data);
       })
-      .catch((error) => {
-        reject(error.response?.data);
+      .catch((e) => {
+        reject(e);
       });
   });
 };
