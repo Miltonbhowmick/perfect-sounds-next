@@ -14,3 +14,20 @@ export const fetchPricePlans = async (params = {}) => {
       });
   });
 };
+
+export const fetchSinglePricePlans = async (params = {}) => {
+  return new Promise((resolve, reject) => {
+    const id = params.pricePlanId;
+    axios({
+      method: "get",
+      url: `${PUBLIC_PAYMENT}/price-plans/${id}`,
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        // console.log(e)
+        reject(e);
+      });
+  });
+};
