@@ -170,7 +170,7 @@ export default async function PricePage() {
                       </div>
                     )}
                     {element.credits.length > 0 ? (
-                      <section>
+                      <section className="flex flex-col gap-2">
                         {element.credits.map((creditObj, creditIndex) => {
                           return (
                             <div
@@ -289,6 +289,10 @@ export default async function PricePage() {
                         </ButtonGradiendOutlined>
                       ) : (
                         <ButtonGradiend
+                          href={{
+                            pathname: "checkout",
+                            query: { pricePlan: element.id },
+                          }}
                           className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 h-[35px] md:h-[45px] lg:h-[55px] w-full rounded-lg justify-end"
                           gradient
                         >
