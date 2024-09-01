@@ -4,6 +4,7 @@
 
 :root {
   --primary-bg: #111111;
+  --primary-bg-rgb: rgb(17, 17, 17, 1);
   --secondary-bg: #1e1e1e;
   --tertiary-bg: #3c3c3c;
   --primary-text: #ffffff;

@@ -30,6 +30,7 @@ module.exports = {
       colors: {
         background: "#111",
         primaryBg: "var(--primary-bg)",
+        primaryBgRGB: "var(--primary-bg-rgb)",
         secondaryBg: "var(--secondary-bg)",
         tertiaryBg: "var(--tertiary-bg)",
         primaryText: "var(--primary-text)",
