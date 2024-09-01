@@ -79,7 +79,7 @@ const MobileNavbar = ({ className }) => {
             </div>
           )}
           <div className="basis-[auto] shrink grow flex justify-center">
-            <Link href="/">
+            <Link href="/" scroll={false}>
               <img
                 className="w-[76px] h-[36px]"
                 src="/images/company-logo/perfectsounds-logo-white.png"
@@ -147,17 +147,29 @@ const MobileNavbar = ({ className }) => {
               <div className="container py-2">
                 <ul className="flex flex-col">
                   <li className="py-2">
-                    <Link href="/discover" className="text-primaryText">
+                    <Link
+                      href="/discover"
+                      scroll={false}
+                      className="text-primaryText"
+                    >
                       Plan
                     </Link>
                   </li>
                   <li className="py-2">
-                    <Link href="/signup" className="text-primaryText">
+                    <Link
+                      href="/signup"
+                      scroll={false}
+                      className="text-primaryText"
+                    >
                       Sign Up
                     </Link>
                   </li>
                   <li className="py-2">
-                    <Link href="/signin" className="text-primaryText">
+                    <Link
+                      href="/signin"
+                      scroll={false}
+                      className="text-primaryText"
+                    >
                       Sign In
                     </Link>
                   </li>

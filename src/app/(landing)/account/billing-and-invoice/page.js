@@ -66,6 +66,7 @@ export default function AccountBillingInvoice() {
                       src="/images/payment/visa-logo.png"
                       alt="visa-logo"
                       fill
+                      sizes="auto"
                     />
                   </div>
                 </div>

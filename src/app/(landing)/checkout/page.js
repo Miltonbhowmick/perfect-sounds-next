@@ -1,17 +1,53 @@
 import CheckoutForm from "@/components/forms/checkout";
-import { fetchSinglePricePlans } from "@/services/payment.service";
+import {
+  fetchSinglePricePlans,
+  isPromoCodeValid,
+} from "@/services/payment.service";
 import Link from "next/link";
 import { getTokenSSR } from "../../actions/auth";
+import { redirect } from "next/navigation";
 
 const CheckoutPage = async (searchParams) => {
   const queryParams = searchParams.searchParams;
   const pricePlanId = parseInt(queryParams.pricePlan);
+  if (!pricePlanId) {
+    redirect("/price");
+  }
+  console.log("asche? price id", pricePlanId);
   const taxPercentage = 5;
   var pricePlanData = null;
+  var costData = {
+    subTotal: 0,
+    taxCost: 0,
+    total: 0,
+  };
   const token = getTokenSSR();
   await fetchSinglePricePlans({ pricePlanId: pricePlanId }).then((data) => {
     pricePlanData = data;
+    costData.subTotal = parseFloat(pricePlanData?.amount).toFixed(2);
+    costData.taxCost =
+      (parseFloat(pricePlanData?.amount) * taxPercentage) / 100;
+    costData.total =
+      parseFloat(pricePlanData?.amount) +
+      (parseFloat(pricePlanData?.amount) * taxPercentage) / 100;
   });
+
+  const handlePromoCode = async (enterCode) => {
+    "use server";
+    let payload = {
+      code: enterCode,
+    };
+    var promoCodeData = null;
+    isPromoCodeValid(payload, token)
+      .then((data) => {
+        console.log("Promo Code is applied!");
+        promoCodeData = data;
+      })
+      .catch((e) => {
+        console.log("Promo Code is not applied!", e);
+      });
+    return promoCodeData;
+  };
 
   return (
     <div className="container flex flex-col gap-5">
@@ -31,6 +67,7 @@ const CheckoutPage = async (searchParams) => {
                         {pricePlanData?.title}
                         <Link
                           href="/price"
+                          scroll={false}
                           className="text-gradientLeft underline"
                         >
                           Change Plan
@@ -56,7 +93,7 @@ const CheckoutPage = async (searchParams) => {
                     </td>
                     <td className="pb-1 md:pb-5">
                       <p className="text-primaryText font-bold flex flex-row gap-3">
-                        ${parseFloat(pricePlanData?.amount).toFixed(2)} USD
+                        ${costData.subTotal} USD
                       </p>
                     </td>
                   </tr>
@@ -68,10 +105,7 @@ const CheckoutPage = async (searchParams) => {
                     </td>
                     <td className="pb-1 md:pb-5">
                       <p className="text-primaryText font-bold flex flex-row gap-3">
-                        $
-                        {(parseFloat(pricePlanData?.amount) * taxPercentage) /
-                          100}
-                        USD
+                        ${costData.taxCost} USD
                       </p>
                     </td>
                   </tr>
@@ -81,11 +115,7 @@ const CheckoutPage = async (searchParams) => {
                     </td>
                     <td className="py-1 md:py-5">
                       <p className="text-primaryText font-bold flex flex-row gap-3">
-                        $
-                        {parseFloat(pricePlanData?.amount) +
-                          (parseFloat(pricePlanData?.amount) * taxPercentage) /
-                            100}
-                        USD
+                        ${costData.total} USD
                       </p>
                     </td>
                   </tr>
@@ -217,6 +247,8 @@ const CheckoutPage = async (searchParams) => {
         <section className="w-[100%] lg:w-[60%]">
           <CheckoutForm
             pricePlan={pricePlanId}
+            costData={costData}
+            handlePromoCode={handlePromoCode}
             authToken={token}
           ></CheckoutForm>
         </section>

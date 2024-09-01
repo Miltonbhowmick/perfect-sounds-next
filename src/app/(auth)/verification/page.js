@@ -55,7 +55,7 @@ export default function Verification(searchParams) {
     verifyCode(payload)
       .then((data) => {
         alert("Verfied!");
-        router.push("/signin");
+        router.push("/signin", { scroll: false });
       })
       .catch((e) => {
         alert("unsuccess");

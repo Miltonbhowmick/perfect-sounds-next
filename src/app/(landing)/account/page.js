@@ -54,7 +54,7 @@ export default function Account() {
             </h4>
             <p className="text-primaryText font-medium">
               We never share your profile information , See our{" "}
-              <Link href="" className="text-gradientRight">
+              <Link href="" scroll={false} className="text-gradientRight">
                 Privacy Policy
               </Link>
             </p>

@@ -140,7 +140,12 @@ export default async function PricePage() {
                   className="bg-white p-2 rounded-sm"
                 >
                   <div className="relative w-[60px] h-[30px]">
-                    <Image src={element.imageSrc} alt={element.name} fill />
+                    <Image
+                      src={element.imageSrc}
+                      alt={element.name}
+                      fill
+                      sizes="width:auto"
+                    />
                   </div>
                 </li>
               );

@@ -50,7 +50,9 @@ const AccountSidebar = ({ className, ...props }) => {
             />
           </svg>
           <h5 className="text-primaryText">
-            <Link href="/account">Profile</Link>
+            <Link href="/account" scroll={false}>
+              Profile
+            </Link>
           </h5>
         </li>
         <li
@@ -73,7 +75,9 @@ const AccountSidebar = ({ className, ...props }) => {
             />
           </svg>
           <h5 className="text-primaryText">
-            <Link href="/account/favourites">Favorites</Link>
+            <Link href="/account/favourites" scroll={false}>
+              Favorites
+            </Link>
           </h5>
         </li>
         <li
@@ -102,7 +106,9 @@ const AccountSidebar = ({ className, ...props }) => {
             />
           </svg>
           <h5 className="text-primaryText">
-            <Link href="/account/downloads">Downloads</Link>
+            <Link href="/account/downloads" scroll={false}>
+              Downloads
+            </Link>
           </h5>
         </li>
         <li
@@ -151,7 +157,9 @@ const AccountSidebar = ({ className, ...props }) => {
             />
           </svg>
           <h5 className="text-primaryText">
-            <Link href="/account/billing-and-invoice">Billing & Invoice</Link>
+            <Link href="/account/billing-and-invoice" scroll={false}>
+              Billing & Invoice
+            </Link>
           </h5>
         </li>
       </ul>

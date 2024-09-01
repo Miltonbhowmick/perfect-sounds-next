@@ -17,6 +17,7 @@ const ButtonGradiend = ({
     return (
       <Link
         href={href}
+        scroll={false}
         className={`${bgStyle} ${className} flex justify-center items-center px-[10px] min-h-[30px]`}
         {...props}
       >

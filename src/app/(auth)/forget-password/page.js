@@ -27,7 +27,6 @@ export default function ForgetPassword() {
                 <Image
                   src="/images/company-logo/perfectsounds-logo-white.png"
                   alt="perfectsounds-logo-white"
-                  fill
                 />
               </div>
             </div>

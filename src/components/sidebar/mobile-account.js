@@ -73,7 +73,9 @@ const AccountMobileSidebar = ({ className }) => {
             />
           </svg>
           <h6 className="text-primaryText w-max">
-            <Link href="/account/favourites">Favorites</Link>
+            <Link href="/account/favourites" scroll={false}>
+              Favorites
+            </Link>
           </h6>
         </li>
         <li
@@ -102,7 +104,9 @@ const AccountMobileSidebar = ({ className }) => {
             />
           </svg>
           <h6 className="text-primaryText w-max">
-            <Link href="/account/downloads">Downloads</Link>
+            <Link href="/account/downloads" scroll={false}>
+              Downloads
+            </Link>
           </h6>
         </li>
         <li
@@ -151,7 +155,9 @@ const AccountMobileSidebar = ({ className }) => {
             />
           </svg>
           <h6 className="text-primaryText w-max">
-            <Link href="/account/billing-and-invoice">Billing & Invoice</Link>
+            <Link href="/account/billing-and-invoice" scroll={false}>
+              Billing & Invoice
+            </Link>
           </h6>
         </li>
       </ul>

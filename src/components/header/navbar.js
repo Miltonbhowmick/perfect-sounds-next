@@ -13,11 +13,13 @@ export default function Navbar({ className }) {
 
   const handleSignout = () => {
     const ck = Cookies.remove("PERFECTSOUND");
-    router.push("/signin");
+    router.push("/signin", { scroll: false });
   };
 
   return (
-    <nav className={`${className} bg-secondaryBg fixed z-[999] w-full`}>
+    <nav
+      className={`${className} bg-secondaryBg fixed top-0 left-0 right-0 z-[99]`}
+    >
       <div className="container">
         <div className="py-2 lg:h-[100px] flex justify-between items-center">
           <div className="basis-[30%] shrink grow-0 flex gap-2 items-center">
@@ -49,7 +51,7 @@ export default function Navbar({ className }) {
             />
           </div>
           <div className="basis-[40%] shrink grow flex justify-center">
-            <Link href="/">
+            <Link href="/" scroll={false}>
               <img
                 className="md:w-[80px] lg:w-[120px]"
                 src="/images/company-logo/perfectsounds-logo-white.png"
@@ -60,6 +62,7 @@ export default function Navbar({ className }) {
             <li>
               <Link
                 href="/price"
+                scroll={false}
                 className="text-primaryText text-h3 font-medium"
               >
                 <h6>Plan</h6>
@@ -70,6 +73,7 @@ export default function Navbar({ className }) {
                 <li>
                   <Link
                     href="/signup"
+                    scroll={false}
                     className="text-primaryText text-h3 font-medium"
                   >
                     Sign up
@@ -86,15 +90,26 @@ export default function Navbar({ className }) {
                 </li>
               </>
             ) : (
-              <li>
-                <ButtonGradiend
-                  onClick={handleSignout}
-                  className="text-primaryText text-h3 px-[16px] py-[10px] rounded-full"
-                  gradient
-                >
-                  <span className="leading-none">Sign Out</span>
-                </ButtonGradiend>
-              </li>
+              <>
+                <li>
+                  <ButtonGradiend
+                    href={"/account"}
+                    className="text-primaryText text-h3 px-[16px] py-[10px] rounded-full"
+                    gradient
+                  >
+                    <span className="leading-none">Account</span>
+                  </ButtonGradiend>
+                </li>
+                <li>
+                  <ButtonGradiend
+                    onClick={handleSignout}
+                    className="text-primaryText text-h3 px-[16px] py-[10px] rounded-full"
+                    gradient
+                  >
+                    <span className="leading-none">Sign Out</span>
+                  </ButtonGradiend>
+                </li>
+              </>
             )}
           </ul>
         </div>

@@ -88,6 +88,7 @@ const Discover = async (searchParams) => {
                         subcategory: element?.slug,
                       },
                     }}
+                    scroll={false}
                   >
                     {element.name}
                   </Link>
@@ -125,6 +126,7 @@ const Discover = async (searchParams) => {
                             category: element?.slug,
                           },
                         }}
+                        scroll={false}
                       >
                         <h6>{element.name}</h6>
                       </Link>

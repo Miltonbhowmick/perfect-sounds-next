@@ -11,6 +11,7 @@ const CategoryChipList = ({ itemList }) => {
             category: obj?.slug,
           },
         }}
+        scroll={false}
       >
         <Chip
           variant="outlined"

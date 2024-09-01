@@ -29,6 +29,7 @@ const FooterBottom = () => {
                   <li>
                     <Link
                       href="/discover"
+                      scroll={false}
                       className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
                     >
                       Browse Sounds
@@ -37,6 +38,7 @@ const FooterBottom = () => {
                   <li>
                     <Link
                       href="/price"
+                      scroll={false}
                       className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
                     >
                       Plan
@@ -45,6 +47,7 @@ const FooterBottom = () => {
                   <li>
                     <Link
                       href="/checkout"
+                      scroll={false}
                       className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
                     >
                       Checkout
@@ -53,6 +56,7 @@ const FooterBottom = () => {
                   <li>
                     <Link
                       href="/wishlist"
+                      scroll={false}
                       className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
                     >
                       Wishlist
@@ -66,6 +70,7 @@ const FooterBottom = () => {
                   <li>
                     <Link
                       href="/contact"
+                      scroll={false}
                       className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
                     >
                       Contact
@@ -74,6 +79,7 @@ const FooterBottom = () => {
                   <li>
                     <Link
                       href="/account/favourites"
+                      scroll={false}
                       className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
                     >
                       Facourites
@@ -82,6 +88,7 @@ const FooterBottom = () => {
                   <li>
                     <Link
                       href="/account/downloads"
+                      scroll={false}
                       className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
                     >
                       Downloads
@@ -90,6 +97,7 @@ const FooterBottom = () => {
                   <li>
                     <Link
                       href="/account/billing-and-invoice"
+                      scroll={false}
                       className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
                     >
                       Billing & Invoice
@@ -103,6 +111,7 @@ const FooterBottom = () => {
                   <li>
                     <Link
                       href="/license"
+                      scroll={false}
                       className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
                     >
                       License

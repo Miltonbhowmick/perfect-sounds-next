@@ -63,7 +63,8 @@ const SignupForm = ({ className }) => {
       .then((data) => {
         alert("OTP success send");
         router.push(
-          `/verification?email=${payload.email}&reason=user_creation`
+          `/verification?email=${payload.email}&reason=user_creation`,
+          { scroll: false }
         );
       })
       .catch((e) => {
@@ -160,7 +161,7 @@ const SignupForm = ({ className }) => {
       </button>
       <p className="text-primaryText font-bold flex gap-2 justify-center lg:justify-start">
         Already have an account?
-        <Link href="/signin" className="text-secondaryButton">
+        <Link href="/signin" scroll={false} className="text-secondaryButton">
           Sign in
         </Link>
       </p>

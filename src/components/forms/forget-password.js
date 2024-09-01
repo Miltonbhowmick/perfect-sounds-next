@@ -37,7 +37,8 @@ const ForgetPasswordForm = ({ className }) => {
       .then((data) => {
         alert("OTP success send");
         router.push(
-          `/verification?email=${payload.email}&reason=user_creation`
+          `/verification?email=${payload.email}&reason=user_creation`,
+          { scroll: false }
         );
       })
       .catch((e) => {
@@ -73,7 +74,7 @@ const ForgetPasswordForm = ({ className }) => {
       </button>
       <p className="text-primaryText font-bold flex gap-2 justify-center lg:justify-start">
         {"Don't have an account?"}
-        <Link href="/signup" className="text-secondaryButton">
+        <Link href="/signup" scroll={false} className="text-secondaryButton">
           Sign up now
         </Link>
       </p>

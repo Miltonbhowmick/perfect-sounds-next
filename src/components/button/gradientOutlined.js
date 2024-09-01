@@ -17,6 +17,7 @@ const ButtonGradiendOutlined = ({
     return (
       <Link
         href={href}
+        scroll={false}
         className={`${bgStyle} ${className} p-[2px] min-h-[30px]`}
         {...props}
       >

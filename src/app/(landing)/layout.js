@@ -12,7 +12,6 @@ import MobileNavbar from "@/components/header/mobile-navbar";
 import store from "@/store/store";
 import { profile } from "@/services/user.service";
 import { getTokenSSR, deleteCookie } from "../actions/auth";
-import NavigationLoader from "@/components/loader/navigation-loader";
 import { Suspense } from "react";
 import Loading from "./loading";
 

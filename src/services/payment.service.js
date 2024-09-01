@@ -26,7 +26,25 @@ export const fetchSinglePricePlans = async (params = {}) => {
         resolve(response.data);
       })
       .catch((e) => {
-        // console.log(e)
+        reject(e);
+      });
+  });
+};
+
+export const isPromoCodeValid = async (payload = {}, token) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "post",
+      url: `${PUBLIC_PAYMENT}/promo-codes/promo_validate/`,
+      headers: {
+        ...token,
+      },
+      data: payload,
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
         reject(e);
       });
   });

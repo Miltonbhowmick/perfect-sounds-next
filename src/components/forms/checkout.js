@@ -1,14 +1,21 @@
 "use client";
 
 import * as yup from "yup";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import classNames from "classnames";
 import SuccessfullModal from "@/components/modal/successfull";
 import { createOrder } from "@/services/order.service";
 
-const CheckoutForm = ({ pricePlan, authToken, className }) => {
+const CheckoutForm = ({
+  pricePlan,
+  costData,
+  handlePromoCode,
+  authToken,
+  className,
+}) => {
   const [showSuccessfullModal, setShowSuccessfullModal] = useState(false);
+  var promoCodeData = null;
 
   const checkoutSchema = yup.object({
     firstName: yup.string().required("First name is required!"),
@@ -62,6 +69,18 @@ const CheckoutForm = ({ pricePlan, authToken, className }) => {
         });
     },
   });
+
+  useEffect(() => {
+    if (promoCodeData) {
+      costData.total = (costData.total * promoCodeData.percentage) / 100;
+    }
+  }, [promoCodeData]);
+
+  const handleApplyPromoCode = () => {
+    handlePromoCode(formik.values.promoCode).then((data) => {
+      promoCodeData = data;
+    });
+  };
 
   return (
     <>
@@ -122,7 +141,13 @@ const CheckoutForm = ({ pricePlan, authToken, className }) => {
             htmlFor="name"
             className="text-primaryText font-medium text-paragraph md:text-paragraph-md lg:text-paragraph-lg"
           >
-            Promo Code
+            <span>Promo Code</span>
+            <a
+              onClick={handleApplyPromoCode}
+              className="ms-2 text-small text-gradientLeft underline"
+            >
+              {promoCodeData != null ? "applied" : "apply"}
+            </a>
           </label>
           <input
             id="promoCode"

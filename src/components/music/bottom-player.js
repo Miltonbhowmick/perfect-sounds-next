@@ -117,7 +117,7 @@ const BottomPlayer = () => {
 
   return (
     <div
-      className="fixed z-[45] bottom-0 left-0 right-0 bg-[#000000] bg-opacity-70"
+      className="fixed z-[45] bottom-0 left-0 right-0 bg-[#000000] bg-opacity-70 overflow-hidden"
       style={{
         boxShadow:
           "52.433px -52.433px 52.433px 0px rgba(0, 0, 0, 0.20) inset, -52.433px 52.433px 52.433px 0px rgba(255, 255, 255, 0.20) inset",

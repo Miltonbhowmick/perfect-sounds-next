@@ -23,7 +23,7 @@ const SigninForm = ({ className }) => {
       signin(payload)
         .then((data) => {
           alert("signin succes");
-          router.push("/");
+          router.push("/", { scroll: false });
         })
         .catch((e) => {
           alert("unsuccess");
@@ -72,6 +72,7 @@ const SigninForm = ({ className }) => {
       </div>
       <Link
         href={"/forget-password"}
+        scroll={false}
         className="text-gradientRight font-medium	 text-paragraph md:text-paragraph-md lg:text-paragraph-lg text-center lg:text-start"
       >
         Forgot Password
