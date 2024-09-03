@@ -17,7 +17,7 @@ const userSlice = createSlice({
     },
   },
   selectors: {
-    getAuthToken: (state) => `Token ${state.user.token}`,
+    getAuthToken: (state) => state.user.token,
     getProfile: (state) => state.user.profile,
   },
 });

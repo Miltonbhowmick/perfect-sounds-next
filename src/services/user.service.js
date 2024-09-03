@@ -88,3 +88,44 @@ export const profile = async (params = {}, token) => {
       });
   });
 };
+
+export const updateUserProfile = async (payload = {}, token) => {
+  return new Promise((resolve, reject) => {
+    console.log(payload);
+    axios({
+      method: "patch",
+      url: `${PUBLIC_ACCOUNT}/users/profile/`,
+      headers: {
+        ...token,
+      },
+      data: payload,
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        reject(e);
+      });
+  });
+};
+
+export const verifyUserPassword = async (payload = {}, token) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "post",
+      url: `${PUBLIC_ACCOUNT}/users/verification/`,
+      headers: {
+        ...token,
+      },
+      data: payload,
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        reject(e);
+      });
+  });
+};

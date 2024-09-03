@@ -14,6 +14,7 @@ import { profile } from "@/services/user.service";
 import { getTokenSSR, deleteCookie } from "../actions/auth";
 import { Suspense } from "react";
 import Loading from "./loading";
+import { cookies } from "next/headers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,7 +36,7 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body className={(inter.className, "bg-primaryBg")}>
         <Providers store={store}>
-          <PopulateStore userProfile={userProfile}>
+          <PopulateStore userProfile={userProfile} authToken={authToken}>
             <ClientMediaElementProviders>
               <Suspense fallback={<Loading />}></Suspense>
               <Navbar className="hidden md:block" />
