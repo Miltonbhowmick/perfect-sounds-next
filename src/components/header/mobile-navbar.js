@@ -3,17 +3,27 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { getProfile } from "@/store/modules/user";
+import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 const MobileNavbar = ({ className }) => {
+  const router = useRouter();
+  const profile = useSelector(getProfile);
   const [showMenuList, setShowMenuList] = useState(false);
   const [showSearchBox, setShowSearchBox] = useState(false);
-
   const pathName = usePathname();
 
   useEffect(() => {
     setShowMenuList(false);
     setShowSearchBox(false);
   }, [pathName]);
+
+  const handleSignout = () => {
+    const ck = Cookies.remove("PERFECTSOUND");
+    router.push("/signin", { scroll: false });
+  };
 
   return (
     <nav className={`${className} relative z-[10] bg-secondaryBg`}>
@@ -91,7 +101,7 @@ const MobileNavbar = ({ className }) => {
               setShowMenuList(!showMenuList);
               setShowSearchBox(false);
             }}
-            className="relative w-[24px] h-[24px]"
+            className="relative w-[24px] h-[24px] cursor-pointer"
           >
             {showMenuList === false ? (
               <svg
@@ -150,29 +160,53 @@ const MobileNavbar = ({ className }) => {
                     <Link
                       href="/discover"
                       scroll={false}
-                      className="text-primaryText"
+                      className="text-primaryText cursor-pointer"
                     >
                       Plan
                     </Link>
                   </li>
-                  <li className="py-2">
-                    <Link
-                      href="/signup"
-                      scroll={false}
-                      className="text-primaryText"
-                    >
-                      Sign Up
-                    </Link>
-                  </li>
-                  <li className="py-2">
-                    <Link
-                      href="/signin"
-                      scroll={false}
-                      className="text-primaryText"
-                    >
-                      Sign In
-                    </Link>
-                  </li>
+                  {profile === null ? (
+                    <>
+                      <li className="py-2">
+                        <Link
+                          href="/signup"
+                          scroll={false}
+                          className="text-primaryText cursor-pointer"
+                        >
+                          Sign Up
+                        </Link>
+                      </li>
+                      <li className="py-2">
+                        <Link
+                          href="/signin"
+                          scroll={false}
+                          className="text-primaryText cursor-pointer"
+                        >
+                          Sign In
+                        </Link>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li className="py-2">
+                        <Link
+                          href="/account"
+                          scroll={false}
+                          className="text-primaryText cursor-pointer"
+                        >
+                          Account
+                        </Link>
+                      </li>
+                      <li className="py-2">
+                        <a
+                          onClick={handleSignout}
+                          className="text-primaryText cursor-pointer"
+                        >
+                          Sign Out
+                        </a>
+                      </li>
+                    </>
+                  )}
                 </ul>
               </div>
             </div>
