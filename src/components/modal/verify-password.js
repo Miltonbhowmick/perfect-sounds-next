@@ -2,9 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import ButtonGradiend from "../button/gradient";
-import { updateUserProfile, verifyUserPassword } from "@/services/user.service";
+import {
+  deleteUserProfile,
+  updateUserProfile,
+  verifyUserPassword,
+} from "@/services/user.service";
 import { getAuthToken, getProfile } from "@/store/modules/user";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 export default function VerifyPasswordModal({
   showModal,
@@ -12,10 +17,12 @@ export default function VerifyPasswordModal({
   headline,
   description,
   userData,
+  mode,
   className,
   ...props
 }) {
   const token = useSelector(getAuthToken);
+  const router = useRouter();
   const modalWrapperRef = useRef();
   var [password, setPassword] = useState("");
 
@@ -75,17 +82,27 @@ export default function VerifyPasswordModal({
       alert("Password not be empty!");
       return;
     }
-    console.log("====", token);
     handleVerifyUserPasswordApi();
+  };
+
+  const handleDeleteProfile = () => {
+    deleteUserProfile({}, token)
+      .then((data) => {
+        console.log("User deleted!");
+        router.push("/signup");
+      })
+      .catch((e) => {
+        console.log("User deletion failed!");
+      });
   };
 
   return (
     <>
       {showModal && (
-        <div className="fixed inset-0 z-50 overflow-x-hidden flex justify-center items-center bg-primaryBg">
+        <div className="fixed inset-0 z-50 overflow-x-hidden mx-2 sm:mx-0 flex justify-center items-center bg-primaryBgRGB">
           <div
             ref={modalWrapperRef}
-            className="relative max-w-[846px] max-h-[695px] mx-5 p-[30px] md:p-[70px] bg-secondaryBg rounded-[10px] md:rounded-[20px] drop-shadow-primary"
+            className="relative max-w-[846px] max-h-[695px] min-w-[100%] sm:min-w-[430px] md:min-w-[500px] mx-5 p-[30px] md:p-[70px] bg-secondaryBg rounded-[10px] md:rounded-[20px] drop-shadow-primary"
           >
             <a
               onClick={() => {
@@ -114,9 +131,16 @@ export default function VerifyPasswordModal({
                 <h4 className="text-primaryText font-bold text-center uppercase">
                   Your Password
                 </h4>
-                <p className="text-primaryText text-center w-3/4">
-                  Verify your account and update your profile information
-                </p>
+                {mode === "updateProfile" && (
+                  <p className="text-primaryText text-center w-3/4">
+                    Verify your account and update your profile information
+                  </p>
+                )}
+                {mode === "deleteProfile" && (
+                  <p className="text-primaryText text-center w-3/4">
+                    Verify and delete your profile
+                  </p>
+                )}
                 <div className="w-full flex flex-col gap-2">
                   <label
                     htmlFor="password"
@@ -137,15 +161,28 @@ export default function VerifyPasswordModal({
                   />
                 </div>
               </div>
-              <ButtonGradiend
-                onClick={() => {
-                  handleUpdateProfile();
-                }}
-                className="py-2 md:py-3 rounded-md w-full"
-                gradient
-              >
-                <h6 className="text-primaryText">Done</h6>
-              </ButtonGradiend>
+              {mode === "updateProfile" && (
+                <ButtonGradiend
+                  onClick={() => {
+                    handleUpdateProfile();
+                  }}
+                  className="py-2 md:py-3 rounded-md w-full"
+                  gradient
+                >
+                  <h6 className="text-primaryText">Done</h6>
+                </ButtonGradiend>
+              )}
+              {mode === "deleteProfile" && (
+                <ButtonGradiend
+                  onClick={() => {
+                    handleDeleteProfile();
+                  }}
+                  className="py-2 md:py-3 rounded-md w-full"
+                  gradient
+                >
+                  <h6 className="text-primaryText">Done</h6>
+                </ButtonGradiend>
+              )}
             </div>
           </div>
         </div>

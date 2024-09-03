@@ -129,3 +129,23 @@ export const verifyUserPassword = async (payload = {}, token) => {
       });
   });
 };
+
+export const deleteUserProfile = async (payload = {}, token) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "delete",
+      url: `${PUBLIC_ACCOUNT}/users/profile/`,
+      headers: {
+        ...token,
+      },
+    })
+      .then((response) => {
+        Cookies.remove("PERFECTSOUND");
+        resolve(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        reject(e);
+      });
+  });
+};

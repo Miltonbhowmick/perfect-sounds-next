@@ -6,6 +6,8 @@ import AccountSidebar from "@/components/sidebar/account";
 import ButtonGradiend from "@/components/button/gradient";
 import EditProfileForm from "@/components/forms/edit-profile";
 import AccountMobileSidebar from "@/components/sidebar/mobile-account";
+import VerifyPasswordModal from "@/components/modal/verify-password";
+import DeleteProfileModal from "@/components/forms/delete-profile";
 
 export default function Account() {
   return (
@@ -53,7 +55,7 @@ export default function Account() {
               Edit Profile Information
             </h4>
             <p className="text-primaryText font-medium">
-              We never share your profile information , See our{" "}
+              We never share your profile information , See our
               <Link href="" scroll={false} className="text-gradientRight">
                 Privacy Policy
               </Link>
@@ -65,12 +67,7 @@ export default function Account() {
             <p className="text-primaryText font-medium">
               Erase your email address and other data form our systems.
             </p>
-            <ButtonGradiend
-              className="mt-5 px-5 h-[35px] md:h-[45px] lg:h-[55px] w-max rounded-lg"
-              gradient
-            >
-              <h6 className="text-primaryText font-medium">Delete Account</h6>
-            </ButtonGradiend>
+            <DeleteProfileModal />
           </div>
         </div>
       </div>

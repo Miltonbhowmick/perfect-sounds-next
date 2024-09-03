@@ -17,12 +17,12 @@ const EditProfileForm = ({ className }) => {
   const formik = useFormik({
     initialValues: {
       email: profile.email,
-      firstName: profile.first_name,
-      lastName: profile.last_name,
-      address: profile.address,
-      city: profile.city,
-      postCode: profile.post_code,
-      country: profile.country,
+      firstName: profile.first_name || "",
+      lastName: profile.last_name || "",
+      address: profile.address || "",
+      city: profile.city || "",
+      postCode: profile.post_code || "",
+      country: profile.country || "",
     },
     onSubmit: (values) => {
       setShowVerifyPasswordModal(true);
@@ -165,6 +165,7 @@ const EditProfileForm = ({ className }) => {
           showModal={showVerifyPasswordModal}
           hideModal={setShowVerifyPasswordModal}
           userData={formik.values}
+          mode={"updateProfile"}
         />
       )}
     </form>
