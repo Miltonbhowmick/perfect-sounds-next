@@ -1,14 +1,24 @@
 import Image from "next/image";
-import Link from "next/link";
 
 import HeroBannerHorizontal from "@/components/herosection/horizontal";
 import AccountSidebar from "@/components/sidebar/account";
-import ButtonGradiend from "@/components/button/gradient";
-import EditProfileForm from "@/components/forms/edit-profile";
 import ClientWrapper from "@/components/music/client-wrapper";
 import AccountMobileSidebar from "@/components/sidebar/mobile-account";
+import { getTokenSSR } from "@/app/actions/auth";
+import { fetchFavourites } from "@/services/common.service";
+import ClientFavouriteWrapper from "@/components/music/client-favourite-wrapper";
 
-export default function AccountFavourites() {
+export default async function AccountFavourites() {
+  const authToken = getTokenSSR();
+  var favoriteList = null;
+  let params = {
+    limit: 5,
+    offset: 0,
+  };
+  await fetchFavourites(params, authToken).then((data) => {
+    favoriteList = data.results;
+  });
+
   return (
     <div>
       <div className="relative overflow-hidden">
@@ -45,7 +55,9 @@ export default function AccountFavourites() {
             </p>
           </div>
           <div className="px-5 py-2 lg:px-14 lg:py-5 bg-secondaryBg rounded-[20px]">
-            <ClientWrapper></ClientWrapper>
+            <ClientFavouriteWrapper
+              musicTrackList={favoriteList}
+            ></ClientFavouriteWrapper>
           </div>
         </div>
       </div>

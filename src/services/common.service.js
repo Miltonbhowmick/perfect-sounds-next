@@ -10,8 +10,8 @@ export const fetchCategories = async (params = {}) => {
       .then((response) => {
         resolve(response.data);
       })
-      .catch((error) => {
-        reject(error.response?.data);
+      .catch((e) => {
+        reject(e);
       });
   });
 };
@@ -25,8 +25,26 @@ export const fetchSubCategories = (params = {}) => {
       .then((response) => {
         resolve(response.data);
       })
-      .catch((error) => {
-        reject(error.response?.data);
+      .catch((e) => {
+        reject(e);
+      });
+  });
+};
+
+export const fetchFavourites = (params = {}, token) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "get",
+      url: `${PUBLIC_COMMON}/favourites`,
+      headers: {
+        ...token,
+      },
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        reject(e);
       });
   });
 };
