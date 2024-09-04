@@ -48,3 +48,22 @@ export const fetchFavourites = (params = {}, token) => {
       });
   });
 };
+
+export const deleteSingleFavourite = (payload = {}, token) => {
+  return new Promise((resolve, reject) => {
+    const id = payload.id;
+    axios({
+      method: "delete",
+      url: `${PUBLIC_COMMON}/favourites/${id}/`,
+      headers: {
+        ...token,
+      },
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+};

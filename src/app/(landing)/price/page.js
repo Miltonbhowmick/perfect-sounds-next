@@ -105,7 +105,7 @@ export default async function PricePage() {
   });
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen mt-16">
       <div className="relative overflow-hidden">
         <HeroBannerHorizontal
           className="h-[245px] sm:h-[345px] md:h-[360px] lg:h-[400px]"
