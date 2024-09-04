@@ -35,7 +35,7 @@ const Discover = async (searchParams) => {
   });
 
   return (
-    <main>
+    <main className="min-h-screen mt-24">
       <div className="container py-10">
         <div className="flex gap-5 justify-between lg:hidden">
           <div className="w-1/2">
