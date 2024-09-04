@@ -77,7 +77,9 @@ const Discover = async (searchParams) => {
             {subCategories.map((element, index) => {
               return (
                 <li
-                  className="text-primaryText font-medium px-5 py-2 border border-tertiaryBg w-max rounded-lg"
+                  className={`${
+                    element.slug === subCategoryQuery ? "bg-gradientLeft" : ""
+                  } text-primaryText font-medium px-5 py-2 border border-tertiaryBg w-max rounded-lg`}
                   key={"sub_cat" + index}
                 >
                   <Link
@@ -114,7 +116,9 @@ const Discover = async (searchParams) => {
                   return (
                     <li
                       className={`${
-                        element.active ? "bg-gradientLeft" : "border-tertiaryBg"
+                        element.slug === categoryQuery
+                          ? "bg-gradientLeft"
+                          : "border-tertiaryBg"
                       } px-[30px] py-[20px] text-primaryText font-medium rounded-xl `}
                       key={"cat" + index}
                     >
