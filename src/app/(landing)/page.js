@@ -8,8 +8,10 @@ import { fetchCategories } from "@/services/common.service";
 import { fetchTracks } from "@/services/music.service";
 import CategoryChipList from "@/components/category/chipList";
 import { Suspense } from "react";
+import { getTokenSSR } from "../actions/auth";
 
 export default async function Home() {
+  const authToken = getTokenSSR();
   var categories = null;
 
   await fetchCategories().then((data) => {
@@ -21,7 +23,7 @@ export default async function Home() {
     limit: 6,
     offset: 0,
   };
-  await fetchTracks(params).then((data) => {
+  await fetchTracks(params, authToken).then((data) => {
     musicTrackList = data.results;
   });
 
