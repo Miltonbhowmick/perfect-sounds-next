@@ -4,8 +4,10 @@ import { fetchCategories, fetchSubCategories } from "@/services/common.service";
 import { fetchTracks } from "@/services/music.service";
 import { Suspense } from "react";
 import Link from "next/link";
+import { getTokenSSR } from "@/app/actions/auth";
 
 const Discover = async (searchParams) => {
+  const authToken = getTokenSSR();
   const queryParams = searchParams.searchParams;
   var categoryQuery = queryParams.category || null;
   var subCategoryQuery = queryParams.subcategory || null;
@@ -30,7 +32,7 @@ const Discover = async (searchParams) => {
   if (subCategoryQuery) {
     params["subcategory__slug"] = subCategoryQuery;
   }
-  await fetchTracks(params).then((data) => {
+  await fetchTracks(params, authToken).then((data) => {
     musicTrackList = data.results;
   });
 

@@ -11,7 +11,10 @@ import ButtonMediaPlay from "@/components/button/mediaPlay";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import { addSingleFavourite } from "@/services/common.service";
+import {
+  addSingleFavourite,
+  deleteSingleFavourite,
+} from "@/services/common.service";
 import { getAuthToken } from "@/store/modules/user";
 
 const MusicWrapper = ({ musicTrackList }) => {
@@ -160,6 +163,19 @@ const MusicWrapper = ({ musicTrackList }) => {
       });
   };
 
+  const handleRemoveSingleFavouriteTrack = (favoriteId) => {
+    let payload = {
+      id: favoriteId,
+    };
+    deleteSingleFavourite(payload, authToken)
+      .then((data) => {
+        console.log("Favourite track deletion done!");
+      })
+      .catch((e) => {
+        console.log("Favourite track deletion failed!");
+      });
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <audio ref={audioRef}>
@@ -220,37 +236,62 @@ const MusicWrapper = ({ musicTrackList }) => {
                   : "00:00"}
               </p>
             </div>
-            <div
-              onClick={() => handleAddTrackFavorite(music)}
-              className="px-2 py-2 rounded text-primaryText border border-primaryText cursor-pointer"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                viewBox="0 0 22 22"
-                fill="none"
-                className="w-[12px] h-[12px] md:w-[22px] md:h-[22px]"
+            {music.is_favorite === null ? (
+              <div
+                onClick={() => handleAddTrackFavorite(music)}
+                className="px-2 py-2 rounded text-primaryText border border-primaryText cursor-pointer"
               >
-                <g id="heart-add">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  viewBox="0 0 22 22"
+                  fill="none"
+                  className="w-[12px] h-[12px] md:w-[22px] md:h-[22px]"
+                >
+                  <g id="heart-add">
+                    <path
+                      id="Vector"
+                      d="M11.1077 18.8259C9.94145 18.8259 9.26923 18.3283 7.92477 17.3332C0.866083 12.1087 1.55853 5.9159 4.61874 4.03876C6.95051 2.60845 8.98568 3.18485 10.2082 4.10299C10.7096 4.47945 10.9602 4.66768 11.1077 4.66768C11.2551 4.66768 11.5057 4.47945 12.0071 4.10299C13.2297 3.18485 15.2648 2.60845 17.5966 4.03876C19.091 4.95545 20.0208 6.90133 19.759 9.26104"
+                      stroke="white"
+                      strokeWidth="1.3043"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      id="Vector_2"
+                      d="M12.8467 15.3478H19.8029M16.3248 11.8696V18.8259"
+                      stroke="white"
+                      strokeWidth="1.3043"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </g>
+                </svg>
+              </div>
+            ) : (
+              <div
+                onClick={() =>
+                  handleRemoveSingleFavouriteTrack(music.is_favorite)
+                }
+                className="px-2 py-2 rounded text-primaryText border border-primaryText cursor-pointer"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  viewBox="0 0 22 22"
+                  fill="none"
+                >
                   <path
-                    id="Vector"
-                    d="M11.1077 18.8259C9.94145 18.8259 9.26923 18.3283 7.92477 17.3332C0.866083 12.1087 1.55853 5.9159 4.61874 4.03876C6.95051 2.60845 8.98568 3.18485 10.2082 4.10299C10.7096 4.47945 10.9602 4.66768 11.1077 4.66768C11.2551 4.66768 11.5057 4.47945 12.0071 4.10299C13.2297 3.18485 15.2648 2.60845 17.5966 4.03876C19.091 4.95545 20.0208 6.90133 19.759 9.26104"
-                    stroke="white"
-                    strokeWidth="1.3043"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    id="Vector_2"
-                    d="M12.8467 15.3478H19.8029M16.3248 11.8696V18.8259"
+                    d="M11.0332 14.4782L12.3375 12.3044L10.5984 10.5653L13.207 8.3915L11.0332 4.91338C11.0332 4.91338 11.4313 4.47945 11.9326 4.10299C13.1552 3.18485 15.1903 2.60845 17.5222 4.03876C20.5823 5.9159 21.2748 12.1087 14.2161 17.3332C12.8717 18.3283 12.1994 18.8259 11.0332 18.8259C9.86699 18.8259 9.19477 18.3283 7.85031 17.3332C0.79162 12.1087 1.48407 5.9159 4.54427 4.03876C6.19121 3.02853 7.69018 3.01938 8.85937 3.42464"
                     stroke="white"
                     strokeWidth="1.3043"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
-                </g>
-              </svg>
-            </div>
+                </svg>
+              </div>
+            )}
             <a className="px-2 py-2 rounded text-primaryText border border-primaryText cursor-pointer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
