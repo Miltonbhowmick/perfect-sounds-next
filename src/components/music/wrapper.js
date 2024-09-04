@@ -11,6 +11,8 @@ import ButtonMediaPlay from "@/components/button/mediaPlay";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import { addSingleFavourite } from "@/services/common.service";
+import { getAuthToken } from "@/store/modules/user";
 
 const MusicWrapper = ({ musicTrackList }) => {
   // const musicList = [
@@ -30,7 +32,7 @@ const MusicWrapper = ({ musicTrackList }) => {
   //     url: "/musics/3.mp3",
   //   },
   // ];
-
+  const authToken = useSelector(getAuthToken);
   const dispatch = useDispatch();
   var currentMusic = useSelector((state) => {
     return state.music.currentMusic;
@@ -145,6 +147,19 @@ const MusicWrapper = ({ musicTrackList }) => {
     return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
   };
 
+  const handleAddTrackFavorite = (track) => {
+    let payload = {
+      track: track.id,
+    };
+    addSingleFavourite(payload, authToken)
+      .then((data) => {
+        console.log("Successfully added track to favorite!");
+      })
+      .catch((e) => {
+        console.log("Adding track to favorite failed!");
+      });
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <audio ref={audioRef}>
@@ -205,7 +220,10 @@ const MusicWrapper = ({ musicTrackList }) => {
                   : "00:00"}
               </p>
             </div>
-            <div className="px-2 py-2 rounded text-primaryText border border-primaryText cursor-pointer">
+            <div
+              onClick={() => handleAddTrackFavorite(music)}
+              className="px-2 py-2 rounded text-primaryText border border-primaryText cursor-pointer"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="22"

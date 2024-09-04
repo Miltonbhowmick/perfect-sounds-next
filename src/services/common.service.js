@@ -67,3 +67,22 @@ export const deleteSingleFavourite = (payload = {}, token) => {
       });
   });
 };
+
+export const addSingleFavourite = (payload = {}, token) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "post",
+      url: `${PUBLIC_COMMON}/favourites/`,
+      headers: {
+        ...token,
+      },
+      data: payload,
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+};
