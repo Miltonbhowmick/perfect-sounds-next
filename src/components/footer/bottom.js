@@ -120,15 +120,20 @@ const FooterBottom = () => {
                   <li>
                     <Link
                       href="/terms-of-use"
+                      scroll={false}
                       className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
                     >
                       Terms of Use
                     </Link>
                   </li>
                   <li>
-                    <a className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText">
+                    <Link
+                      href="/privacy-policy"
+                      scroll={false}
+                      className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
+                    >
                       Privacy Policy
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
