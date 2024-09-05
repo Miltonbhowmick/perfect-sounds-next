@@ -51,7 +51,10 @@ const MusicWrapper = ({ musicTrackList }) => {
   const wavesurferInstances = useRef([]);
 
   useEffect(() => {
-    if (waveformRefs.current.length === musicTrackList.length) {
+    if (
+      musicTrackList &&
+      waveformRefs.current.length === musicTrackList.length
+    ) {
       console.log("musicTrackList.length", musicTrackList.length);
       wavesurferInstances.current = musicTrackList.map((music, index) => {
         const ws = WaveSurfer.create({

@@ -1,11 +1,11 @@
 import Link from "next/link";
 
 const ButtonGradiendOutlined = ({
+  href = defaultProps.href,
+  onClick = defaultProps.onClick,
+  className = defaultProps.className,
+  gradient = defaultProps.gradient,
   children,
-  href,
-  onClick,
-  className,
-  gradient,
   ...props
 }) => {
   const gradientStyles = "bg-gradient-to-r from-gradientLeft to-gradientRight";
@@ -40,7 +40,7 @@ const ButtonGradiendOutlined = ({
   );
 };
 
-ButtonGradiendOutlined.defaultProps = {
+const defaultProps = {
   href: null,
   onClick: null,
   className: "",

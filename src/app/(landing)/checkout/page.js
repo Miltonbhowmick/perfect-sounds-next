@@ -13,7 +13,6 @@ const CheckoutPage = async (searchParams) => {
   if (!pricePlanId) {
     redirect("/price");
   }
-  console.log("asche? price id", pricePlanId);
   const taxPercentage = 5;
   var pricePlanData = null;
   var costData = {

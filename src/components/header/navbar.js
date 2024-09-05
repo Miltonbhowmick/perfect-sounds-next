@@ -5,15 +5,24 @@ import Link from "next/link";
 import { getProfile } from "@/store/modules/user";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Navbar({ className }) {
   const router = useRouter();
   const profile = useSelector(getProfile);
+  const [searchText, setSearchText] = useState();
+  const queryParams = useSearchParams();
 
   const handleSignout = () => {
     const ck = Cookies.remove("PERFECTSOUND");
     router.push("/signin", { scroll: false });
+  };
+
+  const handleTrackSearch = (event) => {
+    if (event.key === "Enter") {
+      router.push(`/discover?title=${searchText}`);
+    }
   };
 
   return (
@@ -46,6 +55,8 @@ export default function Navbar({ className }) {
               />
             </svg>
             <input
+              onChange={(e) => setSearchText(e.target.value)}
+              onKeyDown={handleTrackSearch}
               className="text-secondaryText bg-transparent outline-0"
               placeholder="Search for Sound effect"
             />
