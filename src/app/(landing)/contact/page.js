@@ -4,7 +4,7 @@ import ContactForm from "@/components/forms/contact";
 
 const ContactPage = () => {
   return (
-    <div>
+    <main className="min-h-screen mt-24">
       <div className="relative overflow-hidden">
         <HeroBannerHorizontal
           className="h-[245px] sm:h-[345px] md:h-[360px] lg:h-[400px]"
@@ -252,7 +252,7 @@ const ContactPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 
