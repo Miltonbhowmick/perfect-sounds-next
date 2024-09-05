@@ -1,10 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 
 import HeroBannerHorizontal from "@/components/herosection/horizontal";
-import AccountSidebar from "@/components/sidebar/account";
-import ButtonGradiend from "@/components/button/gradient";
-import EditProfileForm from "@/components/forms/edit-profile";
 import AccountMobileSidebar from "@/components/sidebar/mobile-account";
 import LicenseSidebar from "@/components/sidebar/license";
 

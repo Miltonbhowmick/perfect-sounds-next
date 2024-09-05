@@ -118,9 +118,12 @@ const FooterBottom = () => {
                     </Link>
                   </li>
                   <li>
-                    <a className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText">
+                    <Link
+                      href="/terms-of-use"
+                      className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
+                    >
                       Terms of Use
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     <a className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText">
