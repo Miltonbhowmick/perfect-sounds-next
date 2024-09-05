@@ -28,7 +28,7 @@ export default async function Home() {
   });
 
   return (
-    <main className="relative">
+    <main className="relative mt-16">
       <HeroBannerHorizontal
         className="h-[245px] sm:h-[345px] md:h-[500px] lg:h-[550px]"
         image={
