@@ -26,7 +26,9 @@ const MobileNavbar = ({ className }) => {
   };
 
   return (
-    <nav className={`${className} relative z-[10] bg-secondaryBg`}>
+    <nav
+      className={`${className} fixed top-0 left-0 right-0 z-[99] bg-secondaryBg`}
+    >
       <div className="container">
         <div className="h-[70px] flex justify-between items-center">
           <div
@@ -84,7 +86,11 @@ const MobileNavbar = ({ className }) => {
                     />
                   </svg>
                 </div>
-                <p className="text-primaryText">Search for Sound effect</p>
+                {/* <p className="text-primaryText">Search for Sound effect</p> */}
+                <input
+                  className="text-secondaryText bg-transparent outline-0"
+                  placeholder="Search for Sound effect"
+                />
               </div>
             </div>
           )}

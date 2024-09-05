@@ -21,7 +21,7 @@ export default function Navbar({ className }) {
       className={`${className} bg-secondaryBg fixed top-0 left-0 right-0 z-[99]`}
     >
       <div className="container">
-        <div className="py-2 lg:h-[100px] flex justify-between items-center">
+        <div className="py-2 md:h-[70px] lg:h-[100px] flex justify-between items-center">
           <div className="basis-[30%] shrink grow-0 flex gap-2 items-center">
             <svg
               className="w-[20px]"
