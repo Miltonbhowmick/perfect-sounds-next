@@ -8,6 +8,7 @@ const ImageContent = ({
   description,
   buttonVariant,
   buttonText,
+  buttonLink,
   className,
   ...props
 }) => {
@@ -25,6 +26,7 @@ const ImageContent = ({
         {description && <p className="text-primaryText">{description}</p>}
         {buttonVariant === "gradient" && (
           <ButtonGradiend
+            href={buttonLink}
             className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 px-5 h-[35px] md:h-[45px] lg:h-[55px] w-max rounded-full"
             gradient
           >
@@ -32,7 +34,10 @@ const ImageContent = ({
           </ButtonGradiend>
         )}
         {buttonVariant === "grad-outlined" && (
-          <ButtonGradiendOutlined className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 h-[35px] md:h-[45px] lg:h-[55px] rounded-full">
+          <ButtonGradiendOutlined
+            href={buttonLink}
+            className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 h-[35px] md:h-[45px] lg:h-[55px] rounded-full"
+          >
             <h6 className="bg-gradient-to-r from-gradientLeft to-gradientRight bg-clip-text text-transparent font-bold">
               {buttonText}
             </h6>
@@ -48,6 +53,7 @@ ImageContent.defaultProps = {
   headline: null,
   description: null,
   buttonText: null,
+  buttonLink: null,
   buttonVariant: "gradient",
   className: "",
 };

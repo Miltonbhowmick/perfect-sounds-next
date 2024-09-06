@@ -9,6 +9,7 @@ const HeroBannerHorizontal = ({
   headline,
   description,
   buttonText,
+  buttonLink,
   buttonVariant,
   ...props
 }) => {
@@ -23,6 +24,7 @@ const HeroBannerHorizontal = ({
           <p className="text-primaryText text-center">{description}</p>
           {buttonText && buttonVariant === "gradient" && (
             <ButtonGradiend
+              href={buttonLink}
               className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 h-[40px] lg:h-[55px] rounded-full"
               gradient
             >
@@ -30,7 +32,10 @@ const HeroBannerHorizontal = ({
             </ButtonGradiend>
           )}
           {buttonText && buttonVariant === "grad-outlined" && (
-            <ButtonGradiendOutlined className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 h-[40px] lg:h-[55px] rounded-full">
+            <ButtonGradiendOutlined
+              href={buttonLink}
+              className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 h-[40px] lg:h-[55px] rounded-full"
+            >
               <h6 className="bg-gradient-to-r from-gradientLeft to-gradientRight bg-clip-text text-transparent font-bold">
                 {buttonText}
               </h6>
@@ -47,6 +52,7 @@ HeroBannerHorizontal.defaultProps = {
   headline: null,
   description: null,
   buttonText: null,
+  buttonLink: null,
   buttonVariant: "gradient",
   className: "",
 };

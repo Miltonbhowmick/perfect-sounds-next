@@ -44,6 +44,7 @@ export default async function Home() {
           "Enhance Your Productions with our High-Quality Sound Effects Library"
         }
         buttonText={"Buy Sound Effects"}
+        buttonLink={"/discover"}
       ></HeroBannerHorizontal>
       <BadgeCross
         firstLoop="4"
@@ -100,6 +101,7 @@ export default async function Home() {
               "Check out All Sounds Now and Take Your Audio Design to the Next Level!"
             }
             buttonText={"Explore sounds"}
+            buttonLink={"/discover"}
             buttonVariant="grad-outlined"
           ></HeroBannerHorizontal>
         </div>
@@ -119,6 +121,7 @@ export default async function Home() {
             headline="Your Premier Source for Unmatched Sound Effects"
             description="Explore a Vast Library of High-Quality Sound Effects and Audio Samples,Create Customized Audio Designs, and Bring Your Projects to Life!"
             buttonVariant="gradient"
+            buttonLink={"/price"}
             buttonText="Check Pricing"
           ></LeftImageRightContent>
         </div>
