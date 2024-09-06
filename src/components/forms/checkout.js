@@ -49,7 +49,6 @@ const CheckoutForm = ({ pricePlan, costData, authToken, className }) => {
       let payload = {
         first_name: values.firstName,
         last_name: values.lastName,
-        promo_code: promoCodeData?.id,
         company: values.company,
         address1: values.address1,
         address2: values.address2,
@@ -60,6 +59,10 @@ const CheckoutForm = ({ pricePlan, costData, authToken, className }) => {
         is_agreed_policy: values.isAgreePolicy,
         price_plan: pricePlan,
       };
+
+      if (promoCodeData?.id) {
+        payload["promo_code"] = parseInt(promoCodeData?.id);
+      }
 
       createOrder(payload, authToken)
         .then((data) => {
