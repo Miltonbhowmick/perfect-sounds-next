@@ -44,24 +44,6 @@ const FooterBottom = () => {
                       Plan
                     </Link>
                   </li>
-                  <li>
-                    <Link
-                      href="/checkout"
-                      scroll={false}
-                      className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
-                    >
-                      Checkout
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/wishlist"
-                      scroll={false}
-                      className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
-                    >
-                      Wishlist
-                    </Link>
-                  </li>
                 </ul>
               </div>
               <div className="basis-1/3 shrink grow flex flex-col gap-2 md:gap-6">
@@ -74,33 +56,6 @@ const FooterBottom = () => {
                       className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
                     >
                       Contact
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/account/favourites"
-                      scroll={false}
-                      className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
-                    >
-                      Facourites
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/account/downloads"
-                      scroll={false}
-                      className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
-                    >
-                      Downloads
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/account/billing-and-invoice"
-                      scroll={false}
-                      className="text-paragraph sm:text-paragraph-md md:text-small text-secondaryText"
-                    >
-                      Billing & Invoice
                     </Link>
                   </li>
                 </ul>
