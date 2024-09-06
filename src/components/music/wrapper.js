@@ -16,6 +16,7 @@ import {
   deleteSingleFavourite,
 } from "@/services/common.service";
 import { getAuthToken } from "@/store/modules/user";
+import toast from "react-hot-toast";
 
 const MusicWrapper = ({ musicTrackList }) => {
   // const musicList = [
@@ -51,6 +52,7 @@ const MusicWrapper = ({ musicTrackList }) => {
   const wavesurferInstances = useRef([]);
 
   useEffect(() => {
+    console.log("=============WRAPPER===========", waveformRefs.current.length);
     if (
       musicTrackList &&
       waveformRefs.current.length === musicTrackList.length
@@ -68,7 +70,7 @@ const MusicWrapper = ({ musicTrackList }) => {
           responsive: true,
           height: 50,
           width: "100%",
-          // normalize: false,
+          normalize: false,
           // partialRender: true,
           url: music.audio_file,
           media: new Audio(),
@@ -125,6 +127,7 @@ const MusicWrapper = ({ musicTrackList }) => {
           // ws.destroy();
         }
       });
+      waveformRefs.current = [];
     };
   }, [musicTrackList]);
 
@@ -158,10 +161,10 @@ const MusicWrapper = ({ musicTrackList }) => {
     };
     addSingleFavourite(payload, authToken)
       .then((data) => {
-        console.log("Successfully added track to favorite!");
+        toast.success("Successfully added track to favorite!");
       })
       .catch((e) => {
-        console.log("Adding track to favorite failed!");
+        toast.error("Adding track to favorite failed!");
       });
   };
 
@@ -171,10 +174,10 @@ const MusicWrapper = ({ musicTrackList }) => {
     };
     deleteSingleFavourite(payload, authToken)
       .then((data) => {
-        console.log("Favourite track deletion done!");
+        toast.success("Favourite track deletion done!");
       })
       .catch((e) => {
-        console.log("Favourite track deletion failed!");
+        toast.error("Favourite track deletion failed!");
       });
   };
 
