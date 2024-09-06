@@ -10,6 +10,7 @@ import {
 import { getAuthToken, getProfile } from "@/store/modules/user";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function VerifyPasswordModal({
   showModal,
@@ -53,11 +54,11 @@ export default function VerifyPasswordModal({
     };
     updateUserProfile(payload, token)
       .then((res) => {
-        console.log("====== update profile");
+        toast.success("Profile is updated!");
         hideModal(false);
       })
       .catch((e) => {
-        console.log("====== update not profile", e);
+        toast.error("Profile is updating failed!");
         hideModal(false);
       });
   };
@@ -69,17 +70,17 @@ export default function VerifyPasswordModal({
 
     verifyUserPassword(payload, token)
       .then((data) => {
-        console.log("Successfully user verified!");
+        toast.success("Successfully user verified!");
         handleUpdateUserProfileApi();
       })
       .catch((e) => {
-        console.log("user verification failed!");
+        toast.error("Verification is failed!");
       });
   };
 
   const handleUpdateProfile = () => {
     if (!password || password.length === 0) {
-      alert("Password not be empty!");
+      toast.error("Password can not be empty!");
       return;
     }
     handleVerifyUserPasswordApi();
@@ -88,11 +89,11 @@ export default function VerifyPasswordModal({
   const handleDeleteProfile = () => {
     deleteUserProfile({}, token)
       .then((data) => {
-        console.log("User deleted!");
+        toast.success("User has been deleted!");
         router.push("/signup");
       })
       .catch((e) => {
-        console.log("User deletion failed!");
+        toast.error("User deletion failed!");
       });
   };
 

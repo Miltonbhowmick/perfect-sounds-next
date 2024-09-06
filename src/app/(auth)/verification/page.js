@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import OTPInput from "react-otp-input";
 import { sendVerificationCode, verifyCode } from "@/services/user.service";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function Verification(searchParams) {
   const router = useRouter();
@@ -39,11 +40,11 @@ export default function Verification(searchParams) {
     };
     sendVerificationCode(payload)
       .then((data) => {
-        alert("otp success send");
+        toast.success("OTP success send");
         resetTimer();
       })
       .catch((e) => {
-        alert("unsuccess");
+        toast.error("OTP not send!");
       });
   };
 
@@ -54,11 +55,11 @@ export default function Verification(searchParams) {
     };
     verifyCode(payload)
       .then((data) => {
-        alert("Verfied!");
+        toast.success("Verification is successfull!");
         router.push("/signin", { scroll: false });
       })
       .catch((e) => {
-        alert("unsuccess");
+        toast.error("Verification is unsuccessfull!");
       });
   };
 

@@ -13,6 +13,7 @@ import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { deleteSingleFavourite } from "@/services/common.service";
 import { getAuthToken } from "@/store/modules/user";
+import toast from "react-hot-toast";
 
 const MusicFavouriteWrapper = ({ musicTrackList }) => {
   // const musicList = [
@@ -154,10 +155,10 @@ const MusicFavouriteWrapper = ({ musicTrackList }) => {
     };
     deleteSingleFavourite(payload, authToken)
       .then((data) => {
-        console.log("Favourite track deletion done!");
+        toast.success("Favourite track deletion done!");
       })
       .catch((e) => {
-        console.log("Favourite track deletion failed!");
+        toast.error("Favourite track deletion failed!");
       });
   };
 

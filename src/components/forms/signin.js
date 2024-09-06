@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import Link from "next/link";
 import classNames from "classnames";
 import { signin } from "@/services/user.service";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 const SigninForm = ({ className }) => {
   const router = useRouter();
@@ -22,11 +23,11 @@ const SigninForm = ({ className }) => {
       };
       signin(payload)
         .then((data) => {
-          alert("signin succes");
+          toast.success("Signin is successfull!");
           router.push("/", { scroll: false });
         })
         .catch((e) => {
-          alert("unsuccess");
+          toast.error("Signin is unsuccessfull!");
         });
     },
   });
@@ -77,12 +78,15 @@ const SigninForm = ({ className }) => {
       >
         Forgot Password
       </Link>
-      <button className="px-[20px] py-[15px] bg-gradient-to-r from-gradientLeft to-gradientRight rounded-lg">
+      <button
+        type="submit"
+        className="px-[20px] py-[15px] bg-gradient-to-r from-gradientLeft to-gradientRight rounded-lg"
+      >
         <h6 className="text-primaryText font-bold">Signin</h6>
       </button>
       <p className="text-primaryText font-bold flex gap-2 justify-center lg:justify-start">
         {"Don't have an account?"}
-        <Link href="/signup" className="text-secondaryButton">
+        <Link href={"/signup"} className="text-secondaryButton">
           Sign up now
         </Link>
       </p>

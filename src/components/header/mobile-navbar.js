@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { getProfile } from "@/store/modules/user";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
+import toast from "react-hot-toast";
 
 const MobileNavbar = ({ className }) => {
   const router = useRouter();
@@ -21,6 +22,7 @@ const MobileNavbar = ({ className }) => {
   }, [pathName]);
 
   const handleSignout = () => {
+    toast.success("Signout successfull!");
     const ck = Cookies.remove("PERFECTSOUND");
     router.push("/signin", { scroll: false });
   };

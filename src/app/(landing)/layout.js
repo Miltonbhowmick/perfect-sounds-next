@@ -14,6 +14,7 @@ import { profile } from "@/services/user.service";
 import { getTokenSSR, deleteCookie } from "../actions/auth";
 import { Suspense } from "react";
 import Loading from "./loading";
+import { Toaster } from "react-hot-toast";
 import { cookies } from "next/headers";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -47,6 +48,10 @@ export default async function RootLayout({ children }) {
                 <BottomFooter></BottomFooter>
                 <CopyWrite></CopyWrite>
               </div>
+              <Toaster
+                position="bottom-right"
+                toastOptions={{ duration: 3000 }}
+              />
             </ClientMediaElementProviders>
           </PopulateStore>
         </Providers>

@@ -6,16 +6,17 @@ import { useFormik } from "formik";
 import classNames from "classnames";
 import SuccessfullModal from "@/components/modal/successfull";
 import { createOrder } from "@/services/order.service";
+import toast from "react-hot-toast";
+import Loading from "@/app/(auth)/loading";
+import { isPromoCodeValid } from "@/services/payment.service";
+import { useRouter } from "next/navigation";
 
-const CheckoutForm = ({
-  pricePlan,
-  costData,
-  handlePromoCode,
-  authToken,
-  className,
-}) => {
+const CheckoutForm = ({ pricePlan, costData, authToken, className }) => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [showSuccessfullModal, setShowSuccessfullModal] = useState(false);
-  var promoCodeData = null;
+  var [checkoutCostData, setCheckoutCostData] = useState(costData);
+  var [promoCodeData, setPromoCodeData] = useState(null);
 
   const checkoutSchema = yup.object({
     firstName: yup.string().required("First name is required!"),
@@ -48,7 +49,7 @@ const CheckoutForm = ({
       let payload = {
         first_name: values.firstName,
         last_name: values.lastName,
-        promo_code: values.promoCode,
+        promo_code: promoCodeData?.id,
         company: values.company,
         address1: values.address1,
         address2: values.address2,
@@ -65,22 +66,60 @@ const CheckoutForm = ({
           setShowSuccessfullModal(true);
         })
         .catch((e) => {
-          alert("unsuccessfull order");
+          toast.error("Order is not created!");
         });
     },
   });
 
   useEffect(() => {
     if (promoCodeData) {
-      costData.total = (costData.total * promoCodeData.percentage) / 100;
+      setCheckoutCostData((prevState) => ({
+        ...prevState,
+        total:
+          checkoutCostData.total -
+          (checkoutCostData.total * promoCodeData.percentage) / 100,
+      }));
     }
   }, [promoCodeData]);
 
-  const handleApplyPromoCode = () => {
-    handlePromoCode(formik.values.promoCode).then((data) => {
-      promoCodeData = data;
-    });
+  const hideShowSuccessfullModal = () => {
+    setShowSuccessfullModal(false);
+    router.push("/account");
   };
+
+  const handlePromoCodeValidApi = () => {
+    if (promoCodeData != null) {
+      toast.error("Already applied promocode!");
+      return;
+    }
+    if (formik.values.promoCode.length === 0) {
+      toast.error("Please fill promo code first!");
+      return;
+    }
+    let payload = {
+      code: formik.values.promoCode,
+    };
+    setLoading(true);
+    isPromoCodeValid(payload, authToken)
+      .then((data) => {
+        toast.success("Promo Code is valid!");
+        setPromoCodeData(data);
+        setLoading(false);
+      })
+      .catch((e) => {
+        toast.error("Promo Code is not valid!");
+        setLoading(false);
+      });
+    return promoCodeData;
+  };
+
+  const handleApplyPromoCode = () => {
+    handlePromoCodeValidApi();
+  };
+
+  if (loading === true) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -139,15 +178,22 @@ const CheckoutForm = ({
         <div className="flex flex-col gap-2 w-full">
           <label
             htmlFor="name"
-            className="text-primaryText font-medium text-paragraph md:text-paragraph-md lg:text-paragraph-lg"
+            className="flex justify-between items-center text-primaryText font-medium text-paragraph md:text-paragraph-md lg:text-paragraph-lg"
           >
-            <span>Promo Code</span>
-            <a
-              onClick={handleApplyPromoCode}
-              className="ms-2 text-small text-gradientLeft underline"
-            >
-              {promoCodeData != null ? "applied" : "apply"}
-            </a>
+            <div>
+              <span>Promo Code</span>
+              <a
+                onClick={handleApplyPromoCode}
+                className="ms-2 text-small text-gradientLeft underline cursor-pointer"
+              >
+                {promoCodeData != null ? "applied" : "apply"}
+              </a>
+            </div>
+            {promoCodeData != null && (
+              <span className="text-paragraph">
+                Total with promo code: {checkoutCostData.total}
+              </span>
+            )}
           </label>
           <input
             id="promoCode"
@@ -156,7 +202,12 @@ const CheckoutForm = ({
             placeholder="Ex. DX263"
             onChange={formik.handleChange}
             value={formik.values.promoCode}
-            className="px-[20px] py-[15px] bg-transparent focus:outline-none border-tertiaryBg rounded-xl border text-[16px] text-primaryText placeholder-slate-400"
+            disabled={promoCodeData != null}
+            className={`${
+              promoCodeData != null
+                ? "opacity-30 bg-tertiaryBg"
+                : "bg-transparent"
+            } px-[20px] py-[15px] focus:outline-none border-tertiaryBg rounded-xl border text-[16px] text-primaryText placeholder-slate-400`}
           />
         </div>
         <div className="flex flex-col gap-2 w-full">
@@ -342,14 +393,14 @@ const CheckoutForm = ({
           className="px-[20px] py-[15px] bg-gradient-to-r from-gradientLeft to-gradientRight rounded-lg"
         >
           <h6 className="text-primaryText font-bold">
-            Complete Payment -$20.00
+            Complete Payment - ${checkoutCostData.total}
           </h6>
         </button>
       </form>
       {showSuccessfullModal && (
         <SuccessfullModal
           showModal={showSuccessfullModal}
-          hideModal={setShowSuccessfullModal}
+          hideModal={hideShowSuccessfullModal}
         ></SuccessfullModal>
       )}
     </>

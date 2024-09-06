@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function Navbar({ className }) {
   const router = useRouter();
@@ -15,6 +16,7 @@ export default function Navbar({ className }) {
   const queryParams = useSearchParams();
 
   const handleSignout = () => {
+    toast.success("Signout successfull!");
     const ck = Cookies.remove("PERFECTSOUND");
     router.push("/signin", { scroll: false });
   };

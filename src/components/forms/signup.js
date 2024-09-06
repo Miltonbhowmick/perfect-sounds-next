@@ -7,6 +7,7 @@ import Link from "next/link";
 import classNames from "classnames";
 import { signup, sendVerificationCode } from "@/services/user.service";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const SignupForm = ({ className }) => {
   const router = useRouter();
@@ -45,10 +46,11 @@ const SignupForm = ({ className }) => {
       };
       signup(payload)
         .then((data) => {
+          toast.success("Please check your email!");
           handleResendVerificationCodeApi(payload);
         })
         .catch((e) => {
-          alert("unsuccess signup");
+          toast.success("Signup verification sending problem!");
         });
     },
   });
@@ -61,15 +63,15 @@ const SignupForm = ({ className }) => {
     console.log("call it???", payload);
     sendVerificationCode(payload)
       .then((data) => {
-        alert("OTP success send");
+        toast.success("OTP is sent successfully!");
+        alert();
         router.push(
           `/verification?email=${payload.email}&reason=user_creation`,
           { scroll: false }
         );
       })
       .catch((e) => {
-        console.log(e);
-        alert("unsuccess");
+        toast.success("OTP is not sent!");
       });
   };
 

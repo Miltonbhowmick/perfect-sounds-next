@@ -7,6 +7,7 @@ import classNames from "classnames";
 import * as yup from "yup";
 import { sendVerificationCode } from "@/services/user.service";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const ForgetPasswordForm = ({ className }) => {
   const router = useRouter();
@@ -35,15 +36,14 @@ const ForgetPasswordForm = ({ className }) => {
     console.log("call it???", payload);
     sendVerificationCode(payload)
       .then((data) => {
-        alert("OTP success send");
+        toast.success("OTP success send");
         router.push(
           `/verification?email=${payload.email}&reason=user_creation`,
           { scroll: false }
         );
       })
       .catch((e) => {
-        console.log(e);
-        alert("unsuccess");
+        toast.error("OTP is not sent!");
       });
   };
 

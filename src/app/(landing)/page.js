@@ -113,6 +113,7 @@ export default async function Home() {
                 alt="left-image-content"
                 className="object-fit object-cover"
                 fill
+                sizes="xl"
               />
             }
             headline="Your Premier Source for Unmatched Sound Effects"

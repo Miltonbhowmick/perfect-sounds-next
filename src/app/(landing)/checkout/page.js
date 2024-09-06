@@ -6,8 +6,10 @@ import {
 import Link from "next/link";
 import { getTokenSSR } from "../../actions/auth";
 import { redirect } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 const CheckoutPage = async (searchParams) => {
+  const token = getTokenSSR();
   const queryParams = searchParams.searchParams;
   const pricePlanId = parseInt(queryParams.pricePlan);
   if (!pricePlanId) {
@@ -20,7 +22,6 @@ const CheckoutPage = async (searchParams) => {
     taxCost: 0,
     total: 0,
   };
-  const token = getTokenSSR();
   await fetchSinglePricePlans({ pricePlanId: pricePlanId }).then((data) => {
     pricePlanData = data;
     costData.subTotal = parseFloat(pricePlanData?.amount).toFixed(2);
@@ -30,23 +31,6 @@ const CheckoutPage = async (searchParams) => {
       parseFloat(pricePlanData?.amount) +
       (parseFloat(pricePlanData?.amount) * taxPercentage) / 100;
   });
-
-  const handlePromoCode = async (enterCode) => {
-    "use server";
-    let payload = {
-      code: enterCode,
-    };
-    var promoCodeData = null;
-    isPromoCodeValid(payload, token)
-      .then((data) => {
-        console.log("Promo Code is applied!");
-        promoCodeData = data;
-      })
-      .catch((e) => {
-        console.log("Promo Code is not applied!", e);
-      });
-    return promoCodeData;
-  };
 
   return (
     <div className="container flex flex-col gap-5">
@@ -247,7 +231,6 @@ const CheckoutPage = async (searchParams) => {
           <CheckoutForm
             pricePlan={pricePlanId}
             costData={costData}
-            handlePromoCode={handlePromoCode}
             authToken={token}
           ></CheckoutForm>
         </section>
