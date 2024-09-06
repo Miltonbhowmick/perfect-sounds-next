@@ -315,7 +315,7 @@ export default async function PricePage() {
 
         <div className="mt-10 flex flex-col gap-12">
           <h4 className="text-primaryText font-bold">Safe for all Platform</h4>
-          <ul className="flex flex-row gap-12">
+          <ul className="flex flex-row justify-center gap-12">
             <li>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
