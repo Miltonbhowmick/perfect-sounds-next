@@ -29,23 +29,27 @@ export default async function Home() {
 
   return (
     <main className="relative mt-16">
-      <HeroBannerHorizontal
-        className="h-[245px] sm:h-[345px] md:h-[500px] lg:h-[550px]"
-        image={
-          <Image
-            src="/images/home-hero-banner.png"
-            alt="home-hero-banner"
-            className="object-cover object-center"
-            fill
-          />
-        }
-        headline={"Your One-Stop Shop for  Premium Sound Effects"}
-        description={
-          "Enhance Your Productions with our High-Quality Sound Effects Library"
-        }
-        buttonText={"Buy Sound Effects"}
-        buttonLink={"/discover"}
-      ></HeroBannerHorizontal>
+      <div className="relative overflow-hidden">
+        <HeroBannerHorizontal
+          className="h-[245px] sm:h-[345px] md:h-[500px] lg:h-[550px]"
+          image={
+            <Image
+              src="/images/home-hero-banner.png"
+              alt="home-hero-banner"
+              className="object-cover object-center"
+              fill
+            />
+          }
+          headline={"Your One-Stop Shop for  Premium Sound Effects"}
+          description={
+            "Enhance Your Productions with our High-Quality Sound Effects Library"
+          }
+          buttonText={"Buy Sound Effects"}
+          buttonLink={"/discover"}
+        ></HeroBannerHorizontal>
+        <div className="bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gradientRight to-gradientLeft blur-[45px] md:blur-[90px] rounded-full w-[130px] h-[120px] md:w-[336px] md:h-[200px] lg:w-[436px] lg:h-[405px] absolute -top-[20%] -left-[15%] lg:-left-[20%]"></div>
+        <div className="bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gradientRight to-gradientLeft blur-[45px] md:blur-[90px] rounded-full w-[111px] h-[111px] md:w-[236px] md:h-[170px] lg:w-[336px] lg:h-[305px] absolute bottom-[5%] -right-[12%] lg:-right-[15%]"></div>
+      </div>
       <BadgeCross
         firstLoop="4"
         firstContent="around 1100+ Sound"
