@@ -48,7 +48,6 @@ const MusicFavouriteWrapper = ({ musicTrackList }) => {
   const [currentTimes, setCurrentTimes] = useState({});
   const waveformRefs = useRef([]);
   const wavesurferInstances = useRef([]);
-  const audioRef = useRef();
 
   useEffect(() => {
     if (waveformRefs.current.length === musicTrackList.length) {
@@ -164,9 +163,6 @@ const MusicFavouriteWrapper = ({ musicTrackList }) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <audio ref={audioRef}>
-        <source src="/musics/1.mp3"></source>
-      </audio>
       {musicTrackList.map((music, index) => (
         <div
           className="flex gap-4 md:gap-8 lg:gap-16 justify-between items-center"

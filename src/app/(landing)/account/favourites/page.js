@@ -2,7 +2,6 @@ import Image from "next/image";
 
 import HeroBannerHorizontal from "@/components/herosection/horizontal";
 import AccountSidebar from "@/components/sidebar/account";
-import ClientWrapper from "@/components/music/client-wrapper";
 import AccountMobileSidebar from "@/components/sidebar/mobile-account";
 import { getTokenSSR } from "@/app/actions/auth";
 import { fetchFavourites } from "@/services/common.service";
@@ -55,9 +54,15 @@ export default async function AccountFavourites() {
             </p>
           </div>
           <div className="px-5 py-2 lg:px-14 lg:py-5 bg-secondaryBg rounded-[20px]">
-            <ClientFavouriteWrapper
-              musicTrackList={favoriteList}
-            ></ClientFavouriteWrapper>
+            {favoriteList && favoriteList.length > 0 ? (
+              <ClientFavouriteWrapper
+                musicTrackList={favoriteList}
+              ></ClientFavouriteWrapper>
+            ) : (
+              <h5 className="text-primaryText text-center">
+                There are no favourites tracks
+              </h5>
+            )}
           </div>
         </div>
       </div>
