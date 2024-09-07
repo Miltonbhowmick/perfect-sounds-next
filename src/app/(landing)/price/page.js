@@ -160,125 +160,97 @@ export default async function PricePage() {
                   className="basis-[100%] sm:basis-[48%] lg:basis-[23%] shrink bg-secondaryBg rounded-xl p-5"
                   key={"price_plan_" + index}
                 >
-                  <div className="flex flex-col gap-5 h-[35rem]">
-                    <h6 className="text-primaryText font-medium uppercase text-center">
-                      {element.title}
-                    </h6>
-                    {element.duration_unit && (
-                      <div className="flex justify-center items-center">
-                        <h4 className="text-primaryText font-bold">
-                          ${parseFloat(element.amount).toFixed(2)}/
-                        </h4>
-                        <p className="text-primaryText font-medium self-end">
-                          {element.duration_unit} {element.duration}
-                        </p>
-                      </div>
-                    )}
-                    {element.credits.length > 0 ? (
-                      <section className="flex flex-col gap-2">
-                        {element.credits.map((creditObj, creditIndex) => {
-                          return (
-                            <div
-                              className="border border-tertiaryBg px-3 py-4 rounded-xl relative"
-                              key={"credit_" + creditIndex}
-                            >
-                              <input
-                                type="radio"
-                                id={creditObj.id}
-                                className="accent-gradientLeft"
-                                name="credit"
-                                style={{
-                                  height: "15px",
-                                  width: "15px",
-                                  verticalAlign: "middle",
-                                }}
-                              ></input>
-                              <label
-                                htmlFor={creditObj.id}
-                                className="absolute top-0 left-0 right-0 bottom-0 flex justify-between items-center ps-10 pe-6 cursor-pointer"
-                              >
-                                <span className="text-primaryText font-medium text-paragraph md:text-small">
-                                  {creditObj.credit} Credit
-                                </span>
-                                <span className="text-primaryText font-medium text-paragraph md:text-small">
-                                  ${creditObj.amount}
-                                </span>
-                              </label>
-                            </div>
-                          );
-                        })}
-                        <div className="border border-tertiaryBg px-3 py-4 rounded-xl relative">
-                          <input
-                            type="radio"
-                            id="manual"
-                            className="accent-gradientLeft"
-                            name="credit"
-                            style={{
-                              height: "15px",
-                              width: "15px",
-                              verticalAlign: "middle",
-                            }}
-                          ></input>
-                          <label
-                            htmlFor="manual"
-                            className="absolute top-0 left-0 right-0 bottom-0 flex justify-between items-center ps-10 pe-6 cursor-pointer"
-                          >
-                            <div className="text-primaryText font-medium text-paragraph md:text-small">
-                              Custom Credit
-                            </div>
-
-                            <input
-                              type="number"
-                              className="bg-transparent text-primaryText [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                              placeholder="$105"
-                              style={{ width: "65px" }}
-                            />
-                          </label>
+                  <div className="flex flex-col justify-between h-[35rem]">
+                    <div className="flex flex-col gap-5">
+                      <h6 className="text-primaryText font-medium uppercase text-center">
+                        {element.title}
+                      </h6>
+                      {element.duration_unit && (
+                        <div className="flex justify-center items-center">
+                          <h4 className="text-primaryText font-bold">
+                            ${parseFloat(element.amount).toFixed(2)}/
+                          </h4>
+                          <p className="text-primaryText font-medium self-end">
+                            {element.duration_unit} {element.duration}
+                          </p>
                         </div>
-                      </section>
-                    ) : (
-                      ""
-                    )}
+                      )}
+                      {element.credits.length > 0 ? (
+                        <section className="custom-scrollbar pe-2 flex flex-col gap-2 h-[200px] overflow-y-auto">
+                          {element.credits.map((creditObj, creditIndex) => {
+                            return (
+                              <div
+                                className="border border-tertiaryBg px-3 py-4 rounded-xl relative"
+                                key={"credit_" + creditIndex}
+                              >
+                                <input
+                                  type="radio"
+                                  id={creditObj.id}
+                                  className="accent-gradientLeft"
+                                  name="credit"
+                                  style={{
+                                    height: "15px",
+                                    width: "15px",
+                                    verticalAlign: "middle",
+                                  }}
+                                ></input>
+                                <label
+                                  htmlFor={creditObj.id}
+                                  className="absolute top-0 left-0 right-0 bottom-0 flex justify-between items-center ps-10 pe-6 cursor-pointer"
+                                >
+                                  <span className="text-primaryText font-medium text-paragraph md:text-small">
+                                    {creditObj.credit} Credit
+                                  </span>
+                                  <span className="text-primaryText font-medium text-paragraph md:text-small">
+                                    ${creditObj.amount}
+                                  </span>
+                                </label>
+                              </div>
+                            );
+                          })}
+                        </section>
+                      ) : null}
 
-                    {element.description && (
-                      // <ul className="flex flex-col gap-5">
-                      //   {element.description.map((featureObj, idx) => {
-                      //     return (
-                      //       <li
-                      //         className="flex gap-3 items-center"
-                      //         key={"feature_" + idx}
-                      //       >
-                      //         <svg
-                      //           xmlns="http://www.w3.org/2000/svg"
-                      //           width="24"
-                      //           height="25"
-                      //           viewBox="0 0 24 25"
-                      //           fill="none"
-                      //         >
-                      //           <path
-                      //             d="M5 14.5L8.5 18L19 7"
-                      //             stroke="white"
-                      //             strokeWidth="1.5"
-                      //             strokeLinecap="round"
-                      //             strokeLinejoin="round"
-                      //           />
-                      //         </svg>
-                      //         <span className="text-primaryText font-medium text-paragraph md:text-small">
-                      //           {featureObj.title}
-                      //         </span>
-                      //       </li>
-                      //     );
-                      //   })}
-                      // </ul>
-                      <div
-                        className="text-primaryText font-medium text-paragraph md:text-small flex flex-col gap-3"
-                        dangerouslySetInnerHTML={{
-                          __html: element.description,
-                        }}
-                      ></div>
-                    )}
+                      {element.description && (
+                        // <ul className="flex flex-col gap-5">
+                        //   {element.description.map((featureObj, idx) => {
+                        //     return (
+                        //       <li
+                        //         className="flex gap-3 items-center"
+                        //         key={"feature_" + idx}
+                        //       >
+                        //         <svg
+                        //           xmlns="http://www.w3.org/2000/svg"
+                        //           width="24"
+                        //           height="25"
+                        //           viewBox="0 0 24 25"
+                        //           fill="none"
+                        //         >
+                        //           <path
+                        //             d="M5 14.5L8.5 18L19 7"
+                        //             stroke="white"
+                        //             strokeWidth="1.5"
+                        //             strokeLinecap="round"
+                        //             strokeLinejoin="round"
+                        //           />
+                        //         </svg>
+                        //         <span className="text-primaryText font-medium text-paragraph md:text-small">
+                        //           {featureObj.title}
+                        //         </span>
+                        //       </li>
+                        //     );
+                        //   })}
+                        // </ul>
+                        <div
+                          className="text-primaryText font-medium text-paragraph md:text-small flex flex-col gap-3"
+                          dangerouslySetInnerHTML={{
+                            __html: element.description,
+                          }}
+                        ></div>
+                      )}
+                    </div>
 
-                    <div className="h-full flex items-end">
+                    <div className="flex items-end">
                       {element.duration !== "custom" ? (
                         <ButtonGradiendOutlined
                           href={{
