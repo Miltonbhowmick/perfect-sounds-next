@@ -1,5 +1,6 @@
 import CheckoutForm from "@/components/forms/checkout";
 import {
+  fetchCreditPlans,
   fetchSinglePricePlans,
   isPromoCodeValid,
 } from "@/services/payment.service";
@@ -12,6 +13,9 @@ const CheckoutPage = async (searchParams) => {
   const token = getTokenSSR();
   const queryParams = searchParams.searchParams;
   const pricePlanId = parseInt(queryParams.pricePlan);
+  const type = queryParams?.type;
+  const credit = queryParams?.credit;
+
   if (!pricePlanId) {
     redirect("/price");
   }
@@ -31,6 +35,12 @@ const CheckoutPage = async (searchParams) => {
       parseFloat(pricePlanData?.amount) +
       (parseFloat(pricePlanData?.amount) * taxPercentage) / 100;
   });
+
+  if (type === "custom") {
+    await fetchCreditPlans({ pricePlanId: pricePlanId }).then((data) => {
+      console.log("====", data);
+    });
+  }
 
   return (
     <div className="container flex flex-col gap-5">

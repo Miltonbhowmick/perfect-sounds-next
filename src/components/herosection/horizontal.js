@@ -3,14 +3,14 @@ import ButtonGradiend from "@/components/button/gradient";
 import ButtonGradiendOutlined from "@/components/button/gradientOutlined";
 
 const HeroBannerHorizontal = ({
+  image = defaultProps.image,
+  headline = defaultProps.headline,
+  description = defaultProps.description,
+  buttonText = defaultProps.buttonText,
+  buttonLink = defaultProps.buttonLink,
+  buttonVariant = defaultProps.buttonVariant,
+  className = defaultProps.className,
   children,
-  className,
-  image,
-  headline,
-  description,
-  buttonText,
-  buttonLink,
-  buttonVariant,
   ...props
 }) => {
   return (
@@ -47,7 +47,7 @@ const HeroBannerHorizontal = ({
   );
 };
 
-HeroBannerHorizontal.defaultProps = {
+const defaultProps = {
   image: null,
   headline: null,
   description: null,

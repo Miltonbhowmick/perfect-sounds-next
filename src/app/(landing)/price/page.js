@@ -1,10 +1,16 @@
+"use client";
+
 import Image from "next/image";
 import HeroBannerHorizontal from "@/components/herosection/horizontal";
 import ButtonGradiend from "@/components/button/gradient";
 import ButtonGradiendOutlined from "@/components/button/gradientOutlined";
 import { fetchPricePlans } from "@/services/payment.service";
+import { useEffect, useState } from "react";
+import Loading from "../loading";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
-export default async function PricePage() {
+export default function PricePage() {
   const paymentList = [
     {
       name: "visa",
@@ -23,86 +29,44 @@ export default async function PricePage() {
       imageSrc: "/images/payment/american-express.png",
     },
   ];
-  const pricingList = [
-    {
-      duration: "month",
-      price: "20",
-      pricePerDuration: "1 month",
-      featureList: [
-        {
-          title: "For Social Media and Content Creators",
-        },
-        {
-          title: "For Social Media and Content Creators",
-        },
-      ],
-      buttonVariant: "gradientOutlined",
-    },
-    {
-      duration: "six month",
-      price: "185",
-      pricePerDuration: "6 month",
-      featureList: [
-        {
-          title: "For Social Media and Content Creators",
-        },
-        {
-          title: "For Social Media and Content Creators",
-        },
-      ],
-      buttonVariant: "gradientOutlined",
-    },
-    {
-      duration: "annual",
-      price: "299",
-      pricePerDuration: "Year",
-      featureList: [
-        {
-          title: "For Social Media and Content Creators",
-        },
-        {
-          title: "For Social Media and Content Creators",
-        },
-      ],
-      buttonVariant: "gradientOutlined",
-    },
-    {
-      duration: "custom",
-      price: null,
-      pricePerDuration: null,
-      creditList: [
-        {
-          id: 1,
-          creditAmount: "30",
-          price: "30",
-        },
-        {
-          id: 2,
-          creditAmount: "60",
-          price: "45",
-        },
-        {
-          id: 3,
-          creditAmount: "100",
-          price: "65",
-        },
-      ],
-      featureList: [
-        {
-          title: "For Social Media and Content Creators",
-        },
-        {
-          title: "For Social Media and Content Creators",
-        },
-      ],
-      buttonVariant: "gradient",
-    },
-  ];
+  const router = useRouter();
+  const [loading, setLoading] = useState(null);
+  const [selectedCreditId, setSelectedCreditId] = useState(null);
+  const [pricePlanList, setPricePlanList] = useState(null);
 
-  var pricePlanList = null;
-  await fetchPricePlans().then((data) => {
-    pricePlanList = data.results;
-  });
+  const handleCreditChange = (id) => {
+    setSelectedCreditId(id);
+  };
+
+  const handleCustomPlan = (pricePlan) => {
+    if (!selectedCreditId) {
+      toast.error("Please select a credit value from custom plan!");
+      return;
+    }
+
+    router.push(
+      `/checkout?pricePlan=${pricePlan?.id}&type=custom&credit=${selectedCreditId}`
+    );
+  };
+
+  useEffect(() => {
+    const fetchAsyncData = async () => {
+      setLoading(true);
+      await fetchPricePlans()
+        .then((data) => {
+          setPricePlanList(data.results);
+          setLoading(false);
+        })
+        .catch((e) => {
+          setLoading(false);
+        });
+    };
+    fetchAsyncData();
+  }, []);
+
+  if (loading === true) {
+    return <Loading />;
+  }
 
   return (
     <main className="min-h-screen mt-16">
@@ -193,6 +157,10 @@ export default async function PricePage() {
                                     width: "15px",
                                     verticalAlign: "middle",
                                   }}
+                                  checked={selectedCreditId === creditObj.id}
+                                  onChange={() =>
+                                    handleCreditChange(creditObj.id)
+                                  }
                                 ></input>
                                 <label
                                   htmlFor={creditObj.id}
@@ -266,10 +234,7 @@ export default async function PricePage() {
                         </ButtonGradiendOutlined>
                       ) : (
                         <ButtonGradiend
-                          href={{
-                            pathname: "checkout",
-                            query: { pricePlan: element.id },
-                          }}
+                          onClick={() => handleCustomPlan(element)}
                           className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 h-[35px] md:h-[45px] lg:h-[55px] w-full rounded-lg justify-end"
                           gradient
                         >

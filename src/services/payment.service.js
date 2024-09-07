@@ -49,3 +49,18 @@ export const isPromoCodeValid = async (payload = {}, token) => {
       });
   });
 };
+
+export const fetchCreditPlans = async (params = {}) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "get",
+      url: `${PUBLIC_PAYMENT}/price-plan-credits`,
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+};
