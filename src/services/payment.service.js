@@ -64,3 +64,19 @@ export const fetchCreditPlans = async (params = {}) => {
       });
   });
 };
+
+export const fetchSingleCreditPlan = async (params = {}) => {
+  return new Promise((resolve, reject) => {
+    const id = params?.id;
+    axios({
+      method: "get",
+      url: `${PUBLIC_PAYMENT}/price-plan-credits/${id}/`,
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+};
