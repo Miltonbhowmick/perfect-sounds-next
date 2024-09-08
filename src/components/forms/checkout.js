@@ -11,7 +11,13 @@ import Loading from "@/app/(auth)/loading";
 import { isPromoCodeValid } from "@/services/payment.service";
 import { useRouter } from "next/navigation";
 
-const CheckoutForm = ({ pricePlan, costData, authToken, className }) => {
+const CheckoutForm = ({
+  pricePlan,
+  selectedCredit,
+  costData,
+  authToken,
+  className,
+}) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [showSuccessfullModal, setShowSuccessfullModal] = useState(false);
@@ -62,6 +68,9 @@ const CheckoutForm = ({ pricePlan, costData, authToken, className }) => {
 
       if (promoCodeData?.id) {
         payload["promo_code"] = parseInt(promoCodeData?.id);
+      }
+      if (selectedCredit) {
+        payload["credit"] = parseInt(selectedCredit?.id);
       }
 
       createOrder(payload, authToken)
@@ -119,6 +128,8 @@ const CheckoutForm = ({ pricePlan, costData, authToken, className }) => {
   const handleApplyPromoCode = () => {
     handlePromoCodeValidApi();
   };
+
+  useEffect(() => {}, []);
 
   if (loading === true) {
     return <Loading />;

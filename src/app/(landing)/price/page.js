@@ -139,8 +139,9 @@ export default function PricePage() {
                           </p>
                         </div>
                       )}
-                      {element.credits.length > 0 ? (
-                        <section className="custom-scrollbar pe-2 flex flex-col gap-2 h-[200px] overflow-y-auto">
+                      {element.duration === "custom" &&
+                      element.credits.length > 0 ? (
+                        <section className="custom-scrollbar pe-2 flex flex-col gap-2 max-h-[200px] overflow-y-auto">
                           {element.credits.map((creditObj, creditIndex) => {
                             return (
                               <div

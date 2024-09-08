@@ -1,13 +1,12 @@
 import CheckoutForm from "@/components/forms/checkout";
 import {
   fetchCreditPlans,
+  fetchSingleCreditPlan,
   fetchSinglePricePlans,
-  isPromoCodeValid,
 } from "@/services/payment.service";
 import Link from "next/link";
 import { getTokenSSR } from "../../actions/auth";
 import { redirect } from "next/navigation";
-import { toast } from "react-hot-toast";
 
 const CheckoutPage = async (searchParams) => {
   const token = getTokenSSR();
@@ -19,6 +18,7 @@ const CheckoutPage = async (searchParams) => {
   if (!pricePlanId) {
     redirect("/price");
   }
+
   const taxPercentage = 5;
   var pricePlanData = null;
   var costData = {
@@ -36,9 +36,15 @@ const CheckoutPage = async (searchParams) => {
       (parseFloat(pricePlanData?.amount) * taxPercentage) / 100;
   });
 
-  if (type === "custom") {
-    await fetchCreditPlans({ pricePlanId: pricePlanId }).then((data) => {
-      console.log("====", data);
+  var creditData = null;
+  if (type === "custom" && credit) {
+    await fetchSingleCreditPlan({ id: credit }).then((data) => {
+      creditData = data;
+      costData.subTotal = parseFloat(creditData?.amount).toFixed(2);
+      costData.taxCost = (parseFloat(creditData?.amount) * taxPercentage) / 100;
+      costData.total =
+        parseFloat(creditData?.amount) +
+        (parseFloat(creditData?.amount) * taxPercentage) / 100;
     });
   }
 
@@ -75,9 +81,16 @@ const CheckoutPage = async (searchParams) => {
                       </p>
                     </td>
                     <td className="pb-1 md:pb-5">
-                      <p className="text-primaryText font-bold flex flex-row gap-3">
-                        {pricePlanData?.duration_unit} {pricePlanData?.duration}
-                      </p>
+                      {pricePlanData?.duration === "custom" ? (
+                        <p className="text-primaryText font-bold flex flex-row gap-3">
+                          {pricePlanData?.duration}, {creditData.credit} credits
+                        </p>
+                      ) : (
+                        <p className="text-primaryText font-bold flex flex-row gap-3">
+                          {pricePlanData?.duration_unit}{" "}
+                          {pricePlanData?.duration}
+                        </p>
+                      )}
                     </td>
                   </tr>
                   <tr>
@@ -240,6 +253,7 @@ const CheckoutPage = async (searchParams) => {
         <section className="w-[100%] lg:w-[60%]">
           <CheckoutForm
             pricePlan={pricePlanId}
+            selectedCredit={creditData}
             costData={costData}
             authToken={token}
           ></CheckoutForm>
