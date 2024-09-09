@@ -51,14 +51,13 @@ const MusicWrapper = ({ musicTrackList }) => {
   const waveformRefs = useRef([]);
   const wavesurferInstances = useRef([]);
 
+  const [trackList, setTrackList] = useState(musicTrackList);
+
   useEffect(() => {
     console.log("=============WRAPPER===========", waveformRefs.current.length);
-    if (
-      musicTrackList &&
-      waveformRefs.current.length === musicTrackList.length
-    ) {
-      console.log("musicTrackList.length", musicTrackList.length);
-      wavesurferInstances.current = musicTrackList.map((music, index) => {
+    if (trackList && waveformRefs.current.length === trackList.length) {
+      console.log("musicTrackList.length", trackList.length);
+      wavesurferInstances.current = trackList.map((music, index) => {
         const ws = WaveSurfer.create({
           container: waveformRefs.current[index],
           waveColor: "#828282",
@@ -129,12 +128,12 @@ const MusicWrapper = ({ musicTrackList }) => {
       });
       waveformRefs.current = [];
     };
-  }, [musicTrackList]);
+  }, [trackList]);
 
   const handlePlayPause = (clickIndex) => {
     let wsClick = null;
     wavesurferInstances.current.forEach((ws, wsIndex) => {
-      if (musicTrackList[wsIndex].id === clickIndex) {
+      if (trackList[wsIndex].id === clickIndex) {
         wsClick = ws;
       } else {
         ws.stop();
@@ -156,11 +155,19 @@ const MusicWrapper = ({ musicTrackList }) => {
   };
 
   const handleAddTrackFavorite = (track) => {
+    console.log("-====", track);
     let payload = {
       track: track.id,
     };
     addSingleFavourite(payload, authToken)
       .then((data) => {
+        const updatedTrackList = trackList.map((el) => {
+          if (el.id === track.id) {
+            return { ...el, is_favorite: data.id };
+          }
+          return el;
+        });
+        setTrackList(updatedTrackList);
         toast.success("Successfully added track to favorite!");
       })
       .catch((e) => {
@@ -168,12 +175,20 @@ const MusicWrapper = ({ musicTrackList }) => {
       });
   };
 
-  const handleRemoveSingleFavouriteTrack = (favoriteId) => {
+  const handleRemoveSingleFavouriteTrack = (track) => {
+    console.log("-====remove ", track);
     let payload = {
-      id: favoriteId,
+      id: track.is_favorite,
     };
     deleteSingleFavourite(payload, authToken)
       .then((data) => {
+        const updatedTrackList = trackList.map((el) => {
+          if (el.id === track.id) {
+            return { ...el, is_favorite: null };
+          }
+          return el;
+        });
+        setTrackList(updatedTrackList);
         toast.success("Favourite track deletion done!");
       })
       .catch((e) => {
@@ -183,7 +198,7 @@ const MusicWrapper = ({ musicTrackList }) => {
 
   return (
     <div className="flex flex-col gap-4">
-      {musicTrackList.map((music, index) => (
+      {trackList.map((music, index) => (
         <div
           className="flex gap-4 md:gap-8 lg:gap-16 justify-between items-center"
           key={"music_row" + music.id}
@@ -272,9 +287,7 @@ const MusicWrapper = ({ musicTrackList }) => {
               </div>
             ) : (
               <div
-                onClick={() =>
-                  handleRemoveSingleFavouriteTrack(music.is_favorite)
-                }
+                onClick={() => handleRemoveSingleFavouriteTrack(music)}
                 className="px-2 py-2 rounded text-primaryText border border-primaryText cursor-pointer"
               >
                 <svg
