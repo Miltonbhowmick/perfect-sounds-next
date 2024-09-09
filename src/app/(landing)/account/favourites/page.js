@@ -54,14 +54,10 @@ export default async function AccountFavourites() {
             </p>
           </div>
           <div className="px-5 py-2 lg:px-14 lg:py-5 bg-secondaryBg rounded-[20px]">
-            {favoriteList && favoriteList.length > 0 ? (
+            {favoriteList && (
               <ClientFavouriteWrapper
                 musicTrackList={favoriteList}
               ></ClientFavouriteWrapper>
-            ) : (
-              <h5 className="text-primaryText text-center">
-                There are no favourites tracks
-              </h5>
             )}
           </div>
         </div>

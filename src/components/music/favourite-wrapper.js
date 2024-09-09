@@ -169,6 +169,14 @@ const MusicFavouriteWrapper = ({ musicTrackList }) => {
       });
   };
 
+  if (trackList === null || trackList.length === 0) {
+    return (
+      <h5 className="text-primaryText text-center">
+        There are no favourites tracks
+      </h5>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-4">
       {trackList.map((music, index) => (
