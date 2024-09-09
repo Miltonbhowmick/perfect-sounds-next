@@ -49,10 +49,12 @@ const MusicFavouriteWrapper = ({ musicTrackList }) => {
   const waveformRefs = useRef([]);
   const wavesurferInstances = useRef([]);
 
+  const [trackList, setTrackList] = useState(musicTrackList);
+
   useEffect(() => {
-    if (waveformRefs.current.length === musicTrackList.length) {
-      console.log("musicTrackList.length", musicTrackList.length);
-      wavesurferInstances.current = musicTrackList.map((music, index) => {
+    if (trackList && waveformRefs.current.length === trackList.length) {
+      console.log("trackList.length", trackList.length);
+      wavesurferInstances.current = trackList.map((music, index) => {
         const ws = WaveSurfer.create({
           container: waveformRefs.current[index],
           waveColor: "#828282",
@@ -122,12 +124,12 @@ const MusicFavouriteWrapper = ({ musicTrackList }) => {
         }
       });
     };
-  }, [musicTrackList]);
+  }, [trackList]);
 
   const handlePlayPause = (clickIndex) => {
     let wsClick = null;
     wavesurferInstances.current.forEach((ws, wsIndex) => {
-      if (musicTrackList[wsIndex].id === clickIndex) {
+      if (trackList[wsIndex].id === clickIndex) {
         wsClick = ws;
       } else {
         ws.stop();
@@ -154,6 +156,12 @@ const MusicFavouriteWrapper = ({ musicTrackList }) => {
     };
     deleteSingleFavourite(payload, authToken)
       .then((data) => {
+        const updatedTrackList = trackList.filter((el) => {
+          if (el.id !== trackObj.id) {
+            return el;
+          }
+        });
+        setTrackList(updatedTrackList);
         toast.success("Favourite track deletion done!");
       })
       .catch((e) => {
@@ -163,7 +171,7 @@ const MusicFavouriteWrapper = ({ musicTrackList }) => {
 
   return (
     <div className="flex flex-col gap-4">
-      {musicTrackList.map((music, index) => (
+      {trackList.map((music, index) => (
         <div
           className="flex gap-4 md:gap-8 lg:gap-16 justify-between items-center"
           key={"music_row" + music.track.id}
