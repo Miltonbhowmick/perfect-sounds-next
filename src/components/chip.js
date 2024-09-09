@@ -1,10 +1,10 @@
 import classNames from "classnames";
 
 const Chip = ({
-  variant,
-  color,
-  prependIcon,
-  appendIcon,
+  variant = defaultProps.variant,
+  color = defaultProps.color,
+  prependIcon = defaultProps.prependIcon,
+  appendIcon = defaultProps.appendIcon,
   children,
   className,
   ...props
@@ -34,7 +34,7 @@ const Chip = ({
   );
 };
 
-Chip.defaultProps = {
+const defaultProps = {
   variant: "flat",
   color: "text-gray-700",
   prependIcon: null,

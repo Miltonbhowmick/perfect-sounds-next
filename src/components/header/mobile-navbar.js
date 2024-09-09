@@ -8,12 +8,14 @@ import { getProfile } from "@/store/modules/user";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
+import Loading from "@/app/(auth)/loading";
 
 const MobileNavbar = ({ className }) => {
   const router = useRouter();
   const profile = useSelector(getProfile);
   const [showMenuList, setShowMenuList] = useState(false);
   const [showSearchBox, setShowSearchBox] = useState(false);
+  const [loading, setLoading] = useState(false);
   const pathName = usePathname();
 
   useEffect(() => {
@@ -22,10 +24,15 @@ const MobileNavbar = ({ className }) => {
   }, [pathName]);
 
   const handleSignout = () => {
+    setLoading(true);
     toast.success("Signout successfull!");
     const ck = Cookies.remove("PERFECTSOUND");
     router.push("/signin", { scroll: false });
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <nav

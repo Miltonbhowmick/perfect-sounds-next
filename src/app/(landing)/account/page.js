@@ -6,10 +6,21 @@ import AccountSidebar from "@/components/sidebar/account";
 import ButtonGradiend from "@/components/button/gradient";
 import EditProfileForm from "@/components/forms/edit-profile";
 import AccountMobileSidebar from "@/components/sidebar/mobile-account";
-import VerifyPasswordModal from "@/components/modal/verify-password";
 import DeleteProfileModal from "@/components/forms/delete-profile";
+import UserSubscriptionOverview from "@/components/account/subscription-overview";
+import { fetchUserLatestSubscription } from "@/services/user.service";
+import { getTokenSSR } from "@/app/actions/auth";
 
-export default function Account() {
+export default async function Account() {
+  const authToken = getTokenSSR();
+  var subscriptionDetail = null;
+
+  try {
+    await fetchUserLatestSubscription({}, authToken).then((data) => {
+      subscriptionDetail = data;
+    });
+  } catch (e) {}
+
   return (
     <div>
       <div className="relative overflow-hidden">
@@ -39,16 +50,7 @@ export default function Account() {
           <div className="px-5 py-2 lg:px-14 lg:py-5 bg-secondaryBg rounded-[20px] flex flex-col gap-2 md:gap-4">
             <h4 className="text-primaryText font-bold">Profile Overview</h4>
             <h5 className="text-primaryText font-medium">Account Type</h5>
-            <p className="text-primaryText font-medium">
-              You currently don’t have any subscription. Subscribe to one of our
-              plans and start downloading.
-            </p>
-            <ButtonGradiend
-              className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 px-5 h-[35px] md:h-[45px] lg:h-[55px] w-max rounded-lg"
-              gradient
-            >
-              <h6 className="text-primaryText font-medium">View Pricing</h6>
-            </ButtonGradiend>
+            <UserSubscriptionOverview subscriptionDetail={subscriptionDetail} />
           </div>
           <div className="px-5 py-2 lg:px-14 lg:py-5 bg-secondaryBg rounded-[20px] flex flex-col gap-2 md:gap-4">
             <h4 className="text-primaryText font-bold">

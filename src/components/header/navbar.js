@@ -8,14 +8,17 @@ import Cookies from "js-cookie";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import Loading from "@/app/(auth)/loading";
 
 export default function Navbar({ className }) {
   const router = useRouter();
   const profile = useSelector(getProfile);
+  const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState();
   const queryParams = useSearchParams();
 
   const handleSignout = () => {
+    setLoading(true);
     toast.success("Signout successfull!");
     const ck = Cookies.remove("PERFECTSOUND");
     router.push("/signin", { scroll: false });
@@ -26,6 +29,10 @@ export default function Navbar({ className }) {
       router.push(`/discover?title=${searchText}`);
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <nav

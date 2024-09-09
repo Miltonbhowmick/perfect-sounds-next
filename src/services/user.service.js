@@ -149,3 +149,21 @@ export const deleteUserProfile = async (payload = {}, token) => {
       });
   });
 };
+
+export const fetchUserLatestSubscription = async (params = {}, token) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "get",
+      url: `${PUBLIC_ACCOUNT}/subscriptions/latest`,
+      headers: {
+        ...token,
+      },
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+};
