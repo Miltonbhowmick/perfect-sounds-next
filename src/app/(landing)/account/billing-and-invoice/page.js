@@ -1,14 +1,19 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
 
 import HeroBannerHorizontal from "@/components/herosection/horizontal";
 import AccountSidebar from "@/components/sidebar/account";
 import ButtonGradiend from "@/components/button/gradient";
-import EditProfileForm from "@/components/forms/edit-profile";
 import ButtonGradiendOutlined from "@/components/button/gradientOutlined";
 import AccountMobileSidebar from "@/components/sidebar/mobile-account";
+import AddPaymentMethodModal from "@/components/modal/add-payment-method";
+import { useState } from "react";
 
 export default function AccountBillingInvoice() {
+  const [showAddPaymentMethodModal, setShowAddPaymentMethodModal] =
+    useState(true);
+
   return (
     <div>
       <div className="relative overflow-hidden">
@@ -82,7 +87,10 @@ export default function AccountBillingInvoice() {
               </p>
             </div>
             <h5 className="mt-3 text-primaryText font-medium">Jacob Hardman</h5>
-            <ButtonGradiendOutlined className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 w-max h-[35px] md:h-[45px] lg:h-[55px] rounded-xl">
+            <ButtonGradiendOutlined
+              onClick={() => setShowAddPaymentMethodModal(true)}
+              className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 w-max h-[35px] md:h-[45px] lg:h-[55px] rounded-xl"
+            >
               <h6 className="bg-gradient-to-r from-gradientLeft to-gradientRight bg-clip-text text-transparent font-bold">
                 Add a payment method
               </h6>
@@ -103,6 +111,12 @@ export default function AccountBillingInvoice() {
           </div>
         </div>
       </div>
+      {showAddPaymentMethodModal && (
+        <AddPaymentMethodModal
+          showModal={showAddPaymentMethodModal}
+          hideModal={setShowAddPaymentMethodModal}
+        />
+      )}
     </div>
   );
 }
