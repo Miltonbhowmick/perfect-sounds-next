@@ -31,7 +31,7 @@ export default function PaymentStripeMethodModal() {
     if (result) {
       toast.error(result?.error?.message);
     } else {
-      console.log(result);
+      toast.success("Successfully added payment method!");
     }
   };
 

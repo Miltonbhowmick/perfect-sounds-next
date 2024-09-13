@@ -8,11 +8,45 @@ import ButtonGradiend from "@/components/button/gradient";
 import ButtonGradiendOutlined from "@/components/button/gradientOutlined";
 import AccountMobileSidebar from "@/components/sidebar/mobile-account";
 import AddPaymentMethodModal from "@/components/modal/add-payment-method";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getPaymentMethodList } from "@/app/actions/payment";
+import Loading from "../../loading";
+import { getUserLatestSubscription } from "@/app/actions/user";
 
 export default function AccountBillingInvoice() {
   const [showAddPaymentMethodModal, setShowAddPaymentMethodModal] =
-    useState(true);
+    useState(false);
+  const [loading, setLoading] = useState(false);
+  const [paymentMethodList, setPaymentMethodList] = useState([]);
+  const [subscriptionPlan, setSubscriptionPlan] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    async function handleFetchPaymentMethodsApi() {
+      try {
+        const data = await getPaymentMethodList();
+        setPaymentMethodList(data);
+      } catch (error) {}
+    }
+
+    async function handleFetchUserLatestSubscriptionApi() {
+      try {
+        const data = await getUserLatestSubscription();
+        setSubscriptionPlan(data);
+      } catch (error) {}
+    }
+
+    handleFetchPaymentMethodsApi();
+    handleFetchUserLatestSubscriptionApi();
+
+    return () => {
+      setLoading(false);
+    };
+  }, []);
+
+  if (loading) {
+    <Loading />;
+  }
 
   return (
     <div>
@@ -46,17 +80,59 @@ export default function AccountBillingInvoice() {
         <div className="basis-auto grow shrink flex flex-col gap-5">
           <div className="px-5 py-2 lg:px-14 lg:py-5 bg-secondaryBg rounded-[20px] flex flex-col gap-2 md:gap-4">
             <h4 className="text-primaryText font-bold">Profile Overview</h4>
-            <h5 className="text-primaryText font-medium">Account Type</h5>
-            <p className="text-primaryText font-medium">
-              You currently don’t have any subscription. Subscribe to one of our
-              plans and start downloading.
-            </p>
-            <ButtonGradiend
-              className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 px-5 h-[35px] md:h-[45px] lg:h-[55px] w-max rounded-lg"
-              gradient
-            >
-              <h6 className="text-primaryText font-medium">View Pricing</h6>
-            </ButtonGradiend>
+            <h5 className="text-primaryText font-medium">Subscription Type</h5>
+            {subscriptionPlan ? (
+              <div className="flex flex-col">
+                <h6 className="text-primaryText font-medium">
+                  Your current plan -{" "}
+                  <span className="text-gradientLeft">
+                    {subscriptionPlan?.order?.price_plan?.title}
+                  </span>{" "}
+                  - with{" "}
+                  {subscriptionPlan?.order?.price_plan?.credits.map(
+                    (creditObj, index) => {
+                      return (
+                        <span
+                          className="text-primaryText"
+                          key={"credit_" + index}
+                        >
+                          {creditObj.credit} credit
+                        </span>
+                      );
+                    }
+                  )}
+                </h6>
+                <p className="text-primaryText">
+                  Payment Status -{" "}
+                  <span className="text-gradientLeft capitalize">
+                    {subscriptionPlan?.order?.status}
+                  </span>
+                </p>
+                {subscriptionPlan?.order?.status === "pending" && (
+                  <ButtonGradiend
+                    className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 px-5 h-[35px] md:h-[45px] lg:h-[55px] w-max rounded-lg"
+                    gradient
+                  >
+                    <h6 className="text-primaryText font-medium">
+                      Pay Now - ${subscriptionPlan?.order?.price_plan?.amount}
+                    </h6>
+                  </ButtonGradiend>
+                )}
+              </div>
+            ) : (
+              <>
+                <p className="text-primaryText font-medium">
+                  You currently don’t have any subscription. Subscribe to one of
+                  our plans and start downloading.
+                </p>
+                <ButtonGradiend
+                  className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 px-5 h-[35px] md:h-[45px] lg:h-[55px] w-max rounded-lg"
+                  gradient
+                >
+                  <h6 className="text-primaryText font-medium">View Pricing</h6>
+                </ButtonGradiend>
+              </>
+            )}
           </div>
           <div className="px-5 py-2 lg:px-14 lg:py-5 bg-secondaryBg rounded-[20px] flex flex-col gap-2 md:gap-4">
             <h4 className="text-primaryText font-bold">Payment Method</h4>
@@ -64,8 +140,13 @@ export default function AccountBillingInvoice() {
               View and Edit your Payment Method
             </p>
             <div className="mt-6 flex flex-col gap-5">
-              <div className="flex justify-between">
-                <div className="p-2 bg-white w-max rounded-xl">
+              {paymentMethodList.length === 0 ? (
+                <p>No payment methods found</p>
+              ) : (
+                paymentMethodList.map((method) => {
+                  return (
+                    <div className="flex justify-between" key={method.id}>
+                      {/* <div className="p-2 bg-white w-max rounded-xl">
                   <div className="relative w-[60px] h-[30px] md:w-[100px] md:h-[50px]">
                     <Image
                       src="/images/payment/visa-logo.png"
@@ -74,19 +155,25 @@ export default function AccountBillingInvoice() {
                       sizes="auto"
                     />
                   </div>
-                </div>
-                <div className="flex gap-2">
-                  <a className="text-primaryText font-bold">Edit</a>
-                  <span className="text-gradientLeft font-bold">|</span>{" "}
-                  <a className="text-gradientLeft font-bold">Delete</a>
-                </div>
-              </div>
+                </div> */}
 
-              <p className="text-primaryText font-medium">
-                <span>*****1234</span> | <span>Expire 06/27</span>
-              </p>
+                      <p className="text-primaryText font-medium">
+                        <span>{method.card.brand.toUpperCase()}</span>
+                        <span>*****{method.card.last4}</span> |{" "}
+                        <span>
+                          Expire {method.card.exp_month}/{method.card.exp_year}
+                        </span>
+                      </p>
+                      <div className="flex gap-2">
+                        <a className="text-primaryText font-bold">Edit</a>
+                        <span className="text-gradientLeft font-bold">|</span>
+                        <a className="text-gradientLeft font-bold">Delete</a>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
             </div>
-            <h5 className="mt-3 text-primaryText font-medium">Jacob Hardman</h5>
             <ButtonGradiendOutlined
               onClick={() => setShowAddPaymentMethodModal(true)}
               className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 w-max h-[35px] md:h-[45px] lg:h-[55px] rounded-xl"

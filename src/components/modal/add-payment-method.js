@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import PaymentStripeMethodModal from "../payment/stripe-method";
 import { loadStripe } from "@stripe/stripe-js";
 import { CardElement, Elements } from "@stripe/react-stripe-js";
+import { fetchClientSecret } from "@/services/payment.service";
+import Loading from "@/app/(auth)/loading";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
@@ -27,6 +29,7 @@ export default function AddPaymentMethodModal({
   const router = useRouter();
   const modalWrapperRef = useRef();
   const [methodType, setMethodType] = useState(1);
+  const [clientSecret, setClientSecret] = useState(null);
 
   const options = {
     currency: "usd",
@@ -35,8 +38,7 @@ export default function AddPaymentMethodModal({
       variables: { colorText: "#ffffff" },
     },
     automatic_payment_methods: { enabled: true },
-    clientSecret:
-      "seti_1PyEuEP0btNCbhoSNJzHJulz_secret_QpujXSbwFjSaZUkx8Ubwvl5kYFjE4yD",
+    clientSecret: clientSecret,
   };
 
   const overlayHandler = useCallback((e) => {
@@ -45,14 +47,26 @@ export default function AddPaymentMethodModal({
     }
   }, []);
 
+  const handleFetchClientSecretApi = () => {
+    fetchClientSecret({}, token).then((res) => {
+      setClientSecret(res.client_secret);
+    });
+  };
+
   useEffect(() => {
     setTimeout(() => {
       window.addEventListener("click", overlayHandler);
     });
+    handleFetchClientSecretApi();
+
     return () => {
       window.removeEventListener("click", overlayHandler);
     };
   }, []);
+
+  if (clientSecret === null) {
+    return <Loading />;
+  }
 
   return (
     <>
