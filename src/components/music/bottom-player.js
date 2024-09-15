@@ -370,7 +370,9 @@ const BottomPlayer = () => {
                 </svg>
               </a>
               <a
-                href={currentMusic.url}
+                href={`/api/download-audio?url=${encodeURIComponent(
+                  currentMusic.url
+                )}`}
                 className="px-2 py-2 rounded-lg bg-[#FFFFFF] bg-opacity-10 text-primaryText cursor-pointer"
                 download
               >

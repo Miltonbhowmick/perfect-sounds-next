@@ -283,10 +283,12 @@ const MusicFavouriteWrapper = ({ musicTrackList }) => {
               </svg>
             </a>
             <a
-              target="_blank"
-              download={music.track.title}
-              href={music.track.audio_file}
+              href={`/api/download-audio?url=${encodeURIComponent(
+                music.track.audio_file
+              )}`}
               className="px-2 py-2 rounded text-primaryText border border-primaryText cursor-pointer"
+              target="_blank"
+              download
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
