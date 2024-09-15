@@ -12,10 +12,12 @@ import { useEffect, useState } from "react";
 import { getPaymentMethodList } from "@/app/actions/payment";
 import Loading from "../../loading";
 import { getUserLatestSubscription } from "@/app/actions/user";
+import PayNowModal from "@/components/modal/pay-now";
 
 export default function AccountBillingInvoice() {
   const [showAddPaymentMethodModal, setShowAddPaymentMethodModal] =
     useState(false);
+  const [showPayNowModal, setShowPayNowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [paymentMethodList, setPaymentMethodList] = useState([]);
   const [subscriptionPlan, setSubscriptionPlan] = useState(null);
@@ -109,14 +111,27 @@ export default function AccountBillingInvoice() {
                   </span>
                 </p>
                 {subscriptionPlan?.order?.status === "pending" && (
-                  <ButtonGradiend
-                    className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 px-5 h-[35px] md:h-[45px] lg:h-[55px] w-max rounded-lg"
-                    gradient
-                  >
-                    <h6 className="text-primaryText font-medium">
-                      Pay Now - ${subscriptionPlan?.order?.price_plan?.amount}
-                    </h6>
-                  </ButtonGradiend>
+                  <>
+                    <ButtonGradiend
+                      onClick={() => {
+                        setShowPayNowModal(true);
+                      }}
+                      className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 px-5 h-[35px] md:h-[45px] lg:h-[55px] w-max rounded-lg"
+                      gradient
+                    >
+                      <h6 className="text-primaryText font-medium">
+                        Pay Now - ${subscriptionPlan?.order?.price_plan?.amount}
+                      </h6>
+                    </ButtonGradiend>
+                    {showPayNowModal && (
+                      <PayNowModal
+                        showModal={showPayNowModal}
+                        hideModal={setShowPayNowModal}
+                        subscriptionPlan={subscriptionPlan}
+                        paymentMethodList={paymentMethodList}
+                      ></PayNowModal>
+                    )}
+                  </>
                 )}
               </div>
             ) : (

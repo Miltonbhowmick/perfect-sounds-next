@@ -116,3 +116,22 @@ export const fetchPaymentMethods = async (params = {}, token) => {
       });
   });
 };
+
+export const confirmPayment = async (payload = {}, token) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "post",
+      url: `${PAYMENT_API}/stripe/payment-confirm/`,
+      headers: {
+        ...token,
+      },
+      data: payload,
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+};

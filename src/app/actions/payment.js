@@ -1,6 +1,9 @@
 "use server";
 
-import { fetchPaymentMethods } from "@/services/payment.service";
+import {
+  confirmPayment,
+  fetchPaymentMethods,
+} from "@/services/payment.service";
 import { getTokenSSR } from "./auth";
 
 export async function getPaymentMethodList() {
@@ -8,6 +11,16 @@ export async function getPaymentMethodList() {
   try {
     const paymentMethodList = await fetchPaymentMethods({}, authToken);
     return paymentMethodList;
+  } catch (error) {
+    return error;
+  }
+}
+
+export async function postConfirmPayment(requestPayload) {
+  const authToken = getTokenSSR();
+  try {
+    const responseData = await confirmPayment(requestPayload, authToken);
+    return responseData;
   } catch (error) {
     return error;
   }
