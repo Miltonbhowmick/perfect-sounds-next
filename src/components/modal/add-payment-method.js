@@ -71,10 +71,10 @@ export default function AddPaymentMethodModal({
   return (
     <>
       {showModal && (
-        <div className="fixed inset-0 z-50 overflow-x-hidden mx-2 sm:mx-0 flex justify-center items-center bg-primaryBgRGB">
+        <div className="fixed inset-0 z-[100] overflow-x-hidden mx-2 sm:mx-0 flex justify-center items-center bg-primaryBgRGB">
           <div
             ref={modalWrapperRef}
-            className="relative max-w-[846px] max-h-[695px] min-w-[100%] sm:min-w-[430px] md:min-w-[500px] mx-5 p-[30px] md:p-[70px] bg-secondaryBg rounded-[10px] md:rounded-[20px] drop-shadow-primary"
+            className="relative overflow-y-auto max-w-[846px] max-h-[495px] min-w-[100%] sm:min-w-[430px] md:min-w-[500px] mx-5 p-[30px] md:p-[70px] bg-secondaryBg rounded-[10px] md:rounded-[20px] drop-shadow-primary"
           >
             <a
               onClick={() => {
@@ -101,9 +101,9 @@ export default function AddPaymentMethodModal({
               <div className="p-[10px] md:p-[30px] w-max bg-gradient-to-r from-gradientLeft to-gradientRight rounded-full drop-shadow-gradient-left"></div>
               <div className="flex flex-col items-center">
                 <h4 className="text-primaryText font-bold text-center uppercase">
-                  Choose and add your payment details
+                  Add your payment details
                 </h4>
-                <p className="text-primaryText text-center w-3/4">
+                <p className="text-primaryText text-center w-full">
                   Its verify confidential and we securely handle everything
                 </p>
                 <div className="w-full py-5">

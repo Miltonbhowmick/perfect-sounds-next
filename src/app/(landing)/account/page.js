@@ -50,7 +50,15 @@ export default async function Account() {
           <div className="px-5 py-2 lg:px-14 lg:py-5 bg-secondaryBg rounded-[20px] flex flex-col gap-2 md:gap-4">
             <h4 className="text-primaryText font-bold">Profile Overview</h4>
             <h5 className="text-primaryText font-medium">Account Type</h5>
-            <UserSubscriptionOverview subscriptionDetail={subscriptionDetail} />
+            {subscriptionDetail?.is_active === true ? (
+              <UserSubscriptionOverview
+                subscriptionDetail={subscriptionDetail}
+              />
+            ) : (
+              <p className="text-primaryText">
+                You don't have any subscription yet. Please visit price plan.
+              </p>
+            )}
           </div>
           <div className="px-5 py-2 lg:px-14 lg:py-5 bg-secondaryBg rounded-[20px] flex flex-col gap-2 md:gap-4">
             <h4 className="text-primaryText font-bold">

@@ -14,7 +14,6 @@ export async function GET(req) {
   }
 
   try {
-    // Use the built-in fetch
     const response = await fetch(url);
 
     if (!response.ok) {

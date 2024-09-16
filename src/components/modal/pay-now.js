@@ -5,6 +5,7 @@ import ButtonGradiend from "../button/gradient";
 import { postConfirmPayment } from "@/app/actions/payment";
 import toast from "react-hot-toast";
 import Loading from "@/app/(landing)/loading";
+import { useRouter } from "next/router";
 
 const PayNowModal = ({
   showModal,
@@ -20,6 +21,7 @@ const PayNowModal = ({
   const [typePaymentMethod, setTypePaymentMethod] = useState(1);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(1);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const overlayHandler = useCallback((e) => {
     if (!modalWrapperRef?.current?.contains(e.target)) {
@@ -49,7 +51,7 @@ const PayNowModal = ({
     const paymentMethodData = getSinglePaymentMethodData(selectedPaymentMethod);
     let payload = {
       payment_method_id: paymentMethodData?.id,
-      price_plan_id: subscriptionPlan?.order?.price_plan?.id,
+      subscription_plan_id: subscriptionPlan?.id,
     };
     postConfirmPayment(payload)
       .then((res) => {
@@ -58,7 +60,7 @@ const PayNowModal = ({
         } else {
           toast.success("Payment is something problem!");
         }
-        console.log(loading);
+        router.push("/account/billing-and-invoice");
         setLoading(false);
       })
       .catch((e) => {
@@ -129,9 +131,11 @@ const PayNowModal = ({
                   <div>{subscriptionPlan.order.price_plan.title}</div>
                 ) : (
                   <>
-                    <div className="w-full flex flex-col gap-5">
+                    <div className="w-full flex flex-col gap-5 py-4">
                       {paymentMethodList.length === 0 ? (
-                        <p>No payment methods found</p>
+                        <p className="text-primaryText font-weight-bold text-center">
+                          No saved payment methods found
+                        </p>
                       ) : (
                         paymentMethodList.map((method, index) => {
                           return (

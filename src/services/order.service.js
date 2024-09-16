@@ -38,3 +38,22 @@ export const createOrder = async (payload = {}, token) => {
       });
   });
 };
+
+export const createDownloadTrack = async (payload = {}, token) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "post",
+      url: `${PUBLIC_ORDER}/downloads/`,
+      headers: {
+        ...token,
+      },
+      data: payload,
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+};

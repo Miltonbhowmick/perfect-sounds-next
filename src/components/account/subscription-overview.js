@@ -1,13 +1,26 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ButtonGradiend from "../button/gradient";
 import Chip from "../chip";
 import { useSelector } from "react-redux";
-import { getProfile } from "@/store/modules/user";
+import { getAuthToken, getProfile } from "@/store/modules/user";
+import { fetchUserCredits } from "@/services/user.service";
 
 export default function UserSubscriptionOverview({ subscriptionDetail }) {
+  const authToken = useSelector(getAuthToken);
   const profile = useSelector(getProfile);
+  const [userCreditData, setUserCreditData] = useState(null);
+
+  const handleFetchUserCreditsApi = () => {
+    fetchUserCredits({}, authToken).then((data) => {
+      setUserCreditData(data);
+    });
+  };
+
+  useEffect(() => {
+    handleFetchUserCreditsApi();
+  }, []);
 
   return (
     <>
@@ -43,7 +56,7 @@ export default function UserSubscriptionOverview({ subscriptionDetail }) {
               <span className="text-primaryText">remaining</span>
             </h5>
             <p className="text-primaryText text-center">
-              Current Credit: {"40"}
+              Current Credit: {userCreditData?.remaining_credits}
             </p>
           </div>
         </>

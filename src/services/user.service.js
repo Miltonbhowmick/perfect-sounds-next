@@ -1,5 +1,9 @@
 import axios from "axios";
-import { PUBLIC_ACCOUNT } from "@/utils/store/endpoints";
+import {
+  ORDER_API,
+  PUBLIC_ACCOUNT,
+  PUBLIC_ORDER,
+} from "@/utils/store/endpoints";
 import { buildParams } from "@/utils/utils";
 import Cookies from "js-cookie";
 
@@ -155,6 +159,24 @@ export const fetchUserLatestSubscription = async (params = {}, token) => {
     axios({
       method: "get",
       url: `${PUBLIC_ACCOUNT}/subscriptions/latest`,
+      headers: {
+        ...token,
+      },
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+};
+
+export const fetchUserCredits = async (params = {}, token) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "get",
+      url: `${ORDER_API}/user/credits`,
       headers: {
         ...token,
       },

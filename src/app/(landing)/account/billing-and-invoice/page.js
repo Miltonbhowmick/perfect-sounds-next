@@ -35,23 +35,17 @@ export default function AccountBillingInvoice() {
       try {
         const data = await getUserLatestSubscription();
         setSubscriptionPlan(data);
+        setLoading(false);
       } catch (error) {}
     }
 
     handleFetchPaymentMethodsApi();
     handleFetchUserLatestSubscriptionApi();
-
-    return () => {
-      setLoading(false);
-    };
   }, []);
-
-  if (loading) {
-    <Loading />;
-  }
 
   return (
     <div>
+      {loading && <Loading />}
       <div className="relative overflow-hidden">
         <HeroBannerHorizontal
           className="h-[245px] sm:h-[345px] md:h-[360px] lg:h-[400px]"
@@ -156,7 +150,9 @@ export default function AccountBillingInvoice() {
             </p>
             <div className="mt-6 flex flex-col gap-5">
               {paymentMethodList.length === 0 ? (
-                <p>No payment methods found</p>
+                <p className="text-primaryText font-weight-bold">
+                  No payment methods found
+                </p>
               ) : (
                 paymentMethodList.map((method) => {
                   return (

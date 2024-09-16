@@ -6,8 +6,8 @@ import { getTokenSSR } from "./auth";
 export async function getUserLatestSubscription() {
   const authToken = getTokenSSR();
   try {
-    const data = await fetchUserLatestSubscription({}, authToken);
-    return data;
+    const responseData = await fetchUserLatestSubscription({}, authToken);
+    return responseData;
   } catch (error) {
     return error;
   }
