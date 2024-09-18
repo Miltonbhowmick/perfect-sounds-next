@@ -38,7 +38,7 @@ const ForgetPasswordForm = ({ className }) => {
       .then((data) => {
         toast.success("OTP success send");
         router.push(
-          `/verification?email=${payload.email}&reason=user_creation`,
+          `/verification?email=${payload.email}&reason=forget_password`,
           { scroll: false }
         );
       })

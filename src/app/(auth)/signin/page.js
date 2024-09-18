@@ -12,6 +12,7 @@ export default function SignIn() {
             alt="login-banner"
             className="object-fit object-cover opacity-50"
             fill
+            priority
           />
         }
         headline={"The Ultimate Destination for Premium Sound Effects"}

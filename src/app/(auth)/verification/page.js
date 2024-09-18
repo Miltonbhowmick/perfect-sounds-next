@@ -7,18 +7,20 @@ import OTPInput from "react-otp-input";
 import { sendVerificationCode, verifyCode } from "@/services/user.service";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import Loading from "../loading";
 
 export default function Verification(searchParams) {
   const router = useRouter();
   const [otp, setOtp] = useState("");
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(60);
+  const [loading, setLoading] = useState(false);
 
   const queryParams = searchParams.searchParams;
   const email = queryParams?.email || null;
   const reason = queryParams?.reason || null;
 
   const resetTimer = () => {
-    setTimer(10);
+    setTimer(60);
   };
 
   useEffect(() => {
@@ -53,13 +55,16 @@ export default function Verification(searchParams) {
       email: email,
       code: otp,
     };
+    setLoading(true);
     verifyCode(payload)
       .then((data) => {
         toast.success("Verification is successfull!");
+        setLoading(false);
         router.push("/signin", { scroll: false });
       })
       .catch((e) => {
         toast.error("Verification is unsuccessfull!");
+        setLoading(false);
       });
   };
 
@@ -72,6 +77,7 @@ export default function Verification(searchParams) {
             alt="login-banner"
             className="object-fit object-cover opacity-50"
             fill
+            priority
           />
         }
         headline={"The Ultimate Destination for Premium Sound Effects"}
@@ -92,23 +98,22 @@ export default function Verification(searchParams) {
               </div>
             </div>
             <h4 className="hidden lg:block text-primaryText font-bold text-center lg:text-start">
-              Login to Perfectsounds
+              Verification
             </h4>
             <h1 className="block lg:hidden text-primaryText font-bold text-center lg:text-start">
-              Login to Perfectsounds
+              Verification
             </h1>
             <p className="text-primaryText font-medium text-center lg:text-start">
-              Enhance Your Productions with our High-Quality Sound Effects
-              Library
+              Verify your code properly
             </p>
-            <div className="flex justify-center">
+            <div className="flex">
               <OTPInput
                 value={otp}
                 onChange={setOtp}
                 numInputs={6}
                 inputType="number"
                 renderSeparator={<span style={{ width: "10px" }}> </span>}
-                inputStyle="w-16 text-center text-h3-md aspect-square focus:outline-none focus:ring-1 rounded-md mpx-4 py-3 ring-[0.4px] ring-gray-500"
+                inputStyle="custom-hide-number-arrows w-12 md:w-16 text-center text-h6-sm md:text-h3-md aspect-square focus:outline-none focus:ring-1 rounded-md py-3 ring-[0.4px] ring-gray-500"
                 renderInput={(props) => (
                   <input {...props} style={{ width: "" }} />
                 )}
@@ -120,7 +125,7 @@ export default function Verification(searchParams) {
                 00:{timer > 9 ? timer : "0" + timer}
               </h3>
             </div>
-            <p className="text-center text-primaryText font-bold">
+            <p className="text-primaryText font-bold">
               Want verification code again?
               <a
                 onClick={handleResendVerificationCodeApi}
@@ -147,6 +152,7 @@ export default function Verification(searchParams) {
           </div>
         </div>
       </div>
+      {loading && <Loading />}
     </main>
   );
 }

@@ -55,7 +55,7 @@ const BadgeCross = ({
 
   return (
     <div
-      className={`h-[45px] xs-[50px] sm:h-[60px] md:h-[150px] lg:h-[200px] xl:h-[200px] relative -top-[25px] overflow-hidden ${className}`}
+      className={`h-[70px] xs-[50px] sm:h-[90px] md:h-[150px] lg:h-[200px] xl:h-[200px] relative -top-[25px] overflow-hidden ${className}`}
     >
       <div className="bg-gradient-to-r from-gradientLeft to-gradientRight absolute z-[2] top-1/2 -translate-y-1/2 -left-[10px] right-0 rotate-[1.817deg] h-[38px] xs-[40px] sm:h-[45px] md:h-[100px] xl:h-[100px] xl:w-[120%] flex items-center">
         {firstContentElements}

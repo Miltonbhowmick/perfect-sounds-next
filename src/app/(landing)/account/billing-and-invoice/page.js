@@ -36,7 +36,9 @@ export default function AccountBillingInvoice() {
         const data = await getUserLatestSubscription();
         setSubscriptionPlan(data);
         setLoading(false);
-      } catch (error) {}
+      } catch (error) {
+        setLoading(false);
+      }
     }
 
     handleFetchPaymentMethodsApi();

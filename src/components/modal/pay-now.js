@@ -5,7 +5,7 @@ import ButtonGradiend from "../button/gradient";
 import { postConfirmPayment } from "@/app/actions/payment";
 import toast from "react-hot-toast";
 import Loading from "@/app/(landing)/loading";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const PayNowModal = ({
   showModal,

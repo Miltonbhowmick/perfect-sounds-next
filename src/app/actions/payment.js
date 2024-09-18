@@ -22,6 +22,7 @@ export async function postConfirmPayment(requestPayload) {
     const responseData = await confirmPayment(requestPayload, authToken);
     return responseData;
   } catch (error) {
-    return error;
+    console.log(error);
+    return { error: error?.message };
   }
 }

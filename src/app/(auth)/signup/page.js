@@ -11,6 +11,7 @@ export default function SignUp() {
             src="/images/account/login-banner.png"
             alt="login-banner"
             className="object-fit object-cover opacity-50"
+            priority
             fill
           />
         }
@@ -21,7 +22,7 @@ export default function SignUp() {
       />
       <div className="lg:basis-[50%] min-h-screen py-2 bg-secondaryBg flex justify-center items-center">
         <div className="container h-full flex justify-center items-center">
-          <div className="relative w-full lg:w-[70%] flex flex-col gap-4">
+          <div className="relative w-full lg:w-[70%] flex flex-col gap-1">
             <div className="flex justify-center lg:justify-start">
               <div className="relative w-[90px] h-[50px] md:w-[100px] md:h-[60px]">
                 <Image
@@ -38,8 +39,7 @@ export default function SignUp() {
               Create an account for free
             </h1>
             <p className="text-primaryText font-medium text-center lg:text-start">
-              Enhance Your Productions with our High-Quality Sound Effects
-              Library
+              Enhance Your Productions with our Perfectsounds
             </p>
             <SignupForm className="mt-3"></SignupForm>
           </div>

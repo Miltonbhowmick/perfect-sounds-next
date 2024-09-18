@@ -150,3 +150,8 @@ p {
   background-color: darkgrey;
   outline: 1px solid slategrey;
 }
+
+.custom-hide-number-arrows {
+  -webkit-appearance: none;
+  margin: 0;
+}
