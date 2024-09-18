@@ -1,3 +1,5 @@
+import classNames from "classnames";
+
 const HeadlineSection = ({
   headline,
   description,
@@ -13,11 +15,21 @@ const HeadlineSection = ({
   };
 
   return (
-    <div className={`flex flex-col ${contentPositionStyles}`}>
+    <div
+      className={classNames(
+        "flex",
+        "flex-col",
+        {
+          "justify-start": side === "left",
+        },
+        { "justify-center": side === "center" },
+        { "justify-end": side === "end" }
+      )}
+    >
       <h4
-        className={
-          (uppercase ? "uppercase" : "capitalize", `${textColor} font-bold`)
-        }
+        className={`${
+          uppercase ? "uppercase" : "capitalize"
+        } ${textColor} font-bold`}
       >
         {headline}
       </h4>
