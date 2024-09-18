@@ -38,6 +38,7 @@ const BottomPlayer = () => {
 
   useEffect(() => {
     if (bottomWaveformRef.current && currentMusic) {
+      setCurrentTime(0);
       wavesurferInstance.current = WaveSurfer.create({
         container: bottomWaveformRef.current,
         waveColor: "#828282",
@@ -59,7 +60,9 @@ const BottomPlayer = () => {
 
       wavesurferInstance.current.on("audioprocess", () => {
         const currentTime = wavesurferInstance.current.getCurrentTime();
-        setCurrentTime(currentTime);
+        if (currentTime >= 0) {
+          setCurrentTime(currentTime);
+        }
       });
 
       wavesurferInstance.current.on("play", () => dispatch(setPlaying(true)));
@@ -149,9 +152,6 @@ const BottomPlayer = () => {
             </p>
           </div>
 
-          {/* <div className="block lg:hidden w-full">
-            <div ref={bottomWaveformRef}></div>
-          </div> */}
           <div className="w-full basis-auto lg:basis-[60%] shrink flex gap-2 md:gap-8 justify-start items-center">
             <div className="w-full flex gap-1 justify-between items-center">
               <div className="flex basis-[40%] shrink lg:hidden gap-2">
@@ -266,7 +266,7 @@ const BottomPlayer = () => {
                 />
               </div>
             </div>
-            <div className="hidden">
+            {/* <div className="hidden">
               <div ref={bottomWaveformRef}></div>
             </div>
             <div className="hidden lg:flex w-full gap-5">
@@ -278,8 +278,13 @@ const BottomPlayer = () => {
                 onChange={(e) => {
                   handleCurrentPlayingTime(e);
                 }}
+                value={currentTime}
                 className="accent-gradientRight w-full bg-[#F47B23]"
               />
+            </div> */}
+
+            <div className="hidden lg:block w-full">
+              <div ref={bottomWaveformRef}></div>
             </div>
           </div>
           <div className="border-t border-[#4F4F4F] lg:border-none w-full basis-auto lg:basis-[35%] pt-2 lg:py-auto flex gap-3 justify-between items-center">
