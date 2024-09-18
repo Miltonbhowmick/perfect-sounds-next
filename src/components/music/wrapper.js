@@ -151,6 +151,9 @@ const MusicWrapper = ({ musicTrackList }) => {
   const formatDuration = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
+    if (seconds < 0) {
+      return "0:00";
+    }
     return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
   };
 
