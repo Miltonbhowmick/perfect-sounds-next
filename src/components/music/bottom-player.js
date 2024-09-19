@@ -35,6 +35,8 @@ const BottomPlayer = () => {
   const wavesurferInstance = useRef(null);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [playingSliderValue, setPlayingSliderValue] = useState(0);
+  const [isSeekingPlayingSlider, setIsSeekingPlayingSlider] = useState(false);
 
   useEffect(() => {
     if (bottomWaveformRef.current && currentMusic) {
@@ -106,7 +108,28 @@ const BottomPlayer = () => {
     dispatch(setIsMuted(!isMuted));
   };
 
+  // Handle user changing the slider position
+  const handleSliderChange = (e) => {
+    setPlayingSliderValue(e.target.value); // Update slider position as user moves it
+  };
+  // When user starts seeking
+  const handleSeekStart = () => {
+    setIsSeekingPlayingSlider(true); // Set seeking state to true
+  };
+  // When user stops seeking
+  const handleSeekEnd = (e) => {
+    setIsSeekingPlayingSlider(false);
+    handleCurrentPlayingTime(e); // Call onSeek to update the currentTime in the audio
+  };
+
+  useEffect(() => {
+    if (!isSeekingPlayingSlider) {
+      setPlayingSliderValue(currentTime);
+    }
+  }, [currentTime, isSeekingPlayingSlider]);
+
   const handleCurrentPlayingTime = (e) => {
+    setCurrentTime(e.target.value);
     wavesurferInstance.current.seekTo(e.target.value / duration);
   };
 
@@ -140,9 +163,12 @@ const BottomPlayer = () => {
               min="0"
               max={duration}
               step="1"
-              onChange={(e) => {
-                handleCurrentPlayingTime(e);
-              }}
+              value={playingSliderValue}
+              onChange={handleSliderChange}
+              onMouseDown={handleSeekStart}
+              onMouseUp={handleSeekEnd}
+              onTouchStart={handleSeekStart}
+              onTouchEnd={handleSeekEnd}
               className="accent-gradientRight w-full bg-[#F47B23]"
             />
             <p className="text-primaryText">
