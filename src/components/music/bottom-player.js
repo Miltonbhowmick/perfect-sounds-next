@@ -402,7 +402,7 @@ const BottomPlayer = () => {
               </a>
               <a
                 href={`/api/download-audio?url=${encodeURIComponent(
-                  currentMusic.url
+                  currentMusic.audio_file
                 )}`}
                 className="px-2 py-2 rounded-lg bg-[#FFFFFF] bg-opacity-10 text-primaryText cursor-pointer"
                 download
