@@ -31,7 +31,7 @@ const SuccessfullModal = ({
   return (
     <>
       {showModal && (
-        <div className="fixed inset-0 z-50 overflow-x-hidden mx-2 sm:mx-0 flex justify-center items-center bg-primaryBgRGB">
+        <div className="fixed inset-0 z-[100] overflow-x-hidden mx-2 sm:mx-0 flex justify-center items-center bg-primaryBgRGB">
           <div
             ref={modalWrapperRef}
             className="relative max-w-[846px] max-h-[695px] min-w-[100%] sm:min-w-[430px] md:min-w-[500px] mx-5 p-[30px] md:p-[70px] bg-secondaryBg rounded-[10px] md:rounded-[20px] drop-shadow-primary"
