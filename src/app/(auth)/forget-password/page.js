@@ -11,7 +11,7 @@ export default function ForgetPassword() {
             src="/images/account/login-banner.png"
             priority
             alt="login-banner"
-            className="object-fit object-cover opacity-50"
+            className="object-fit opacity-50"
             fill
           />
         }

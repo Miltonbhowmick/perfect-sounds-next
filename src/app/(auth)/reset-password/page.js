@@ -11,7 +11,7 @@ export default function ResetPassword() {
           <Image
             src="/images/account/login-banner.png"
             alt="login-banner"
-            className="object-fit object-cover opacity-50"
+            className="object-fit opacity-50"
             priority
             fill
           />
