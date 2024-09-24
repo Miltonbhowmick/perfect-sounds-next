@@ -7,7 +7,9 @@ export const buildParams = (params) => {
     "?" +
     keys
       .map((key) => {
-        return `${key}=${params[key]}`;
+        if (params[key] != null) {
+          return `${key}=${params[key]}`;
+        }
       })
       .join("&")
   );

@@ -54,6 +54,10 @@ const MusicWrapper = ({ musicTrackList }) => {
   const [trackList, setTrackList] = useState(musicTrackList);
 
   useEffect(() => {
+    setTrackList(musicTrackList);
+  }, [musicTrackList]);
+
+  useEffect(() => {
     console.log("=============WRAPPER===========", waveformRefs.current.length);
     if (trackList && waveformRefs.current.length === trackList.length) {
       console.log("musicTrackList.length", trackList.length);
@@ -179,7 +183,6 @@ const MusicWrapper = ({ musicTrackList }) => {
   };
 
   const handleRemoveSingleFavouriteTrack = (track) => {
-    console.log("-====remove ", track);
     let payload = {
       id: track.is_favorite,
     };

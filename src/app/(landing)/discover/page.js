@@ -13,13 +13,16 @@ import Loading from "../loading";
 import { buildParams } from "@/utils/utils";
 import ButtonGradiend from "@/components/button/gradient";
 import ButtonGradiendOutlined from "@/components/button/gradientOutlined";
+import MusicWrapper from "@/components/music/wrapper";
+import toast from "react-hot-toast";
 
 const Discover = () => {
   var [loading, setLoading] = useState(false);
   const router = useRouter();
   const authToken = useSelector(getAuthToken);
   const searchParams = useSearchParams();
-  const queryParams = Object.fromEntries(searchParams.entries());
+  var queryParams = Object.fromEntries(searchParams.entries());
+  var pageQuery = parseInt(queryParams.page) || null;
   var categoryQuery = queryParams.category || null;
   var subCategoryQuery = queryParams.subcategory || null;
   var titleQuery = queryParams.title || null;
@@ -44,13 +47,23 @@ const Discover = () => {
     });
   };
 
-  const handleFetchTracksApi = (page) => {
+  const handleSelectSubcategory = (e) => {
+    queryParams["subcategory"] = e?.target?.value;
+    router.push(`/discover${buildParams(queryParams)}`, { scroll: false });
+  };
+  const handleSelectCategory = (e) => {
+    queryParams["category"] = e?.target?.value;
+    router.push(`/discover${buildParams(queryParams)}`, { scroll: false });
+  };
+
+  const handleFetchTracksApi = () => {
     var params = {
       limit: musicTrackLimit,
     };
-    if (page) {
-      params["offset"] = musicTrackLimit * (page - 1);
-      setCurrentMusicTrackPage(page);
+    console.log("page query!", pageQuery);
+    if (pageQuery) {
+      params["offset"] = musicTrackLimit * (pageQuery - 1);
+      setCurrentMusicTrackPage(pageQuery);
     } else {
       params["offset"] = musicTrackOffset;
     }
@@ -80,18 +93,22 @@ const Discover = () => {
   };
 
   const handlePrevPage = () => {
-    if (currentMusicTrackPage - 1 < 1) {
+    if (pageQuery - 1 < 1) {
       return;
     }
-    handleFetchTracksApi(currentMusicTrackPage - 1);
+    // handleFetchTracksApi(currentMusicTrackPage - 1);
+    queryParams["page"] = currentMusicTrackPage - 1;
+    router.push(`/discover${buildParams(queryParams)}`);
   };
 
   const handleNextPage = () => {
-    if (currentMusicTrackPage + 1 > totalMusicTrackPage) {
-      alert("No more music page!");
+    if (pageQuery + 1 > totalMusicTrackPage) {
+      toast.error("No more music page!");
       return;
     }
-    handleFetchTracksApi(currentMusicTrackPage + 1);
+    // handleFetchTracksApi(currentMusicTrackPage + 1);
+    queryParams["page"] = currentMusicTrackPage + 1;
+    router.push(`/discover${buildParams(queryParams)}`);
   };
 
   const handleSearchTitle = (event) => {
@@ -105,7 +122,7 @@ const Discover = () => {
   };
 
   useEffect(() => {
-    console.log(titleQuery);
+    console.log("fetch all");
     const fetchAsyncData = async () => {
       setLoading(true);
       await Promise.all([
@@ -151,11 +168,18 @@ const Discover = () => {
             <h5 className="text-primaryText uppercase font-medium">
               categories
             </h5>
-            <select className="appearance-none w-full px-4 py-3 rounded-full text-paragraph md:text-paragraph-md text-primaryText border border-primaryText bg-transparent outline-transparent">
+            <select
+              onChange={handleSelectCategory}
+              className="appearance-none w-full px-4 py-3 rounded-full text-paragraph md:text-paragraph-md text-primaryText border border-primaryText bg-transparent outline-transparent"
+            >
               {categories &&
                 categories?.map((element, index) => {
                   return (
-                    <option className="text-primaryBg" key={"cat_" + index}>
+                    <option
+                      className="text-primaryBg"
+                      key={"cat_" + index}
+                      value={element?.slug}
+                    >
                       {element?.name}
                     </option>
                   );
@@ -166,11 +190,18 @@ const Discover = () => {
             <h5 className="text-primaryText uppercase font-medium">
               sub categories
             </h5>
-            <select className="appearance-none w-full px-4 py-3 rounded-full text-paragraph md:text-paragraph-md text-primaryText border border-primaryText bg-transparent outline-transparent">
+            <select
+              onChange={handleSelectSubcategory}
+              className="appearance-none w-full px-4 py-3 rounded-full text-paragraph md:text-paragraph-md text-primaryText border border-primaryText bg-transparent outline-transparent"
+            >
               {subCategories &&
                 subCategories.map((element, index) => {
                   return (
-                    <option className="text-primaryBg" key={"subcat_" + index}>
+                    <option
+                      className="text-primaryBg"
+                      key={"subcat_" + index}
+                      value={element?.slug}
+                    >
                       {element.name}
                     </option>
                   );
@@ -283,7 +314,10 @@ const Discover = () => {
           </div>
           <div className="bg-secondaryBg p-5 rounded-xl basis-auto grow shrink">
             {musicTrackList && (
-              <ClientWrapper musicTrackList={musicTrackList}></ClientWrapper>
+              <MusicWrapper
+                musicTrackList={musicTrackList}
+                key={JSON.stringify(musicTrackList)}
+              ></MusicWrapper>
             )}
           </div>
         </div>

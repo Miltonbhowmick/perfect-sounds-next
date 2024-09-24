@@ -4,13 +4,13 @@ import { buildParams } from "@/utils/utils";
 
 export const fetchTracks = async (params = {}, token) => {
   return new Promise((resolve, reject) => {
-    axios
-      .get(`${PUBLIC_MUSIC}/tracks/${buildParams(params)}`, {
-        params: params,
-        headers: {
-          ...token,
-        },
-      })
+    axios({
+      url: `${PUBLIC_MUSIC}/tracks/${buildParams(params)}`,
+      method: "get",
+      headers: {
+        ...token,
+      },
+    })
       .then((response) => {
         resolve(response.data);
       })
