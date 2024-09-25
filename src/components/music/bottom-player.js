@@ -5,6 +5,12 @@ import {
   setCurrentVolume,
   setIsMuted,
   setPlaying,
+  setCurrentMusicFavourite,
+  getCurrentMusic,
+  getPlaying,
+  getCurrentVolume,
+  getIsMuted,
+  getIsFavourite,
 } from "@/store/modules/music";
 import ButtonMediaPlay from "@/components/button/mediaPlay";
 import WaveSurfer from "wavesurfer.js";
@@ -13,21 +19,21 @@ import { useMediaElement } from "@/contexts/MediaElementContext";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import {
+  addSingleFavourite,
+  deleteSingleFavourite,
+} from "@/services/common.service";
+import { getAuthToken } from "@/store/modules/user";
+import toast from "react-hot-toast";
 
 const BottomPlayer = () => {
+  const authToken = useSelector(getAuthToken);
   const dispatch = useDispatch();
-  const currentMusic = useSelector((state) => {
-    return state.music.currentMusic;
-  });
-  const playing = useSelector((state) => {
-    return state.music.playing;
-  });
-  const currentVolume = useSelector((state) => {
-    return state.music.currentVolume;
-  });
-  const isMuted = useSelector((state) => {
-    return state.music.isMuted;
-  });
+  var currentMusic = useSelector(getCurrentMusic);
+  var playing = useSelector(getPlaying);
+  var currentVolume = useSelector(getCurrentVolume);
+  var isMuted = useSelector(getIsMuted);
+  var isFavourite = useSelector(getIsFavourite);
 
   const { mediaElement } = useMediaElement();
 
@@ -146,6 +152,34 @@ const BottomPlayer = () => {
     return title;
   };
 
+  const handleAddTrackFavorite = (track) => {
+    let payload = {
+      track: track.id,
+    };
+    addSingleFavourite(payload, authToken)
+      .then((data) => {
+        dispatch(setCurrentMusicFavourite(data.id));
+        toast.success("Successfully added track to favorite!");
+      })
+      .catch((e) => {
+        toast.error("Adding track to favorite failed!");
+      });
+  };
+
+  const handleRemoveSingleFavouriteTrack = (favouriteId) => {
+    let payload = {
+      id: favouriteId,
+    };
+    deleteSingleFavourite(payload, authToken)
+      .then((data) => {
+        dispatch(setCurrentMusicFavourite(null));
+        toast.success("Favourite track deletion done!");
+      })
+      .catch((e) => {
+        toast.error("Favourite track deletion failed!");
+      });
+  };
+
   return (
     <div
       className="fixed z-[45] bottom-0 left-0 right-0 bg-[#000000] bg-opacity-70 overflow-hidden"
@@ -178,7 +212,7 @@ const BottomPlayer = () => {
             </p>
           </div>
 
-          <div className="w-full basis-auto lg:basis-[60%] shrink flex gap-2 md:gap-8 justify-start items-center">
+          <div className="w-full basis-auto lg:basis-[65%] shrink flex gap-2 md:gap-8 justify-start items-center">
             <div className="w-full flex gap-1 justify-between items-center">
               <div className="flex basis-[40%] shrink lg:hidden gap-2">
                 <div>
@@ -240,8 +274,8 @@ const BottomPlayer = () => {
                 <SkipNextIcon className="w-[24px] h-[24px] md:w-[60px] md:h-[60px] text-primaryText" />
               </div>
               <button className="w-max px-2 md:px-4 h-[30px] md:h-[45px] flex gap-1 items-center rounded-full border border-primaryText">
-                <PlayArrowIcon className="text-primaryText text-small-xs md:text-paragraph-lg" />
-                <p className="text-primaryText">Play All</p>
+                <PlayArrowIcon className="text-primaryText text-small-xs md:text-small" />
+                <p className="text-primaryText text-small">Play All</p>
               </button>
               <div className="hidden lg:flex gap-2">
                 <div>
@@ -313,7 +347,7 @@ const BottomPlayer = () => {
               <div ref={bottomWaveformRef}></div>
             </div>
           </div>
-          <div className="border-t border-[#4F4F4F] lg:border-none w-full basis-auto lg:basis-[35%] pt-2 lg:py-auto flex gap-3 justify-between items-center">
+          <div className="border-t border-[#4F4F4F] lg:border-none w-full basis-auto lg:basis-[33%] pt-2 lg:py-auto flex gap-3 justify-between items-center">
             <div className="flex flex-col ga-1">
               <p className="text-[10px] sm:text-[16px] uppercase text-primaryText">
                 Now playing:
@@ -349,34 +383,60 @@ const BottomPlayer = () => {
                     : "00:00"}
                 </p>
               </div>
-              <div className="px-2 py-2 rounded-lg bg-[#FFFFFF] bg-opacity-10 text-primaryText cursor-pointer">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="22"
-                  height="22"
-                  viewBox="0 0 22 22"
-                  fill="none"
-                  className="w-[12px] h-[12px] md:w-[22px] md:h-[22px]"
+              {isFavourite === null ? (
+                <div
+                  onClick={() => handleAddTrackFavorite(currentMusic)}
+                  className="px-2 py-2 rounded-lg bg-[#FFFFFF] bg-opacity-10 text-primaryText cursor-pointer"
                 >
-                  <g id="heart-add">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 22 22"
+                    fill="none"
+                    className="w-[12px] h-[12px] md:w-[22px] md:h-[22px]"
+                  >
+                    <g id="heart-add">
+                      <path
+                        id="Vector"
+                        d="M11.1077 18.8259C9.94145 18.8259 9.26923 18.3283 7.92477 17.3332C0.866083 12.1087 1.55853 5.9159 4.61874 4.03876C6.95051 2.60845 8.98568 3.18485 10.2082 4.10299C10.7096 4.47945 10.9602 4.66768 11.1077 4.66768C11.2551 4.66768 11.5057 4.47945 12.0071 4.10299C13.2297 3.18485 15.2648 2.60845 17.5966 4.03876C19.091 4.95545 20.0208 6.90133 19.759 9.26104"
+                        stroke="white"
+                        strokeWidth="1.3043"
+                        strokeLinecap="round"
+                      />
+                      <path
+                        id="Vector_2"
+                        d="M12.8467 15.3478H19.8029M16.3248 11.8696V18.8259"
+                        stroke="white"
+                        strokeWidth="1.3043"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </g>
+                  </svg>
+                </div>
+              ) : (
+                <div
+                  onClick={() => handleRemoveSingleFavouriteTrack(isFavourite)}
+                  className="px-2 py-2 rounded-lg bg-[#FFFFFF] bg-opacity-10 text-primaryText cursor-pointer"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 22 22"
+                    fill="none"
+                  >
                     <path
-                      id="Vector"
-                      d="M11.1077 18.8259C9.94145 18.8259 9.26923 18.3283 7.92477 17.3332C0.866083 12.1087 1.55853 5.9159 4.61874 4.03876C6.95051 2.60845 8.98568 3.18485 10.2082 4.10299C10.7096 4.47945 10.9602 4.66768 11.1077 4.66768C11.2551 4.66768 11.5057 4.47945 12.0071 4.10299C13.2297 3.18485 15.2648 2.60845 17.5966 4.03876C19.091 4.95545 20.0208 6.90133 19.759 9.26104"
-                      stroke="white"
-                      strokeWidth="1.3043"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      id="Vector_2"
-                      d="M12.8467 15.3478H19.8029M16.3248 11.8696V18.8259"
+                      d="M11.0332 14.4782L12.3375 12.3044L10.5984 10.5653L13.207 8.3915L11.0332 4.91338C11.0332 4.91338 11.4313 4.47945 11.9326 4.10299C13.1552 3.18485 15.1903 2.60845 17.5222 4.03876C20.5823 5.9159 21.2748 12.1087 14.2161 17.3332C12.8717 18.3283 12.1994 18.8259 11.0332 18.8259C9.86699 18.8259 9.19477 18.3283 7.85031 17.3332C0.79162 12.1087 1.48407 5.9159 4.54427 4.03876C6.19121 3.02853 7.69018 3.01938 8.85937 3.42464"
                       stroke="white"
                       strokeWidth="1.3043"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
-                  </g>
-                </svg>
-              </div>
+                  </svg>
+                </div>
+              )}
               <a className="px-2 py-2 rounded-lg bg-[#FFFFFF] bg-opacity-10 text-primaryText cursor-pointer">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
