@@ -63,14 +63,16 @@ const CheckoutForm = ({
         state: values.state,
         zip_code: values.zipCode,
         is_agreed_policy: values.isAgreePolicy,
-        price_plan: pricePlan,
+        price_plan: pricePlan?.id,
       };
 
       if (promoCodeData?.id) {
         payload["promo_code"] = parseInt(promoCodeData?.id);
       }
-      if (selectedCredit) {
+      if (pricePlan.duration === "custom" && selectedCredit) {
         payload["credit"] = parseInt(selectedCredit?.id);
+      } else {
+        payload["credit"] = pricePlan?.credits[0]?.id;
       }
 
       createOrder(payload, authToken)

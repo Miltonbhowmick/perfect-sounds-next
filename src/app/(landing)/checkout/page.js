@@ -26,6 +26,8 @@ const CheckoutPage = async (searchParams) => {
     taxCost: 0,
     total: 0,
   };
+  var creditData = null;
+
   await fetchSinglePricePlans({ pricePlanId: pricePlanId }).then((data) => {
     pricePlanData = data;
     costData.subTotal = parseFloat(pricePlanData?.amount).toFixed(2);
@@ -36,7 +38,6 @@ const CheckoutPage = async (searchParams) => {
       (parseFloat(pricePlanData?.amount) * taxPercentage) / 100;
   });
 
-  var creditData = null;
   if (type === "custom" && credit) {
     await fetchSingleCreditPlan({ id: credit }).then((data) => {
       creditData = data;
@@ -252,7 +253,7 @@ const CheckoutPage = async (searchParams) => {
       <div className="p-10 bg-secondaryBg rounded-xl flex flex-col items-center">
         <section className="w-[100%] lg:w-[60%]">
           <CheckoutForm
-            pricePlan={pricePlanId}
+            pricePlan={pricePlanData}
             selectedCredit={creditData}
             costData={costData}
             authToken={token}

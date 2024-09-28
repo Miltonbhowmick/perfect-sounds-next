@@ -6,6 +6,17 @@ import { postConfirmPayment } from "@/app/actions/payment";
 import toast from "react-hot-toast";
 import Loading from "@/app/(landing)/loading";
 import { useRouter } from "next/navigation";
+import PaymentStripeMethodModal from "../payment/stripe-method";
+import { fetchPaymentClientSecret } from "@/services/payment.service";
+import { loadStripe } from "@stripe/stripe-js";
+import { useSelector } from "react-redux";
+import { getAuthToken } from "@/store/modules/user";
+import { Elements } from "@stripe/react-stripe-js";
+import PaymentStripePaynowModal from "../payment/stripe-pay-now";
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+);
 
 const PayNowModal = ({
   showModal,
@@ -18,10 +29,21 @@ const PayNowModal = ({
   ...props
 }) => {
   const modalWrapperRef = useRef();
+  const token = useSelector(getAuthToken);
   const [typePaymentMethod, setTypePaymentMethod] = useState(1);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(1);
+  const [clientSecret, setClientSecret] = useState(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  const options = {
+    appearance: {
+      theme: "night",
+      variables: { colorText: "#ffffff" },
+    },
+    automatic_payment_methods: { enabled: true },
+    clientSecret: clientSecret,
+  };
 
   const overlayHandler = useCallback((e) => {
     if (!modalWrapperRef?.current?.contains(e.target)) {
@@ -29,10 +51,25 @@ const PayNowModal = ({
     }
   }, []);
 
+  const handleFetchClientSecretApi = () => {
+    let amount =
+      subscriptionPlan?.order?.price_plan?.duration !== "custom"
+        ? subscriptionPlan?.order?.price_plan?.amount
+        : subscriptionPlan?.order?.price_plan_credit?.amount;
+    let payload = {
+      amount: parseFloat(amount),
+    };
+    fetchPaymentClientSecret(payload, token).then((res) => {
+      setClientSecret(res.client_secret);
+    });
+  };
+
   useEffect(() => {
     setTimeout(() => {
       window.addEventListener("click", overlayHandler);
     });
+    handleFetchClientSecretApi();
+
     return () => {
       window.removeEventListener("click", overlayHandler);
     };
@@ -71,7 +108,7 @@ const PayNowModal = ({
   return (
     <>
       {showModal && (
-        <div className="fixed inset-0 z-50 overflow-x-hidden mx-2 sm:mx-0 flex justify-center items-center bg-primaryBgRGB">
+        <div className="fixed inset-0 z-[100] overflow-x-hidden mx-2 sm:mx-0 flex justify-center items-center bg-primaryBgRGB">
           <div
             ref={modalWrapperRef}
             className="relative max-w-[846px] max-h-[695px] min-w-[100%] sm:min-w-[430px] md:min-w-[500px] mx-5 p-[30px] md:p-[70px] bg-secondaryBg rounded-[10px] md:rounded-[20px] drop-shadow-primary"
@@ -128,7 +165,13 @@ const PayNowModal = ({
                   </li>
                 </ul>
                 {typePaymentMethod === 0 ? (
-                  <div>{subscriptionPlan.order.price_plan.title}</div>
+                  <div className="w-full">
+                    <Elements stripe={stripePromise} options={options}>
+                      <PaymentStripePaynowModal
+                        subscriptionPlan={subscriptionPlan}
+                      />
+                    </Elements>
+                  </div>
                 ) : (
                   <>
                     <div className="w-full flex flex-col gap-5 py-4">

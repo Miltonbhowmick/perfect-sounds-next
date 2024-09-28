@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import PaymentStripeMethodModal from "../payment/stripe-method";
 import { loadStripe } from "@stripe/stripe-js";
 import { CardElement, Elements } from "@stripe/react-stripe-js";
-import { fetchClientSecret } from "@/services/payment.service";
+import { fetchSetupClientSecret } from "@/services/payment.service";
 import Loading from "@/app/(auth)/loading";
 
 const stripePromise = loadStripe(
@@ -48,7 +48,7 @@ export default function AddPaymentMethodModal({
   }, []);
 
   const handleFetchClientSecretApi = () => {
-    fetchClientSecret({}, token).then((res) => {
+    fetchSetupClientSecret({}, token).then((res) => {
       setClientSecret(res.client_secret);
     });
   };

@@ -81,7 +81,7 @@ export const fetchSingleCreditPlan = async (params = {}) => {
   });
 };
 
-export const fetchClientSecret = async (params = {}, token) => {
+export const fetchSetupClientSecret = async (params = {}, token) => {
   return new Promise((resolve, reject) => {
     axios({
       method: "post",
@@ -89,6 +89,25 @@ export const fetchClientSecret = async (params = {}, token) => {
       headers: {
         ...token,
       },
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+};
+
+export const fetchPaymentClientSecret = async (payload = {}, token) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "post",
+      url: `${PAYMENT_API}/stripe/payment-intent/`,
+      headers: {
+        ...token,
+      },
+      data: payload,
     })
       .then((response) => {
         resolve(response.data);

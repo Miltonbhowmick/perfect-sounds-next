@@ -109,7 +109,6 @@ const MusicWrapper = ({ musicTrackList }) => {
 
         ws.on("play", () => {
           setMediaElement(ws.getMediaElement());
-
           dispatch(setCurrentMusic(music));
           dispatch(setPlaying(true));
         });
@@ -162,7 +161,6 @@ const MusicWrapper = ({ musicTrackList }) => {
   };
 
   const handleAddTrackFavorite = (track) => {
-    console.log("-====", track);
     let payload = {
       track: track.id,
     };

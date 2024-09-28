@@ -189,3 +189,22 @@ export const fetchUserCredits = async (params = {}, token) => {
       });
   });
 };
+
+export const activeSingleSubscription = async (payload = {}, token) => {
+  return new Promise((resolve, reject) => {
+    const id = payload?.id;
+    axios({
+      method: "post",
+      url: `${PUBLIC_ACCOUNT}/subscriptions/${id}/active/`,
+      headers: {
+        ...token,
+      },
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+};

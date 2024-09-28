@@ -86,19 +86,8 @@ export default function AccountBillingInvoice() {
                   <span className="text-gradientLeft">
                     {subscriptionPlan?.order?.price_plan?.title}
                   </span>{" "}
-                  - with{" "}
-                  {subscriptionPlan?.order?.price_plan?.credits.map(
-                    (creditObj, index) => {
-                      return (
-                        <span
-                          className="text-primaryText"
-                          key={"credit_" + index}
-                        >
-                          {creditObj.credit} credit
-                        </span>
-                      );
-                    }
-                  )}
+                  - with {subscriptionPlan?.order?.price_plan_credit?.credit}{" "}
+                  credits
                 </h6>
                 <p className="text-primaryText">
                   Payment Status -{" "}
@@ -116,7 +105,11 @@ export default function AccountBillingInvoice() {
                       gradient
                     >
                       <h6 className="text-primaryText font-medium">
-                        Pay Now - ${subscriptionPlan?.order?.price_plan?.amount}
+                        Pay Now - $
+                        {subscriptionPlan?.order?.price_plan?.duration !==
+                        "custom"
+                          ? subscriptionPlan?.order?.price_plan?.amount
+                          : subscriptionPlan?.order?.price_plan_credit?.amount}
                       </h6>
                     </ButtonGradiend>
                     {showPayNowModal && (
@@ -159,17 +152,6 @@ export default function AccountBillingInvoice() {
                 paymentMethodList.map((method) => {
                   return (
                     <div className="flex justify-between" key={method.id}>
-                      {/* <div className="p-2 bg-white w-max rounded-xl">
-                  <div className="relative w-[60px] h-[30px] md:w-[100px] md:h-[50px]">
-                    <Image
-                      src="/images/payment/visa-logo.png"
-                      alt="visa-logo"
-                      fill
-                      sizes="auto"
-                    />
-                  </div>
-                </div> */}
-
                       <p className="text-primaryText font-medium">
                         <span>{method.card.brand.toUpperCase()}</span>
                         <span>*****{method.card.last4}</span> |{" "}
@@ -187,14 +169,16 @@ export default function AccountBillingInvoice() {
                 })
               )}
             </div>
-            <ButtonGradiendOutlined
-              onClick={() => setShowAddPaymentMethodModal(true)}
-              className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 w-max h-[35px] md:h-[45px] lg:h-[55px] rounded-xl"
-            >
-              <h6 className="bg-gradient-to-r from-gradientLeft to-gradientRight bg-clip-text text-transparent font-bold">
-                Add a payment method
-              </h6>
-            </ButtonGradiendOutlined>
+            {paymentMethodList.length === 0 && (
+              <ButtonGradiendOutlined
+                onClick={() => setShowAddPaymentMethodModal(true)}
+                className="mt-1 xs:mt-2 md:mt-4 xl:mt-7 w-max h-[35px] md:h-[45px] lg:h-[55px] rounded-xl"
+              >
+                <h6 className="bg-gradient-to-r from-gradientLeft to-gradientRight bg-clip-text text-transparent font-bold">
+                  Add a payment method
+                </h6>
+              </ButtonGradiendOutlined>
+            )}
           </div>
           <div className="px-5 py-2 lg:px-14 lg:py-5 bg-secondaryBg rounded-[20px] flex flex-col gap-1">
             <h4 className="text-primaryText font-bold">Invoice</h4>
